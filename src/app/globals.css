@@ -26,8 +26,48 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+textarea {
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.cover-photo {
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.custom-scroll-horizontal::-webkit-scrollbar {
+  width: 5px;
+}
+
+textarea::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll-vertical::-webkit-scrollbar {
+  height: 8px;
+}
+
+.custom-scroll-horizontal::-webkit-scrollbar-track,
+.custom-scroll-vertical::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-scroll-horizontal::-webkit-scrollbar-thumb,
+.custom-scroll-vertical::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.custom-scroll-horizontal::-webkit-scrollbar-thumb:hover,
+.custom-scroll-vertical::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
 }
