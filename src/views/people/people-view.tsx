@@ -8,7 +8,7 @@ const PeopleView = async () => {
   const { data: users } = await supabase
     .from("users")
     .select(
-      `name, username, photo, bio, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
+      `name, username, photo, bio, id, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
     )
     .not("email", "eq", session?.user.email as string);
   return (
