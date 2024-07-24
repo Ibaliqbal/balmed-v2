@@ -1,9 +1,11 @@
 "use client";
+import { useGetUserLogin } from "@/provider/user-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 const TabNavigation = ({ username }: { username: string }) => {
+  const { user } = useGetUserLogin();
   const pathname = usePathname();
 
   const lists = [
@@ -26,22 +28,48 @@ const TabNavigation = ({ username }: { username: string }) => {
   ];
 
   return (
-    <div className={`grid grid-cols-4 mt-4 border-b-2 border-b-slate-700`}>
-      {lists.map((list) => (
-        <div
-          className="w-full flex items-center justify-center"
-          key={list.title}
-        >
-          <Link
-            href={list.href}
-            className={`h-full py-5 px-3 cursor-pointer ${
-              list.href === pathname ? "border-b-[3px] border-b-sky-600" : ""
-            }`}
-          >
-            {list.title}
-          </Link>
-        </div>
-      ))}
+    <div
+      className={`grid ${
+        username === user?.username ? "grid-cols-4" : "grid-cols-3"
+      } mt-4 border-b-2 border-b-slate-700`}
+    >
+      {username === user?.username
+        ? lists.map((list) => (
+            <div
+              className="w-full flex items-center justify-center"
+              key={list.title}
+            >
+              <Link
+                href={list.href}
+                className={`h-full py-5 px-3 cursor-pointer ${
+                  list.href === pathname
+                    ? "border-b-[3px] border-b-sky-600"
+                    : ""
+                }`}
+              >
+                {list.title}
+              </Link>
+            </div>
+          ))
+        : lists
+            .filter((list) => list.title !== "Likes")
+            .map((list) => (
+              <div
+                className="w-full flex items-center justify-center"
+                key={list.title}
+              >
+                <Link
+                  href={list.href}
+                  className={`h-full py-5 px-3 cursor-pointer ${
+                    list.href === pathname
+                      ? "border-b-[3px] border-b-sky-600"
+                      : ""
+                  }`}
+                >
+                  {list.title}
+                </Link>
+              </div>
+            ))}
     </div>
   );
 };

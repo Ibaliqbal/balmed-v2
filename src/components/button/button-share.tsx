@@ -1,13 +1,22 @@
 "use client";
+import { UUID } from "crypto";
 import React from "react";
 import toast from "react-hot-toast";
 import { FaShare } from "react-icons/fa";
 
-const ButtonShare = () => {
+const ButtonShare = ({
+  id,
+  creator_username,
+}: {
+  id: string | UUID;
+  creator_username: string;
+}) => {
   return (
     <FaShare
       onClick={async () => {
-        await navigator.clipboard.writeText("https://porto-iqbal.vercel.app");
+        await navigator.clipboard.writeText(
+          `${process.env.NEXT_PUBLIC_APP_URL}/${creator_username}/status/${id}`
+        );
         toast.success("Copied to clipboard");
       }}
       aria-label="button-share"

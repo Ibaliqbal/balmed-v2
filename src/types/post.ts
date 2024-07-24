@@ -16,11 +16,11 @@ export type Post = {
 };
 
 export interface GetPost extends Post {
-  creator: Pick<User, "bio" | "photo" | "name" | "username"> & {
-    followings: [Count];
-    followers: [Count];
+  creator: Pick<User, "bio" | "photo" | "name" | "username" | "id"> & {
+    followings: Count[];
+    followers: Count[];
   };
   like: [Count];
-  comment: [Count]
-  repost: [Count]
+  comment: [Count];
+  repost: [Count];
 }

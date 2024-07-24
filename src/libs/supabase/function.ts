@@ -1,4 +1,5 @@
-import { supabase } from "./init";
+import { getServerSession } from "next-auth";
+import { storage, supabase } from "./init";
 
 export async function getUserLogin(email: string) {
   const { data } = await supabase
@@ -41,25 +42,33 @@ export async function uploadFile(
   file: File,
   pathFile: string
 ) {
-  const result = await supabase.storage.from(tableName).upload(pathFile, file);
+  const result = await storage.from(tableName).upload(pathFile, file);
 
   return result;
 }
 
 export async function deleteFile(storageName: string, pathFile: Array<string>) {
-  const result = await supabase.storage.from(storageName).remove(pathFile);
+  const result = await storage.from(storageName).remove(pathFile);
 
   return result;
 }
 
 export async function getUrlFile(path: string, bucketName: string) {
-  const { data } = await supabase.storage
-    .from(bucketName)
-    .getPublicUrl(`${path}`);
+  const { data } = await storage.from(bucketName).getPublicUrl(`${path}`);
 
   return data;
 }
 
-// export async function deleteFile(bucketName: string, path: string) {
-//   const
-// }
+export async function getServerUser() {
+  const session = await getServerSession();
+
+  if (!session) return null;
+
+  const { data } = await supabase
+    .from("users")
+    .select()
+    .eq("email", session?.user.email)
+    .single();
+
+  return data;
+}

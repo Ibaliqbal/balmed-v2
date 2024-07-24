@@ -1,6 +1,7 @@
 import { UUID } from "crypto";
 import { MediaPreview } from "./media";
 import { Count } from "./post";
+import { User } from "./user";
 
 export type Follow = {
   id: string | UUID;
@@ -10,12 +11,8 @@ export type Follow = {
 };
 
 export type GetFollow = {
-  user: {
-    name: string;
-    username: string;
-    bio: string;
-    photo: MediaPreview;
-    followers: [Count];
-    followings: [Count];
+  user: Pick<User, "username" | "bio" | "photo" | "name" | "id"> & {
+    followings: Count[];
+    followers: Count[];
   };
 };

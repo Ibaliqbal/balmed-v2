@@ -18,7 +18,7 @@ const LeftSide = async () => {
   const user = await getUserLogin((session?.user.email as string) ?? " ");
 
   return (
-    <aside className="w-full p-4 md:flex hidden flex-col items-start gap-8 h-dvh col-span-2 sticky top-0">
+    <aside className="w-full p-4 md:flex hidden flex-col items-start gap-8 h-dvh col-span-2 sticky top-0 z-50">
       <nav className="flex-col grow h-full w-full items-start flex gap-10 text-white">
         <h1 className="text-xl font-bold">BM</h1>
         <Icon

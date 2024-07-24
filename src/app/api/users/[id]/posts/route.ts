@@ -5,24 +5,24 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { data: reposts } = await supabase
-    .from("users")
-    .select(`id, reposts:reposts (post_id)`)
-    .eq("id", params.id)
-    .single();
+  const { data: reposts, error: reposts_error } = await supabase
+    .from("reposts")
+    .select(`post_id`)
+    .eq("user_id", params.id);
 
   const { data, error } = await supabase
     .from("postings")
     .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
+      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
     )
     .or(
-      `creator_id.eq.${params.id}, id.in.(${reposts?.reposts.map(
-        (post) => post.post_id
-      )})`
+      `creator_id.eq.${params.id}, id.in.(${
+        reposts?.map((post) => post.post_id) as string[]
+      })`
     )
     .is("comment_id", null)
     .order("upload_at", { ascending: false });
+
   if (error)
     return Response.json(
       { message: "Something went wrong in server", posts: [] },

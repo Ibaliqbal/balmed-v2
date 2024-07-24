@@ -1,19 +1,40 @@
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const Content = ({ content }: { content: string }) => {
+const Content = ({
+  content,
+  id,
+  username,
+}: {
+  content: string;
+  username: string;
+  id: string;
+}) => {
+  const router = useRouter();
   return (
-    <Link
-      href={"/"}
-      className="whitespace-normal md:tracking-normal tracking-tight line-clamp-5"
+    <p
+      onClick={() => router.push(`/${username}/status/${id}`)}
+      className="whitespace-normal md:tracking-normal tracking-tight line-clamp-5 cursor-pointer"
     >
       {content?.split(" ").map((str, i) =>
         str.startsWith("@") ? (
-          <Link href={"/home"} key={i} className="text-blue-600">
+          <Link
+            href={"/home"}
+            key={i}
+            className="text-blue-600 z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
             {str}{" "}
           </Link>
         ) : str.startsWith("#") ? (
-          <Link href={"/home"} key={i} className="text-blue-600">
+          <Link
+            href={"/home"}
+            key={i}
+            className="text-blue-600 z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
             {str}{" "}
           </Link>
         ) : str.startsWith("https") || str.startsWith("http") ? (
@@ -21,8 +42,20 @@ const Content = ({ content }: { content: string }) => {
             href={str}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600"
+            className="text-blue-600 z-50"
             key={i}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {str}{" "}
+          </a>
+        ) : str.includes(".") ? (
+          <a
+            href={`https://${str}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 z-50"
+            key={i}
+            onClick={(e) => e.stopPropagation()}
           >
             {str}{" "}
           </a>
@@ -30,7 +63,7 @@ const Content = ({ content }: { content: string }) => {
           `${str} `
         )
       )}
-    </Link>
+    </p>
   );
 };
 

@@ -1,10 +1,19 @@
 import Search from "@/components/form/form-search";
 import UserCard from "@/components/user/user-card";
+import { supabase } from "@/libs/supabase/init";
 import { dateFormat } from "@/utils/helpers";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React from "react";
 
-const RightUserProfile = () => {
+const RightUserProfile = async () => {
+  const session = await getServerSession();
+  const { data: users, error } = await supabase
+    .from("users")
+    .select(
+      `name, username, photo, bio, id, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
+    )
+    .not("email", "eq", session?.user.email as string);
   return (
     <section className="w-full lg:block">
       <header className="w-full md:sticky md:top-0 z-10">
@@ -16,8 +25,8 @@ const RightUserProfile = () => {
         <section className="w-full p-5 rounded-3xl border-2 border-slate-800 mt-4">
           <h1 className="text-2xl font-bold">Who to follow</h1>
           <div className="mt-4 w-full flex flex-col gap-6 mb-5">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <UserCard key={i} />
+            {users?.map((user, i) => (
+              <UserCard key={i} {...user} />
             ))}
           </div>
           <Link

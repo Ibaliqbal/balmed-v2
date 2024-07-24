@@ -9,21 +9,21 @@ export async function GET(
   const id = params.id;
   const session = await getServerSession();
 
-  const { data: likes } = await supabase
+  const { data: reposts } = await supabase
     .from("postings")
-    .select(`id, repost:reposts!id(count)`)
+    .select(`id, repost:reposts!id (count)`)
     .eq("id", id)
     .single();
 
-  const { data: user_likes } = await supabase
+  const { data: user_reposts, error } = await supabase
     .from("users")
-    .select(`id, likes:likes (post_id)`)
+    .select(`id,  reposts:reposts (post_id)`)
     .eq("email", session?.user.email)
     .single();
 
   const initData = {
-    total: likes?.repost[0].count,
-    isReposted: user_likes?.likes.some((like) => like.post_id === id),
+    total: reposts?.repost[0].count,
+    isReposted: user_reposts?.reposts.some((repost) => repost.post_id === id),
   };
 
   return Response.json({ data: initData }, { status: 200 });

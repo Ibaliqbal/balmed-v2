@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const { data, error } = await supabase
     .from("postings")
     .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
+      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
     )
     .is("comment_id", null)
     .order("upload_at", { ascending: false });

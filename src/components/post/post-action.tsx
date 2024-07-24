@@ -13,14 +13,15 @@ type Props = {
   isCreator: boolean;
   initDataLikes: {
     total: number;
-    isLiked: DataPostUser | undefined;
+    isLiked: boolean | undefined;
   };
   initDataReposts: {
     total: number;
-    isReposted: DataPostUser | undefined;
+    isReposted: boolean | undefined;
   };
   initDataComments: number;
   initDataBookmark: DataPostUser | undefined;
+  creator_username: string;
 };
 
 const Action = ({
@@ -30,15 +31,20 @@ const Action = ({
   initDataLikes,
   initDataReposts,
   isCreator,
+  creator_username,
 }: Props) => {
   return (
     <section className="flex justify-between mt-7 items-center">
-      {isCreator ? <ButtonDeletePost id={id} /> : null}
-      <ButtonComment id={id} total={initDataComments} />
+      {/* {isCreator ? <ButtonDeletePost id={id} /> : null} */}
+      <ButtonComment
+        id={id}
+        total={initDataComments}
+        username_creator={creator_username}
+      />
       <ButtonRepost id={id} {...initDataReposts} />
       <Like id={id} {...initDataLikes} />
       <ButtonBookmark id={id} isBookmarked={initDataBookmark} />
-      <ButtonShare />
+      <ButtonShare id={id} creator_username={creator_username} />
     </section>
   );
 };

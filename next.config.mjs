@@ -14,6 +14,17 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "ui-avatars.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+    domains: [
+      "lh3.googleusercontent.com",
+      "phtftpjuazktjjpqmkwu.supabase.co",
+      "ui-avatars.com",
     ],
   },
 };

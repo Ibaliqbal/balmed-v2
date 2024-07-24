@@ -13,7 +13,6 @@ import { GetUser } from "@/types/user";
 
 type Props = GetPost & {
   userLogin: GetUser | null;
-  index: number;
 };
 
 const PostCard = ({
@@ -27,7 +26,6 @@ const PostCard = ({
   userLogin,
   id,
   creator_id,
-  index,
 }: Props) => {
   return (
     <motion.article
@@ -37,25 +35,33 @@ const PostCard = ({
         transition: {
           duration: 0.8,
           ease: "linear",
-          delay: index * 0.2,
         },
       }}
       className="w-full border-b-2 pb-3 border-slate-700"
     >
       <section className="flex gap-4 mb-4 items-center">
-        <UserTooltip>
-          <Image
-            src={"/avatar.jpg"}
-            alt={"Avatar"}
-            width={70}
-            height={70}
-            loading={"eager"}
-            className="rounded-full w-[50px] h-[50px] object-cover object-center"
-          />
+        <UserTooltip {...{ ...creator }}>
+          <Link href={`/${encodeURIComponent(creator.username)}`}>
+            <Image
+              src={
+                creator.photo
+                  ? creator.photo.url
+                  : `https://ui-avatars.com/api/?name=${creator.username}&background=random&color=fff`
+              }
+              alt={"Avatar"}
+              width={70}
+              height={70}
+              loading={"eager"}
+              className="rounded-full w-[50px] h-[50px] object-cover object-center"
+            />
+          </Link>
         </UserTooltip>
         <div className="flex items-center gap-2 text-md">
-          <UserTooltip>
-            <Link href={"/"} className="font-semibold">
+          <UserTooltip {...{ ...creator }}>
+            <Link
+              href={`/${encodeURIComponent(creator.username)}`}
+              className="font-semibold"
+            >
               {creator.name
                 ? creator.name.length > 15
                   ? `${creator.name.slice(0, 15)}...`
@@ -63,9 +69,9 @@ const PostCard = ({
                 : "Iqbal"}
             </Link>
           </UserTooltip>
-          <UserTooltip>
+          <UserTooltip {...{ ...creator }}>
             <Link
-              href={"/"}
+              href={`/${encodeURIComponent(creator.username)}`}
               className="hover:underline hover:underline-offset-2 text-gray-500"
             >
               @
@@ -83,23 +89,28 @@ const PostCard = ({
         <PostMoreAction />
       </section>
       <section className="w-full pt-5 flex flex-col gap-3">
-        <Content content={content ? content : "Holaaa"} />
+        <Content
+          content={content ? content : "Holaaa"}
+          username={creator.username}
+          id={id}
+        />
         {media.length > 0 ? <PostMedia media={media} /> : null}
       </section>
       <Action
         id={id}
+        creator_username={creator.username}
         isCreator={userLogin?.id === creator_id}
         initDataBookmark={userLogin?.bookmarks?.find(
-          (data) => data.post_id === id
+          (data) => data?.post_id === id
         )}
         initDataComments={comment[0].count}
         initDataLikes={{
           total: like[0].count,
-          isLiked: userLogin?.likes?.find((data) => data.post_id === id),
+          isLiked: userLogin?.likes?.some((data) => data.post_id === id),
         }}
         initDataReposts={{
           total: repost[0].count,
-          isReposted: userLogin?.reposts?.find((data) => data.post_id === id),
+          isReposted: userLogin?.reposts?.some((data) => data.post_id === id),
         }}
       />
     </motion.article>

@@ -25,7 +25,7 @@ const UserLikePosts = ({ id }: { id: string | UUID }) => {
           </div>
         ) : (
           data?.map((post: GetPost, i: number) => (
-            <PostCard key={post.id} {...post} userLogin={user} index={i} />
+            <PostCard key={post.id} {...post} userLogin={user} />
           ))
         )}
       </div>

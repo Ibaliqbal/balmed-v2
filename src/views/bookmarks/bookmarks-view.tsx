@@ -24,7 +24,7 @@ const BookmarksView = () => {
           </div>
         ) : (
           data?.map((post: GetPost, i: number) => (
-            <PostCard key={post.id} {...post} userLogin={user} index={i} />
+            <PostCard key={post.id} {...post} userLogin={user} />
           ))
         )}
       </div>

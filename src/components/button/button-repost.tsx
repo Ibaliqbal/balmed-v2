@@ -1,7 +1,6 @@
 "use client";
-import instance from "@/libs/axios/instance";
-import { DataPostUser } from "@/types/user";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { getRepostPost, repostPost, unrepostPost } from "@/actions/post";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UUID } from "crypto";
 import React from "react";
 import { BiRepost } from "react-icons/bi";
@@ -9,20 +8,45 @@ import { BiRepost } from "react-icons/bi";
 type Props = {
   id?: string | UUID;
   total?: number;
-  isReposted?: DataPostUser | undefined;
+  isReposted?: boolean | undefined;
 };
 
 const ButtonRepost = ({ id, isReposted, total }: Props) => {
+  const queryKey = ["post-repost", id];
+  const queryClient = useQueryClient();
   const { data } = useQuery({
-    queryKey: ["post-repost", id],
-    queryFn: async () =>
-      (await instance.get(`/api/posts/${id}/repost`)).data?.initData,
+    queryKey: queryKey,
+    queryFn: async () => await getRepostPost(id as string),
     initialData: { total, isReposted },
     staleTime: Infinity,
   });
-  // const {} = useMutation()
+
+  const { mutate } = useMutation({
+    mutationFn: async () =>
+      data.isReposted ? unrepostPost(id as string) : repostPost(id as string),
+    async onMutate() {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousData = queryClient.getQueryData<{
+        total: number;
+        isReposted?: boolean | undefined;
+      }>(queryKey);
+
+      queryClient.setQueryData(queryKey, () => ({
+        total: (previousData?.total || 0) + (previousData?.isReposted ? -1 : 1),
+        isReposted: !previousData?.isReposted,
+      }));
+
+      return { previousData };
+    },
+    onError(error, _, context) {
+      queryClient.setQueryData(queryKey, context?.previousData);
+      console.error(error);
+    },
+  });
   return (
     <button
+      onClick={() => mutate()}
       className={`${
         data.isReposted && "text-sky-500"
       } flex items-center gap-2 repost disabled:cursor-not-allowed hover:text-sky-500 transition-colors duration-200 ease-out`}
