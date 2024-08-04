@@ -18,7 +18,8 @@ const CustomImage = ({
         alt={alt}
         width={width}
         height={height}
-        loading="lazy"
+        priority
+        unoptimized
         onLoadingComplete={() => setLoading(false)}
         {...rest}
         className={`${className} ${loading ? "animate-pulse bg-gray-700" : ""}`}

@@ -1,5 +1,4 @@
 import UserTooltip from "../user/user-tooltip";
-import Image from "next/image";
 import Link from "next/link";
 import { dateConverterNow } from "@/utils/helpers";
 import Content from "./post-content";
@@ -9,6 +8,7 @@ import PostMoreAction from "./post-more-action";
 import { motion } from "framer-motion";
 import { GetPost } from "@/types/post";
 import { GetUser } from "@/types/user";
+import CustomImage from "../ui/image";
 
 type Props = GetPost & {
   userLogin: GetUser | null;
@@ -41,7 +41,7 @@ const PostCard = ({
       <section className="flex gap-4 mb-4 items-center">
         <UserTooltip {...{ ...creator }}>
           <Link href={`/${encodeURIComponent(creator.username)}`}>
-            <Image
+            <CustomImage
               src={
                 creator.photo
                   ? creator.photo.url
@@ -50,7 +50,6 @@ const PostCard = ({
               alt={"Avatar"}
               width={70}
               height={70}
-              loading={"lazy"}
               className="rounded-full w-[50px] h-[50px] object-cover object-center"
             />
           </Link>

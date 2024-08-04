@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { deleteMedia, uploadFilePost } from "@/actions/post";

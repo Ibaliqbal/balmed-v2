@@ -6,7 +6,7 @@ const nextConfig = {
       "phtftpjuazktjjpqmkwu.supabase.co",
       "ui-avatars.com",
     ],
-    unoptimized: false,
+    unoptimized: true,
   },
 };
 

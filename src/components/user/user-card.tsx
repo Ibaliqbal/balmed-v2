@@ -1,9 +1,9 @@
-import Image from "next/image";
 import UserTooltip from "./user-tooltip";
 import ButtonFollow from "../button/button-follow";
 import { User } from "@/types/user";
 import { Count } from "@/types/post";
 import Link from "next/link";
+import CustomImage from "../ui/image";
 
 type Props = Pick<User, "username" | "bio" | "photo" | "name" | "id"> & {
   followings: Count[];
@@ -25,7 +25,7 @@ const UserCard = ({
         <UserTooltip
           {...{ bio, username, name, photo, followers, followings, id }}
         >
-          <Image
+          <CustomImage
             src={
               photo
                 ? photo.url
@@ -34,7 +34,6 @@ const UserCard = ({
             alt={"Avatar"}
             width={50}
             height={50}
-            loading={"lazy"}
             className="rounded-full w-[50px] h-[50px] object-cover object-center"
           />
         </UserTooltip>

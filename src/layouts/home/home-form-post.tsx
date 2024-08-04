@@ -1,7 +1,7 @@
 import FormPost from "@/components/form/form-post";
+import CustomImage from "@/components/ui/image";
 import { getUserLogin } from "@/libs/supabase/function";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 
 const HomeFormPost = async ({ queryKey }: { queryKey: string[] }) => {
   const session = await getServerSession();
@@ -11,7 +11,7 @@ const HomeFormPost = async ({ queryKey }: { queryKey: string[] }) => {
     <section className="mb-4 pt-4 border-b-2 border-slate-700 pb-4 px-4">
       <h1 className="text-2xl font-bold mb-3">Post something do you want</h1>
       <div className="flex gap-6 mt-8">
-        <Image
+        <CustomImage
           src={
             data.photo
               ? data.photo.url
@@ -20,7 +20,6 @@ const HomeFormPost = async ({ queryKey }: { queryKey: string[] }) => {
           alt={"Avatar"}
           width={70}
           height={70}
-          loading={"lazy"}
           className="rounded-full w-[50px] h-[50px] object-cover object-center"
         />
         <FormPost queryKey={queryKey} id="" isComment={false} username="" />

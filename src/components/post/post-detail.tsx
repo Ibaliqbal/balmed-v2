@@ -3,14 +3,13 @@ import { useGetUserLogin } from "@/provider/user-provider";
 import React, { useEffect, useState } from "react";
 import { GetPost } from "@/types/post";
 import Action from "./post-action";
-import { motion } from "framer-motion";
 import UserTooltip from "../user/user-tooltip";
 import Link from "next/link";
-import Image from "next/image";
-import { dateConverterNow, dateFormat } from "@/utils/helpers";
+import { dateFormat } from "@/utils/helpers";
 import PostMoreAction from "./post-more-action";
 import PostMedia from "./post-media";
 import Content from "./post-content";
+import CustomImage from "../ui/image";
 
 const PostDetail = ({
   post,
@@ -37,7 +36,7 @@ const PostDetail = ({
       <section className="flex gap-4 mb-4 items-center">
         <UserTooltip {...{ ...post.creator }}>
           <Link href={`/${encodeURIComponent(post.creator.username)}`}>
-            <Image
+            <CustomImage
               src={
                 post.creator.photo
                   ? post.creator.photo.url
@@ -46,7 +45,6 @@ const PostDetail = ({
               alt={"Avatar"}
               width={70}
               height={70}
-              loading={"lazy"}
               className="rounded-full w-[50px] h-[50px] object-cover object-center"
             />
           </Link>
