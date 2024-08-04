@@ -6,12 +6,13 @@ import Link from "next/link";
 
 const RightTrends = async () => {
   const session = await getServerSession();
-  const { data: users, error } = await supabase
+  const { data: users } = await supabase
     .from("users")
     .select(
       `name, username, photo, bio, id , followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
     )
-    .not("email", "eq", session?.user.email as string);
+    .not("email", "eq", session?.user.email as string)
+    .limit(5);
   return (
     <section className="w-full">
       <header className="w-full sticky md:top-0 z-10">

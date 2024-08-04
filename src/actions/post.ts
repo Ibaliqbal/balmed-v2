@@ -405,3 +405,48 @@ export async function getMediaPostsByHastag(postsId: string[]) {
 
   return data.flatMap((data) => data.media);
 }
+
+export async function getSearchTop(query: string) {
+  const { data, error } = await supabase
+    .from("postings")
+    .select(
+      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
+    )
+    .or(`content.ilike.%${query}%`)
+    .is("comment_id", null)
+    .then((data) => {
+      data.data?.sort((a, b) => b.like[0].count - a.like[0].count);
+      return data;
+    });
+
+  if (error) return [];
+
+  return data;
+}
+
+export async function getSearchLatest(query: string) {
+  const { data, error } = await supabase
+    .from("postings")
+    .select(
+      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
+    )
+    .or(`content.ilike.%${query}%`)
+    .is("comment_id", null)
+    .order("upload_at", { ascending: false });
+
+  if (error) return [];
+
+  return data;
+}
+
+export async function getSearchMedia(query: string) {
+  const { data, error } = await supabase
+    .from("postings")
+    .select(`media`)
+    .or(`content.ilike.%${query}%`)
+    .is("comment_id", null);
+
+  if (error) return [];
+
+  return data.flatMap((data) => data.media);
+}

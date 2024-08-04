@@ -5,6 +5,19 @@ import { supabase } from "@/libs/supabase/init";
 import { MediaPreview } from "@/types/media";
 import { getServerSession } from "next-auth";
 
+export async function getAllUser() {
+  const session = await getServerSession();
+  const { data: users, error } = await supabase
+    .from("users")
+    .select(
+      `name, username, photo, bio, id, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
+    )
+    .neq("email", session?.user.email);
+
+  if (error) return [];
+  return users;
+}
+
 export async function getIsFollowing(id: string) {
   const session = await getServerSession();
   const { data } = await supabase
@@ -85,4 +98,17 @@ export async function updateProfile(data: {
   //   .update({ name, web, location, bio, header_photo, photo: avatar })
   //   .eq("id", id)
   //   .select("name, web, location, bio, photo, header_photo");
+}
+
+export async function searchPeople(query: string) {
+  const { data: users, error } = await supabase
+    .from("users")
+    .select(
+      `name, username, photo, bio, id, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
+    )
+    .or(`name.ilike.%${query}%, username.ilike.%${query}%`);
+
+  if (error) return [];
+
+  return users;
 }

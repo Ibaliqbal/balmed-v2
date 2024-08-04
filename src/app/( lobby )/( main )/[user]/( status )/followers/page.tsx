@@ -1,4 +1,5 @@
 import UserCard from "@/components/user/user-card";
+import EmptyPosts from "@/layouts/empty-posts";
 import { supabase } from "@/libs/supabase/init";
 import { GetFollow } from "@/types/follow";
 import { UUID } from "crypto";
@@ -17,9 +18,17 @@ const page = async ({ params }: { params: { user: string } }) => {
 
   return (
     <section className="pt-6 flex flex-col gap-6 px-3 pb-10">
-      {data?.followers.map((user: GetFollow, i) => (
-        <UserCard {...user.user} key={i} />
-      ))}
+      {data?.followers.length ?? 0 > 0 ? (
+        data?.followers.map((user: GetFollow, i) => (
+          <UserCard {...user.user} key={i} />
+        ))
+      ) : (
+        <EmptyPosts>
+          <h1 className="text-xl text-center">
+            No followers found for this user.
+          </h1>
+        </EmptyPosts>
+      )}
     </section>
   );
 };
