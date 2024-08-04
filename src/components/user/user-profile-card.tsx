@@ -1,12 +1,12 @@
 import { Count } from "@/types/post";
 import { User } from "@/types/user";
 import { dateFormat } from "@/utils/helpers";
-import Image from "next/image";
 import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosLink, IoMdCalendar } from "react-icons/io";
 import { TbDotsCircleHorizontal } from "react-icons/tb";
 import ButtonEditProfile from "../button/button-edit-profile";
+import CustomImage from "../ui/image";
 
 interface Props extends User {
   followings: [Count];
@@ -31,23 +31,21 @@ const ProfileCard = ({
   return (
     <>
       <div className="w-full aspect-[1/.5] relative">
-        <Image
+        <CustomImage
           src={header_photo ? header_photo.url : "/example.jpg"}
           alt={"bg"}
           width={700}
           height={700}
-          loading={"lazy"}
           className="w-full object-cover object-center h-full absolute inset-0"
         />
       </div>
       <div className="px-2 pt-4">
         <div className="flex justify-between px-2">
           <div className="md:w-[200px] w-[150px] h-[150px] md:h-[200px] md:-mt-32 -mt-20 bg-primary rounded-full p-2 flex items-center justify-center relative cover-photo">
-            <Image
-              src={photo.url ? photo.url : "/avatar.jpg"}
+            <CustomImage
+              src={photo ? photo.url : "/avatar.jpg"}
               alt={"Avatar"}
               fill
-              loading={"lazy"}
               className="rounded-full object-cover object-center absolute inset-0 w-full h-full"
             />
           </div>

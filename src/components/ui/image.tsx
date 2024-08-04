@@ -12,16 +12,18 @@ const CustomImage = ({
 }: ImageProps) => {
   const [loading, setLoading] = useState(true);
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      loading="lazy"
-      onLoadingComplete={() => setLoading(false)}
-      {...rest}
-      className={`${className} ${loading ? "animate-pulse bg-gray-700" : ""}`}
-    />
+    <figure>
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        onLoadingComplete={() => setLoading(false)}
+        {...rest}
+        className={`${className} ${loading ? "animate-pulse bg-gray-700" : ""}`}
+      />
+    </figure>
   );
 };
 

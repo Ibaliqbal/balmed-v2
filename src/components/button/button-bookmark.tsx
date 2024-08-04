@@ -21,7 +21,7 @@ const ButtonBookmark = ({ id, isBookmarked }: Props) => {
   const { mutate } = useMutation({
     mutationFn: async () =>
       !bookmarked
-        ? unbookmarkPost(isBookmarked?.id as string)
+        ? unbookmarkPost(id as string)
         : bookmarkedPost(id as string),
     async onMutate() {
       await queryClient.cancelQueries({ queryKey: ["user-login"] });

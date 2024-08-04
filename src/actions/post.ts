@@ -278,7 +278,8 @@ export async function unbookmarkPost(id: string | UUID) {
   const { error, data: getDataBookmark } = await supabase
     .from("bookmarks")
     .delete()
-    .eq("id", id)
+    .eq("post_id", id)
+    .eq("user_id", data.id)
     .select("id, post_id")
     .single();
 
