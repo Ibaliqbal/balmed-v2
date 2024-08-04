@@ -25,7 +25,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
       {
         onSuccess: () => {
           toast.success("Post uploaded successfully");
-          setValue("")
+          setValue("");
           setMediasComment([]);
         },
         onError: (error) => {
@@ -40,8 +40,8 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
     if (e.target.files) {
       const file = e.target.files[0];
 
-      if (file.size > 25000000) {
-        toast.error("File size exceeds maximum allowed 25 MB");
+      if (file.size > 10000000) {
+        toast.error("File size exceeds maximum allowed 10 MB");
         return;
       }
 

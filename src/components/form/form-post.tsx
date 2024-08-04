@@ -60,8 +60,8 @@ const FormPost = ({
     if (e.target.files) {
       const file = e.target.files[0];
 
-      if (file.size > 25000000) {
-        toast.error("File size exceeds maximum allowed 25 MB");
+      if (file.size > 10000000) {
+        toast.error("File size exceeds maximum allowed 10 MB");
         return;
       }
 
