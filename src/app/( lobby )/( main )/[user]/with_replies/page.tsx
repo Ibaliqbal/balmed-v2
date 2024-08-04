@@ -3,10 +3,12 @@ import TabNavigation from "@/layouts/user-profile/tab-navigation";
 import { supabase } from "@/libs/supabase/init";
 import UserReposts from "@/views/user/user-repost";
 import { getServerSession } from "next-auth";
-import React from "react";
 
 const page = async ({ params }: { params: { user: string } }) => {
   const session = await getServerSession();
+  const { data: reposts_user } = await supabase
+    .from("users")
+    .select("id, reposts:reposts (post_id, id)");
   const { data } = await supabase
     .from("users")
     .select(

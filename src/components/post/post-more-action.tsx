@@ -1,4 +1,3 @@
-import React from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const PostMoreAction = () => {

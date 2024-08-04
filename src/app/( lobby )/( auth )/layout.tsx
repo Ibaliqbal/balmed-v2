@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import React from "react";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession();
@@ -17,7 +16,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
           <Image
             src={"/example.jpg"}
             alt={"bg"}
-            loading={"lazy"}
+            priority
             fill
             className="w-full h-full object-cover object-center rounded-xl"
           />

@@ -3,7 +3,6 @@ import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import React from "react";
 
 const RightTrends = async () => {
   const session = await getServerSession();
@@ -20,7 +19,7 @@ const RightTrends = async () => {
           <Search />
         </div>
       </header>
-      <main className="pt-4 mt-4 text-white">
+      <main className="mt-4 text-white">
         <section className="w-full p-5 rounded-3xl border-2 border-slate-800 mt-4">
           <h1 className="text-2xl font-bold">Who to follow</h1>
           <div className="mt-4 w-full flex flex-col gap-6 mb-5">

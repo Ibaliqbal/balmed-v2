@@ -6,17 +6,20 @@ import React, { useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import Modal from "../ui/modal";
 import { motion } from "framer-motion";
-import FormModalComment from "../form/form-modal-comment";
 import Link from "next/link";
+import FormComment from "../form/form-modal-comment";
+import { useParams } from "next/navigation";
 
 type Props = {
   id?: string | UUID;
   total?: number;
   username_creator: string;
+  isDetail?: boolean;
 };
 
-const ButtonComment = ({ id, total, username_creator }: Props) => {
+const ButtonComment = ({ id, total, username_creator, isDetail }: Props) => {
   const [open, setOpen] = useState(false);
+  const params = useParams();
   const { data } = useQuery({
     queryKey: ["post-comment", id],
     queryFn: async () => await getCommentPost(id as string),
@@ -29,6 +32,7 @@ const ButtonComment = ({ id, total, username_creator }: Props) => {
       <button
         className="flex items-center gap-2 comment disabled:cursor-not-allowed"
         onClick={() => setOpen(true)}
+        disabled={isDetail}
       >
         <FaRegComment className="w-5 h-5" /> {data.comment}
       </button>
@@ -44,7 +48,7 @@ const ButtonComment = ({ id, total, username_creator }: Props) => {
           exit={{
             scale: 0,
           }}
-          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 z-[9999] rounded-xl bg-red-400 p-3 modal-post border-2 border-white"
+          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 z-[9999] rounded-lg bg-red-400 p-3 modal-post border-2 border-white"
         >
           <div>
             <h1 className="text-2xl font-bold mb-5">
@@ -56,11 +60,7 @@ const ButtonComment = ({ id, total, username_creator }: Props) => {
                 @{username_creator}
               </Link>
             </p>
-            <FormModalComment
-              id={id as string}
-              setOpen={setOpen}
-              username={username_creator}
-            />
+            <FormComment id={id as string} username={username_creator} />
           </div>
         </motion.div>
       </Modal>

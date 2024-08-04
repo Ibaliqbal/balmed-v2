@@ -1,6 +1,5 @@
 "use client";
 import { FaTrash } from "react-icons/fa";
-import React from "react";
 import { UUID } from "crypto";
 
 type Props = {

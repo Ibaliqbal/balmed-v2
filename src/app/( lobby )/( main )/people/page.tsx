@@ -2,7 +2,6 @@ import HeaderWithBack from "@/components/header/header-with-back";
 import RightPeople from "@/layouts/people/right-people";
 import RightSide from "@/layouts/right-side";
 import PeopleView from "@/views/people/people-view";
-import React from "react";
 
 const page = () => {
   return (

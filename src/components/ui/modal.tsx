@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Modal = ({
@@ -13,7 +12,7 @@ const Modal = ({
   return (
     <AnimatePresence>
       {open && (
-        <>
+        <div className="z-[60]">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{
@@ -25,11 +24,11 @@ const Modal = ({
             exit={{
               opacity: 0,
             }}
-            className="fixed h-dvh w-full top-0 left-0 bg-black bg-opacity-60 z-20"
+            className="fixed h-dvh w-full top-0 left-0 bg-black bg-opacity-60 z-[60]"
             onClick={() => setOpen(false)}
           />
           {children}
-        </>
+        </div>
       )}
     </AnimatePresence>
   );

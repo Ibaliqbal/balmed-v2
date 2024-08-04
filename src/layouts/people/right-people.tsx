@@ -1,8 +1,6 @@
 import Search from "@/components/form/form-search";
 import { dateFormat } from "@/utils/helpers";
-import { format } from "date-fns";
 import Link from "next/link";
-import React from "react";
 
 const RightPeople = () => {
   return (

@@ -2,11 +2,14 @@ import { uploadComment, uploadPost } from "@/actions/post";
 import { GetPost } from "@/types/post";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useUploadPostMutation = (queryKey: string[]) => {
+export const useUploadPostMutation = (
+  queryKey: string[],
+  isComment: boolean
+) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: uploadPost,
+    mutationFn: isComment ? uploadComment : uploadPost,
     onSuccess: async (newPost) => {
       await queryClient.cancelQueries({
         queryKey: queryKey,

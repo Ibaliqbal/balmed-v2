@@ -13,8 +13,8 @@ const instance = axios.create({
   timeout: 60 * 1000,
 });
 
-instance.interceptors.response.use(
-  (response) => response,
+instance.interceptors.request.use(
+  (request) => request,
   (err) => Promise.reject(err)
 );
 

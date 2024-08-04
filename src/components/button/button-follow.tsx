@@ -1,8 +1,8 @@
 "use client";
 import { useGetUserLogin } from "@/provider/user-provider";
-import { useQuery } from "@tanstack/react-query";
-import { UUID } from "crypto";
-import React from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { randomUUID, UUID } from "crypto";
+import React, { useOptimistic } from "react";
 
 const ButtonFollow = ({
   className,
@@ -12,19 +12,23 @@ const ButtonFollow = ({
   id: string | UUID;
 }) => {
   const { user } = useGetUserLogin();
-  const {} = useQuery({
-    queryKey: ["follow-btn", id],
-    initialData: {
-      isFollowing: user?.followings.some(
-        (following) => following.follow_to === id
-      ),
-    },
-  });
+  const [isFollowing, follwingOptimistic] = useOptimistic(
+    user?.followings.some((following) => following.follow_to === id),
+    (state, newData: boolean) => newData
+  );
+
+  // const {} = useMutation()
+
   return id !== user?.id ? (
     <button
       className={`${className} text-white self-start rounded-full font-bold disabled:cursor-not-allowed`}
+      // onClick={handleFollow}
     >
-      Follow
+      {user?.followers.some((follow) => follow.user_id === id)
+        ? "Follback"
+        : isFollowing
+        ? "Unfollow"
+        : "Follow"}
     </button>
   ) : null;
 };

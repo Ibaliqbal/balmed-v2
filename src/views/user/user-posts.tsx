@@ -1,12 +1,11 @@
 "use client";
+import Loading from "@/components/loading";
 import PostCard from "@/components/post/post-card";
 import instance from "@/libs/axios/instance";
 import { useGetUserLogin } from "@/provider/user-provider";
 import { GetPost } from "@/types/post";
 import { useQuery } from "@tanstack/react-query";
 import { UUID } from "crypto";
-import React from "react";
-import { LuLoader2 } from "react-icons/lu";
 
 const UserPosts = ({ id }: { id: string | UUID }) => {
   const { user, isLoading: userLoading } = useGetUserLogin();
@@ -18,12 +17,10 @@ const UserPosts = ({ id }: { id: string | UUID }) => {
   });
 
   return (
-    <section className="pt-8 px-3">
+    <section className="pt-8">
       <div className="flex flex-col gap-5">
         {isLoading || userLoading ? (
-          <div className="w-full items-center justify-center flex">
-            <LuLoader2 className="text-white w-5 h-5 animate-spin " />
-          </div>
+          <Loading />
         ) : (
           data?.map((post: GetPost, i: number) => (
             <PostCard key={post.id} {...post} userLogin={user} />

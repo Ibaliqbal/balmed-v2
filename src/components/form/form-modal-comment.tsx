@@ -7,18 +7,12 @@ import toast from "react-hot-toast";
 import { MediaPreview } from "@/types/media";
 import { useUploadCommentMutation } from "@/mutations/post-mutation";
 import { IoClose } from "react-icons/io5";
+import EmojiSelect from "./emoji-selected";
 
-const FormModalComment = ({
-  id,
-  setOpen,
-  username,
-}: {
-  id: string;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  username: string;
-}) => {
+const FormComment = ({ id, username }: { id: string; username: string }) => {
   const [mediasComment, setMediasComment] = useState<MediaPreview[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState("");
   const { mutate, status } = useUploadCommentMutation(id);
 
   const handlePost = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,13 +21,12 @@ const FormModalComment = ({
     const content = target.content.value;
 
     mutate(
-      { content: `${content} \n@${username}`, medias: mediasComment, id },
+      { content: `${content} @${username}`, medias: mediasComment, id },
       {
         onSuccess: () => {
           toast.success("Post uploaded successfully");
-          target.reset();
+          setValue("")
           setMediasComment([]);
-          setOpen(false);
         },
         onError: (error) => {
           console.error(error);
@@ -96,30 +89,40 @@ const FormModalComment = ({
         placeholder="Text something"
         name="content"
         id=""
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         cols={30}
         rows={10}
         className="resize-none border-2 border-slate-700 rounded-lg p-3 custom-scroll-horizontal"
       ></textarea>
       <div className="w-full flex justify-between items-center mt-4">
-        <div>
-          <label
-            htmlFor="upload_image_comment"
-            className="text-2xl cursor-pointer peer-disabled:cursor-not-allowed"
-          >
-            <FaRegImage />
-          </label>
-          <input
-            type="file"
-            className="hidden peer"
-            id="upload_image_comment"
-            onChange={handleUpload}
+        <div className="flex items-center gap-4">
+          <div>
+            <label
+              htmlFor="upload_image_comment"
+              className="text-2xl cursor-pointer peer-disabled:cursor-not-allowed"
+            >
+              <FaRegImage />
+            </label>
+            <input
+              type="file"
+              className="hidden peer"
+              id="upload_image_comment"
+              onChange={handleUpload}
+            />
+          </div>
+          <EmojiSelect
+            onEmojiSelect={(emoji: string) =>
+              setValue((prev) => `${prev} ${emoji}`)
+            }
           />
         </div>
+
         <button
-          disabled={isLoading}
+          disabled={isLoading || status === "pending"}
           className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg disabled:bg-opacity-65 disabled:cursor-not-allowed"
         >
-          {isLoading ? "Process..." : "Post"}
+          {isLoading || status === "pending" ? "Process..." : "Post"}
         </button>
       </div>
       <div className="w-full flex gap-2 items-center overflow-x-auto max-w-full custom-scroll-vertical pb-2 mt-3">
@@ -130,7 +133,7 @@ const FormModalComment = ({
               alt={"bg"}
               width={100}
               height={100}
-              loading="eager"
+              loading="lazy"
               className="w-[90px] h-[90px] object-cover object-center rounded-md"
             />
             <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
@@ -147,4 +150,4 @@ const FormModalComment = ({
   );
 };
 
-export default FormModalComment;
+export default FormComment;

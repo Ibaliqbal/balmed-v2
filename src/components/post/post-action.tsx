@@ -1,4 +1,3 @@
-import React from "react";
 import Like from "../button/button-like";
 import ButtonComment from "../button/button-comment";
 import ButtonRepost from "../button/button-repost";
@@ -6,7 +5,6 @@ import ButtonBookmark from "../button/button-bookmark";
 import ButtonShare from "../button/button-share";
 import { DataPostUser } from "@/types/user";
 import { UUID } from "crypto";
-import ButtonDeletePost from "../button/button-delete-post";
 
 type Props = {
   id: string | UUID;
@@ -22,6 +20,7 @@ type Props = {
   initDataComments: number;
   initDataBookmark: DataPostUser | undefined;
   creator_username: string;
+  isDetail?: boolean
 };
 
 const Action = ({
@@ -30,8 +29,8 @@ const Action = ({
   initDataComments,
   initDataLikes,
   initDataReposts,
-  isCreator,
   creator_username,
+  isDetail
 }: Props) => {
   return (
     <section className="flex justify-between mt-7 items-center">
@@ -40,6 +39,7 @@ const Action = ({
         id={id}
         total={initDataComments}
         username_creator={creator_username}
+        isDetail={isDetail}
       />
       <ButtonRepost id={id} {...initDataReposts} />
       <Like id={id} {...initDataLikes} />

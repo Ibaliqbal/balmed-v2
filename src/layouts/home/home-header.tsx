@@ -2,7 +2,6 @@
 import BaseHeader from "@/components/header/base-header";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 const HomeHeader = () => {
   const pathname = usePathname();

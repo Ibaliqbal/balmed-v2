@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Platypi } from "next/font/google";
 import "./globals.css";
 import Provider from "@/provider";
 import { Toaster } from "react-hot-toast";
+import TopLoader from "@/components/toploader";
 
-const inter = Inter({ subsets: ["latin"] });
+const platypi = Platypi({ weight: "600", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} custom-scroll-horizontal`}>
+      <body className={`${platypi.className} custom-scroll-horizontal`}>
+        <TopLoader />
         <Provider>{children}</Provider>
         <Toaster position="bottom-center" reverseOrder />
       </body>

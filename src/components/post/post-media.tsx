@@ -1,6 +1,5 @@
 import { MediaPreview } from "@/types/media";
-import Image from "next/image";
-import React from "react";
+import CustomImage from "../ui/image";
 
 const PostMedia = ({ media }: { media: MediaPreview[] }) => {
   return (
@@ -19,11 +18,11 @@ const PostMedia = ({ media }: { media: MediaPreview[] }) => {
                 >
                   <video
                     className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
+                    controlsList="nodownload"
+                    src={m?.url}
                     controls
-                  >
-                    <source src={m?.url} type="video/mp4" />
-                  </video>
-                  <div className="w-full h-full font-semibold text-xl inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60 text-white grid place-items-center">
+                  ></video>
+                  <div className="w-full h-full font-semibold text-lg inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60 text-white grid place-items-center">
                     +{media.length - 4}
                   </div>
                 </div>
@@ -32,12 +31,11 @@ const PostMedia = ({ media }: { media: MediaPreview[] }) => {
                   key={index}
                   className="relative group cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out rounded-lg"
                 >
-                  <Image
+                  <CustomImage
                     src={m.url}
                     alt={"bg"}
                     width={700}
                     height={700}
-                    loading={"eager"}
                     className="w-full object-cover object-center rounded-lg aspect-[1/.9]"
                   />
                   <div className="w-full h-full font-semibold text-xl inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60 text-white grid place-items-center">
@@ -48,19 +46,18 @@ const PostMedia = ({ media }: { media: MediaPreview[] }) => {
             ) : m?.url.split(".").find((str: string) => str.includes("mp4")) ? (
               <video
                 key={index}
-                className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
+                className={`w-full aspect-[1/.9] object-contain rounded-lg object-center`}
+                controlsList="nodownload"
+                src={m?.url}
                 controls
-              >
-                <source src={m?.url} type="video/mp4" />
-              </video>
+              ></video>
             ) : (
-              <Image
+              <CustomImage
                 key={index}
                 src={m.url}
                 alt={"bg"}
                 width={700}
                 height={700}
-                loading={"lazy"}
                 className="w-full object-cover object-center rounded-lg aspect-[1/.9] cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out"
               />
             )
@@ -69,19 +66,18 @@ const PostMedia = ({ media }: { media: MediaPreview[] }) => {
             m?.url.split(".").find((str: string) => str.includes("mp4")) ? (
               <video
                 key={index}
-                className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
+                className={`w-full aspect-[1/.9] object-contain rounded-lg object-center`}
+                controlsList="nodownload"
                 controls
-              >
-                <source src={m?.url} type="video/mp4" />
-              </video>
+                src={m?.url}
+              ></video>
             ) : (
-              <Image
+              <CustomImage
                 key={index}
                 src={m.url}
                 alt={"bg"}
                 width={700}
                 height={700}
-                loading={"lazy"}
                 className="w-full object-cover object-center rounded-lg aspect-[1/.9] cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out"
               />
             )

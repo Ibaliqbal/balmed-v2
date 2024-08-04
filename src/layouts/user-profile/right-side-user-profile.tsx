@@ -4,7 +4,6 @@ import { supabase } from "@/libs/supabase/init";
 import { dateFormat } from "@/utils/helpers";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import React from "react";
 
 const RightUserProfile = async () => {
   const session = await getServerSession();

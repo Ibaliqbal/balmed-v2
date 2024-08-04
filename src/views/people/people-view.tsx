@@ -1,7 +1,6 @@
 import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
 import { getServerSession } from "next-auth";
-import React from "react";
 
 const PeopleView = async () => {
   const session = await getServerSession();

@@ -1,6 +1,5 @@
 "use client";
 import { UUID } from "crypto";
-import React from "react";
 import toast from "react-hot-toast";
 import { FaShare } from "react-icons/fa";
 

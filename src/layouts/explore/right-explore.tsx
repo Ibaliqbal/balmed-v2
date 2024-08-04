@@ -3,7 +3,6 @@ import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import React from "react";
 
 const RightExplore = async () => {
   const session = await getServerSession();

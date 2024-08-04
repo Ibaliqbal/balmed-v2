@@ -5,7 +5,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { data: reposts, error: reposts_error } = await supabase
+  const { data: reposts } = await supabase
     .from("reposts")
     .select(`post_id`)
     .eq("user_id", params.id);

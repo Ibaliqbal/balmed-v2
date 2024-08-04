@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
 
 const Content = ({
   content,
@@ -21,7 +20,7 @@ const Content = ({
       {content?.split(" ").map((str, i) =>
         str.startsWith("@") ? (
           <Link
-            href={"/home"}
+            href={`/${str}`}
             key={i}
             className="text-blue-600 z-50"
             onClick={(e) => e.stopPropagation()}
@@ -30,7 +29,7 @@ const Content = ({
           </Link>
         ) : str.startsWith("#") ? (
           <Link
-            href={"/home"}
+            href={`/h/${encodeURIComponent(str)}`}
             key={i}
             className="text-blue-600 z-50"
             onClick={(e) => e.stopPropagation()}

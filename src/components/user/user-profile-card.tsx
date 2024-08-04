@@ -3,10 +3,10 @@ import { User } from "@/types/user";
 import { dateFormat } from "@/utils/helpers";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosLink, IoMdCalendar } from "react-icons/io";
 import { TbDotsCircleHorizontal } from "react-icons/tb";
+import ButtonEditProfile from "../button/button-edit-profile";
 
 interface Props extends User {
   followings: [Count];
@@ -25,36 +25,35 @@ const ProfileCard = ({
   location,
   joined_at,
   bio,
+  photo,
+  header_photo,
 }: Props) => {
   return (
     <>
       <div className="w-full aspect-[1/.5] relative">
         <Image
-          src={"/bg-signin.jpg"}
+          src={header_photo ? header_photo.url : "/example.jpg"}
           alt={"bg"}
           width={700}
           height={700}
-          loading={"eager"}
+          loading={"lazy"}
           className="w-full object-cover object-center h-full absolute inset-0"
         />
       </div>
       <div className="px-2 pt-4">
-        <div className="flex justify-between">
+        <div className="flex justify-between px-2">
           <div className="md:w-[200px] w-[150px] h-[150px] md:h-[200px] md:-mt-32 -mt-20 bg-primary rounded-full p-2 flex items-center justify-center relative cover-photo">
             <Image
-              src={"/avatar.jpg"}
+              src={photo.url ? photo.url : "/avatar.jpg"}
               alt={"Avatar"}
-              width={200}
-              height={200}
-              loading={"eager"}
+              fill
+              loading={"lazy"}
               className="rounded-full object-cover object-center absolute inset-0 w-full h-full"
             />
           </div>
           <div className="flex gap-4">
             {email === emailLogin ? (
-              <button className="bg-slate-800 text-white self-start px-6 py-3 rounded-full font-bold">
-                Edit profile
-              </button>
+              <ButtonEditProfile />
             ) : (
               <>
                 <TbDotsCircleHorizontal className="w-12 h-12 cursor-pointer" />
@@ -95,17 +94,17 @@ const ProfileCard = ({
               </p>
             )}
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 text-sm">
             <Link
               href={`/${encodeURIComponent(username)}/followings`}
-              className="text-lg hover:underline-offset-2 hover:underline"
+              className="hover:underline-offset-2 hover:underline"
             >
               {followings[0].count}{" "}
               <span className="text-gray-500">Following</span>
             </Link>
             <Link
               href={`/${encodeURIComponent(username)}/followers`}
-              className="text-lg hover:underline-offset-2 hover:underline"
+              className="hover:underline-offset-2 hover:underline"
             >
               {followers[0].count}{" "}
               <span className="text-gray-500">Followers</span>

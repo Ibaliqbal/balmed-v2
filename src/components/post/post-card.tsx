@@ -1,4 +1,3 @@
-import React from "react";
 import UserTooltip from "../user/user-tooltip";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +36,7 @@ const PostCard = ({
           ease: "linear",
         },
       }}
-      className="w-full border-b-2 pb-3 border-slate-700"
+      className="w-full border-b-2 pb-3 border-slate-700 p-4"
     >
       <section className="flex gap-4 mb-4 items-center">
         <UserTooltip {...{ ...creator }}>
@@ -51,7 +50,7 @@ const PostCard = ({
               alt={"Avatar"}
               width={70}
               height={70}
-              loading={"eager"}
+              loading={"lazy"}
               className="rounded-full w-[50px] h-[50px] object-cover object-center"
             />
           </Link>

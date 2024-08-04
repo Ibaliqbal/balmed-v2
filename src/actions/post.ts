@@ -379,3 +379,28 @@ export async function uploadComment(input: {
 
   return newPost.data![0];
 }
+
+export async function getPostsByHastag(postsId: string[]) {
+  const { data, error } = await supabase
+    .from("postings")
+    .select(
+      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
+    )
+    .in("id", postsId)
+    .order("upload_at", { ascending: false });
+
+  if (error) return [];
+
+  return data;
+}
+export async function getMediaPostsByHastag(postsId: string[]) {
+  const { data, error } = await supabase
+    .from("postings")
+    .select(`media`)
+    .in("id", postsId)
+    .order("upload_at", { ascending: false });
+
+  if (error) return [];
+
+  return data.flatMap((data) => data.media);
+}

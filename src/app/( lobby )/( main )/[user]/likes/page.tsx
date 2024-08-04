@@ -3,7 +3,6 @@ import TabNavigation from "@/layouts/user-profile/tab-navigation";
 import { supabase } from "@/libs/supabase/init";
 import UserLikePosts from "@/views/user/user-like-posts";
 import { getServerSession } from "next-auth";
-import React from "react";
 
 const page = async ({ params }: { params: { user: string } }) => {
   const session = await getServerSession();

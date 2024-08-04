@@ -3,7 +3,6 @@ import RightSide from "@/layouts/right-side";
 import RightTrends from "@/layouts/trends/right-trends";
 import { supabase } from "@/libs/supabase/init";
 import TrendsView from "@/views/trends/trends-view";
-import React from "react";
 
 const page = async () => {
   const { data: trends } = await supabase.from("hastags").select();

@@ -2,7 +2,6 @@ import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
 import { GetFollow } from "@/types/follow";
 import { UUID } from "crypto";
-import React from "react";
 
 const page = async ({ params }: { params: { user: string } }) => {
   const {

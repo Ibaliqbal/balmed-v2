@@ -2,7 +2,6 @@ import HeaderWithBack from "@/components/header/header-with-back";
 import RightSide from "@/layouts/right-side";
 import RightUserProfile from "@/layouts/user-profile/right-side-user-profile";
 import { supabase } from "@/libs/supabase/init";
-import React from "react";
 
 const layout = async ({
   children,

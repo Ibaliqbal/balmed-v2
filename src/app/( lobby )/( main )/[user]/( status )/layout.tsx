@@ -1,5 +1,4 @@
 import TabNavigationFollow from "@/layouts/user-profile/tab-follow-navigation";
-import React from "react";
 
 const layout = ({
   children,

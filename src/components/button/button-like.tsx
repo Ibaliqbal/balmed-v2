@@ -1,9 +1,7 @@
 "use client";
 import { getLikesPost, likePost, unlikePost } from "@/actions/post";
-import instance from "@/libs/axios/instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UUID } from "crypto";
-import React from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 type Props = {

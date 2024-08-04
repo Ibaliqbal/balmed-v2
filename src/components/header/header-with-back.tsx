@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import BaseHeader from "./base-header";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";

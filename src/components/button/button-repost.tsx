@@ -2,7 +2,6 @@
 import { getRepostPost, repostPost, unrepostPost } from "@/actions/post";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UUID } from "crypto";
-import React from "react";
 import { BiRepost } from "react-icons/bi";
 
 type Props = {

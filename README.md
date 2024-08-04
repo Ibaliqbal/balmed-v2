@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
 
-## Getting Started
+# BALMED
 
-First, run the development server:
+</div>
+
+![App Screenshot](/public/demo.png)
+
+**BALMED** is a cutting-edge social media application developed using Next.js 14, with React Query for efficient data fetching and Supabase as the database. This app is designed to provide users with an intuitive and responsive experience on the social media platform.
+
+## Features
+
+- **Authentication:** Secure login and registration using NextAuth.
+- **Post Interactions:** Users can like, create, mark, and repost posts.
+- **Search Functionality:** Search for posts using keywords or phrases.
+- **User Interactions:** Follow and unfollow other users (Feature in development).
+- **Media Upload:** Upload images and videos, stored securely in Supabase storage.
+- **Trending Posts:** View trending posts based on hashtags.
+- **Optimistic Updates:** Real-time feedback for likes, reposts, marks, and post creation.
+
+## Tech Stack
+
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React Query](https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+
+## Run Locally
+
+To run this project locally, follow these steps:
+
+1. **Clone the repository:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   git clone https://github.com/Ibaliqbal/balmed-v2.git
+   cd balmed-v2
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+   npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. **Set up environment variables:**
 
-## Learn More
+```bash
+   cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Run the application:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+   npm run dev
+```

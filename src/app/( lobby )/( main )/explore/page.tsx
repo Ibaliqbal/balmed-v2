@@ -2,10 +2,11 @@ import Search from "@/components/form/form-search";
 import BaseHeader from "@/components/header/base-header";
 import RightExplore from "@/layouts/explore/right-explore";
 import RightSide from "@/layouts/right-side";
+import { supabase } from "@/libs/supabase/init";
 import ExploreView from "@/views/explore/explore-view";
-import React from "react";
 
-const page = () => {
+const page = async () => {
+  const { data: trends } = await supabase.from("hastags").select()
   return (
     <>
       <main className="col-span-3">
@@ -15,7 +16,7 @@ const page = () => {
           </div>
         </BaseHeader>
         <section className="border-x-2 border-slate-700">
-          <ExploreView />
+          <ExploreView trends={trends} />
         </section>
       </main>
       <RightSide>

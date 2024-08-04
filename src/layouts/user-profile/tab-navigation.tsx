@@ -2,13 +2,12 @@
 import { useGetUserLogin } from "@/provider/user-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 const TabNavigation = ({ username }: { username: string }) => {
   const { user } = useGetUserLogin();
   const pathname = usePathname();
 
-  const lists = [
+  const navigate = [
     {
       title: "Post",
       href: `/${encodeURIComponent(username)}`,
@@ -34,7 +33,7 @@ const TabNavigation = ({ username }: { username: string }) => {
       } mt-4 border-b-2 border-b-slate-700`}
     >
       {username === user?.username
-        ? lists.map((list) => (
+        ? navigate.map((list) => (
             <div
               className="w-full flex items-center justify-center"
               key={list.title}
@@ -51,7 +50,7 @@ const TabNavigation = ({ username }: { username: string }) => {
               </Link>
             </div>
           ))
-        : lists
+        : navigate
             .filter((list) => list.title !== "Likes")
             .map((list) => (
               <div

@@ -27,7 +27,8 @@ body {
 }
 
 textarea,
-.modal-post {
+.modal-post,
+.input-edit {
   background: linear-gradient(
       to bottom,
       transparent,

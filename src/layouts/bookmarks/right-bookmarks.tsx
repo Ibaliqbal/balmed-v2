@@ -2,10 +2,8 @@ import Search from "@/components/form/form-search";
 import TrendsCard from "@/components/trends/trends-card";
 import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
-import { dateFormat } from "@/utils/helpers";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import React from "react";
 
 const RightBookmarks = async () => {
   const session = await getServerSession();

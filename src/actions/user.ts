@@ -1,7 +1,8 @@
 "use server";
 
-import { getUserLogin } from "@/libs/supabase/function";
+import { deleteFile, getUrlFile, uploadFile } from "@/libs/supabase/function";
 import { supabase } from "@/libs/supabase/init";
+import { MediaPreview } from "@/types/media";
 import { getServerSession } from "next-auth";
 
 export async function getIsFollowing(id: string) {
@@ -17,4 +18,71 @@ export async function getIsFollowing(id: string) {
       (following) => following.follow_to === id
     ),
   };
+}
+
+export async function followingAction() {}
+
+export async function uploadFileUser(formData: FormData) {
+  const session = await getServerSession();
+
+  if (session) {
+    const { data } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", session?.user.email)
+      .single();
+    const file = formData.get("file") as File;
+    const bucketName = formData.get("bucketName") as string;
+    const formatFile = file.type.split("/")[1];
+    if (!data) return { message: "User not found", status: false, data: null };
+
+    const res = await uploadFile(
+      bucketName,
+      file,
+      `${data?.id}/${crypto.randomUUID()}.${formatFile}`
+    );
+
+    if (!res) return { message: "Error uploading", status: false, data: null };
+
+    const url = await getUrlFile(res.data?.path as string, bucketName);
+
+    return {
+      message: "Success",
+      status: true,
+      data: {
+        url: url.publicUrl,
+        path: res.data?.path,
+      },
+    };
+  }
+
+  return { message: "unauthorized", status: false, data: null };
+}
+
+export async function deleteMedia(path: Array<string>) {
+  const result = await deleteFile("avatar", path);
+
+  if (result.error === null)
+    return { message: "Success delete file", status: true };
+
+  return { message: "Failed delete file", status: false };
+}
+
+export async function updateProfile(data: {
+  name: string;
+  bio: string;
+  location: string;
+  web: string;
+  avatar: MediaPreview;
+  header_photo: MediaPreview;
+  id: string;
+}) {
+  const { avatar, bio, header_photo, location, name, web, id } = data;
+
+  console.log(data);
+  // const {} = await supabase
+  //   .from("users")
+  //   .update({ name, web, location, bio, header_photo, photo: avatar })
+  //   .eq("id", id)
+  //   .select("name, web, location, bio, photo, header_photo");
 }

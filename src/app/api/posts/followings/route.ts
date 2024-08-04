@@ -1,5 +1,4 @@
 import { supabase } from "@/libs/supabase/init";
-import { UUID } from "crypto";
 import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
 

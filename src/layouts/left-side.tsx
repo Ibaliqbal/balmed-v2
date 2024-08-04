@@ -1,12 +1,17 @@
-import React from "react";
-import { FaBookmark, FaRegBookmark, FaRegUser, FaUser } from "react-icons/fa";
+import {
+  FaBookmark,
+  FaRegBookmark,
+  FaRegUser,
+  FaUser,
+  FaUsers,
+} from "react-icons/fa";
 import {
   IoHome,
   IoHomeOutline,
   IoNotifications,
   IoSearchOutline,
+  IoMail,
 } from "react-icons/io5";
-import { PiUserBold } from "react-icons/pi";
 import ButtonLogout from "@/components/button/button-logout";
 import ButtonPost from "@/components/button/button-post";
 import Icon from "@/components/left-side/icon";
@@ -37,6 +42,10 @@ const LeftSide = async () => {
           <>
             <p className="flex items-center gap-2 text-xl cursor-not-allowed">
               <IoNotifications />
+              Notification
+            </p>
+            <p className="flex items-center gap-2 text-xl cursor-not-allowed">
+              <IoMail />
               Message
             </p>
             <Icon
@@ -55,7 +64,7 @@ const LeftSide = async () => {
         ) : null}
 
         <p className="flex items-center gap-2 text-xl cursor-not-allowed">
-          <PiUserBold />
+          <FaUsers />
           Communities
         </p>
         <ButtonPost />

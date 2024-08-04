@@ -16,13 +16,12 @@ const userContext = React.createContext<UserContextType>({
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data } = useSession();
+  const { data, status } = useSession();
   const { data: user, isLoading } = useQuery({
     queryKey: ["user-login"],
     queryFn: async () => (await instance.get("/api/users/login")).data?.user,
     staleTime: Infinity,
-    enabled: !!data,
-    refetchInterval: 60 * 60 * 1000,
+    enabled: status === "loading",
   });
   return (
     <userContext.Provider value={{ user, isLoading }}>

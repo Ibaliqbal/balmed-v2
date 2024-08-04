@@ -1,7 +1,6 @@
 "use client";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
-import React from "react";
 
 const ButtonLogout = ({ isAuth }: { isAuth: Session | null }) => {
   return (
