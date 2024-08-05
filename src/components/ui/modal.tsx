@@ -25,7 +25,7 @@ const Modal = ({
             exit={{
               opacity: 0,
             }}
-            className="fixed h-dvh w-full top-0 left-0 bg-black bg-opacity-60 z-[60]"
+            className="fixed h-dvh w-full top-0 left-0 bg-black bg-opacity-60 z-[61]"
             onClick={() => setOpen(false)}
           />
           {children}

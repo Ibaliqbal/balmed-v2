@@ -28,7 +28,7 @@ const layout = async ({
             </p>
           </div>
         </HeaderWithBack>
-        <section className="border-x-2 border-slate-700">{children}</section>
+        <section className="lg:border-x-2 border-slate-700">{children}</section>
       </MainSection>
       <RightSide>
         <RightUserProfile />

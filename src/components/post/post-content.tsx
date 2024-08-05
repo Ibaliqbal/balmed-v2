@@ -20,7 +20,7 @@ const Content = ({
       {content?.split(" ").map((str, i) =>
         str.startsWith("@") ? (
           <Link
-            href={`/${str}`}
+            href={`/${encodeURIComponent(str)}`}
             key={i}
             className="text-blue-600 z-50"
             onClick={(e) => e.stopPropagation()}

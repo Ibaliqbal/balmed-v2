@@ -31,7 +31,7 @@ const layout = async ({
           </div>
         </HeaderWithBack>
         <TabNavigation hastag={decoded} />
-        <section className="border-x-2 border-slate-700">{children}</section>
+        <section className="lg:border-x-2 border-slate-700">{children}</section>
       </MainSection>
       <RightSide>
         <RightTrends />

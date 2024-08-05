@@ -56,7 +56,7 @@ const LeftSide = async () => {
             ></Icon>
             <Icon
               text="Profile"
-              href={`/${user.data.username}`}
+              href={`/${encodeURIComponent(user.data.username)}`}
               one={<FaUser />}
               two={<FaRegUser />}
             />

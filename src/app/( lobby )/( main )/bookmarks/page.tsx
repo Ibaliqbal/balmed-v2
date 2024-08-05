@@ -14,7 +14,7 @@ const page = () => {
             <p className="text-sm">Discover new trends and topics.</p>
           </div>
         </HeaderWithBack>
-        <section className="border-x-2 border-slate-700 pb-10">
+        <section className="lg:border-x-2 border-slate-700 pb-10">
           <BookmarksView />
         </section>
       </MainSection>

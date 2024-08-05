@@ -8,7 +8,7 @@ const HomeHeader = () => {
 
   return (
     <BaseHeader>
-      <nav className="grid grid-cols-2 w-full navbar-home text-white border-b-2 border-slate-700 border-x-2">
+      <nav className="grid grid-cols-2 w-full navbar-home text-white border-b-2 border-slate-700 lg:border-x-2">
         <div className="w-full flex items-center justify-center font-semibold cursor-pointer">
           <Link
             href={"/home"}

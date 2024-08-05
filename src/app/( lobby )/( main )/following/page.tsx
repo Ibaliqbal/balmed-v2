@@ -10,7 +10,7 @@ const page = () => {
     <>
       <MainSection>
         <HomeHeader />
-        <section className="border-x-2 border-slate-700">
+        <section className="lg:border-x-2 border-slate-700">
           <HomeFormPost queryKey={["post", "for-you"]} />
           <Following />
         </section>

@@ -22,7 +22,7 @@ const page = ({
         </div>
       </HeaderWithBack>
       <TabNavigation query={query} filter={filter} />
-      <section className="border-x-2 border-slate-700">
+      <section className="lg:border-x-2 border-slate-700">
         {filter ? (
           filter === "latest" ? (
             <SearchLatestView query={query} />

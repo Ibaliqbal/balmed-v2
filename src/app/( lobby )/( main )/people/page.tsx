@@ -11,7 +11,7 @@ const page = () => {
         <HeaderWithBack>
           <h1 className="text-2xl font-semibold">People</h1>
         </HeaderWithBack>
-        <section className="px-3 border-x-2 border-slate-700">
+        <section className="px-3 lg:border-x-2 border-slate-700">
           <PeopleView />
         </section>
       </MainSection>

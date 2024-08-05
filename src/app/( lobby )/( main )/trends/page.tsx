@@ -13,7 +13,7 @@ const page = async () => {
         <HeaderWithBack>
           <h1 className="text-2xl font-semibold">Trends</h1>
         </HeaderWithBack>
-        <section className="border-x-2 border-slate-700">
+        <section className="lg:border-x-2 border-slate-700">
           <TrendsView trends={trends} />
         </section>
       </MainSection>

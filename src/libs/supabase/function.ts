@@ -66,7 +66,9 @@ export async function getServerUser() {
 
   const { data } = await supabase
     .from("users")
-    .select()
+    .select(
+      `*, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
+    )
     .eq("email", session?.user.email)
     .single();
 

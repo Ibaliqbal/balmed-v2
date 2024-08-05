@@ -12,11 +12,11 @@ const page = async () => {
     <>
       <MainSection>
         <BaseHeader>
-          <div className="py-2 px-4 border-b-2 border-slate-700 border-x-2">
+          <div className="py-2 px-4 border-b-2 border-slate-700 lg:border-x-2">
             <Search />
           </div>
         </BaseHeader>
-        <section className="border-x-2 border-slate-700">
+        <section className="lg:border-x-2 border-slate-700">
           <ExploreView trends={trends} />
         </section>
       </MainSection>

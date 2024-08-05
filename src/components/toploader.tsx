@@ -12,6 +12,7 @@ export default function TopLoader() {
         crawl={true}
         easing="ease"
         speed={200}
+        zIndex={71}
         shadow="0 0 10px #2563eb,0 0 5px #2563eb"
       />
     </>

@@ -1,4 +1,3 @@
-import { getServerUser } from "@/libs/supabase/function";
 import { supabase } from "@/libs/supabase/init";
 import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
@@ -10,7 +9,6 @@ export async function GET(
   const id = params.id;
   const session = await getServerSession();
   console.log(session);
-  const user = await getServerUser();
 
   const { data: likes } = await supabase
     .from("postings")
