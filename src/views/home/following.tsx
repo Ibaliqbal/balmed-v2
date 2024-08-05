@@ -25,7 +25,9 @@ const Following = () => {
           ))
         ) : (
           <EmptyPosts>
-            <h1 className="text-xl text-center">No posts here, creator your post now</h1>
+            <h1 className="text-xl text-center">
+              No posts here, create your post now
+            </h1>
           </EmptyPosts>
         )}
       </div>

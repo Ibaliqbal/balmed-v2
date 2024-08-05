@@ -25,7 +25,7 @@ const ForYou = () => {
         ) : (
           <EmptyPosts>
             <h1 className="text-xl text-center">
-              No posts here, creator your post now
+              No posts here, create your post now
             </h1>
           </EmptyPosts>
         )}

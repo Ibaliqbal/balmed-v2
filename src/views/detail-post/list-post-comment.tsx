@@ -24,7 +24,7 @@ const ListPOstComment = ({ id }: { id: string }) => {
   ) : (
     <EmptyPosts>
       <h1 className="text-xl text-center">
-        No comment on this post, creator your comment now
+        No comment on this post, create your comment now
       </h1>
     </EmptyPosts>
   );

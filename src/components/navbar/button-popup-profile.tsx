@@ -21,7 +21,7 @@ const ButtonPopupProfile = ({
 
   const childrenAnimte = {
     open: {
-      translateX: -360,
+      translateX: -600,
     },
     enter: (i: number) => ({
       translateX: 0,
@@ -33,7 +33,7 @@ const ButtonPopupProfile = ({
       },
     }),
     closed: (i: number) => ({
-      translateX: -360,
+      translateX: -600,
       transition: {
         duration: 0.5,
         delay: 0.5 * i * 0.2,
@@ -54,11 +54,11 @@ const ButtonPopupProfile = ({
         width={50}
         height={50}
         onClick={() => setOepnModalProfile(true)}
-        className="rounded-full md:w-[50px] md:h-[50px] object-cover object-center mt-4 mr-5"
+        className="rounded-full md:w-[50px] md:h-[50px] object-cover object-center mt-2 mr-5"
       />
       <Modal open={openModalProfile} setOpen={setOepnModalProfile}>
         <motion.div
-          initial={{ translateX: -360 }}
+          initial={{ translateX: -600 }}
           animate={{
             translateX: 0,
             transition: {
@@ -68,7 +68,7 @@ const ButtonPopupProfile = ({
             },
           }}
           exit={{
-            translateX: -360,
+            translateX: -600,
             transition: {
               delay: 0.8,
               ease: [0.215, 0.61, 0.355, 1],
