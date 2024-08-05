@@ -18,7 +18,6 @@ const config: Config = {
     },
     container: {
       center: true,
-      padding: "1.5rem",
       screens: {
         small: "640px",
         medium: "768px",

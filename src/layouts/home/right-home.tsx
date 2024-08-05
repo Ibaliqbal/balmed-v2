@@ -15,7 +15,7 @@ const RightHome = async () => {
     .not("email", "eq", session?.user.email as string)
     .limit(5);
 
-  const { data: trends } = await supabase.from("hastags").select();
+  const { data: trends } = await supabase.from("hastags").select().limit(10);
 
   return (
     <section className="w-full lg:block">
@@ -42,14 +42,11 @@ const RightHome = async () => {
         >
           <h1 className="text-2xl font-bold">Trends for you</h1>
           <ul className="mt-4 w-full flex flex-col gap-3 mb-5">
-            {trends
-              ?.sort((a, b) => (b.posts.length || 0) - (a.posts.length || 0))
-              .slice(0, 10)
-              .map((trend, i) => (
-                <li key={i}>
-                  <TrendsCard {...trend} />
-                </li>
-              ))}
+            {trends?.map((trend, i) => (
+              <li key={i}>
+                <TrendsCard {...trend} />
+              </li>
+            ))}
           </ul>
           <Link
             className="text-blue-600 text-lg font-semibold"

@@ -50,11 +50,11 @@ const PostCard = ({
               alt={"Avatar"}
               width={70}
               height={70}
-              className="rounded-full w-[50px] h-[50px] object-cover object-center"
+              className="rounded-full md:w-[50px] md:h-[50px] object-cover object-center"
             />
           </Link>
         </UserTooltip>
-        <div className="flex items-center gap-2 text-md">
+        <div className="flex items-center gap-2 md:text-md text-sm md:flex-nowrap flex-wrap">
           <UserTooltip {...{ ...creator }}>
             <Link
               href={`/${encodeURIComponent(creator.username)}`}
@@ -80,7 +80,7 @@ const PostCard = ({
                 : "Ibal"}
             </Link>
           </UserTooltip>
-          <h1 className="text-sm">
+          <h1 className="md:text-sm text-xs">
             {dateConverterNow(upload_at ? upload_at : "2024-07-19")}
           </h1>
         </div>

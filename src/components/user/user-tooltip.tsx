@@ -22,7 +22,7 @@ const UserTooltip = ({
   return (
     <div className="relative cursor-pointer group w-fit">
       {children}
-      <div className="w-[300px] h-[230px] z-[60] rounded-2xl scale-0 invisible opacity-0 transition-all duration-[600ms] ease-in-out group-hover:visible group-hover:opacity-100 bg-slate-900 bg-opacity-60 text-white absolute left-[50%] -translate-x-[50%] group-hover:scale-100 origin-top flex flex-col justify-between p-5">
+      <div className="w-[300px] h-[250px] z-[60] rounded-2xl scale-0 invisible opacity-0 transition-all duration-[600ms] ease-in-out group-hover:visible group-hover:opacity-100 bg-slate-900 bg-opacity-70 text-white absolute left-[50%] -translate-x-[50%] group-hover:scale-100 origin-top flex flex-col justify-between p-5">
         <div className="flex justify-between">
           <CustomImage
             src={
@@ -40,9 +40,9 @@ const UserTooltip = ({
         <div className="flex gap-1 flex-col">
           <div className="flex gap-2 items-center flex-wrap">
             <h4>{name}</h4>
-            <h4 className="text-gray-500">@{username}</h4>
+            <h4 className="text-slate-500">@{username}</h4>
           </div>
-          <p>{bio}</p>
+          <p className="line-clamp-2">{bio}</p>
         </div>
         <div className="flex justify-around">
           <p>{followers[0].count} Followers</p>

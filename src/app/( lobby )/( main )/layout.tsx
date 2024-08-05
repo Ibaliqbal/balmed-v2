@@ -7,9 +7,9 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
 
   if (!session) return redirect("/");
   return (
-    <main className="grid grid-cols-9 container max-w-7xl gap-4">
+    <main className="lg:grid lg:grid-cols-9 container lg:px-[1.25rem] max-w-7xl lg:gap-4">
       <LeftSide />
-      <section className="col-span-7 grid grid-cols-5 gap-4">
+      <section className="lg:col-span-7 lg:grid lg:grid-cols-5 lg:gap-4">
         {children}
       </section>
     </main>

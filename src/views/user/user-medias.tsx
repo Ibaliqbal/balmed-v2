@@ -19,7 +19,7 @@ const UserMedias = ({ id }: { id: string | UUID }) => {
   return isLoading ? (
     <Loading />
   ) : data.length > 0 ? (
-    <section className="pt-8 px-3 grid grid-cols-3 gap-2 pb-10">
+    <section className="pt-5 px-3 grid md:grid-cols-3 grid-cols-2 gap-2 pb-10">
       {data.map((media: MediaPreview, i: number) =>
         media.url.includes("mp4") ? (
           <video

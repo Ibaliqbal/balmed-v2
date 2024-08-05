@@ -92,12 +92,10 @@ export async function updateProfile(data: {
 }) {
   const { avatar, bio, header_photo, location, name, web, id } = data;
 
-  console.log(data);
-  // const {} = await supabase
-  //   .from("users")
-  //   .update({ name, web, location, bio, header_photo, photo: avatar })
-  //   .eq("id", id)
-  //   .select("name, web, location, bio, photo, header_photo");
+  await supabase
+    .from("users")
+    .update({ name, web, location, bio, header_photo, photo: avatar })
+    .eq("id", id);
 }
 
 export async function searchPeople(query: string) {

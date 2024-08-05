@@ -11,7 +11,7 @@ const PeopleView = async () => {
     )
     .not("email", "eq", session?.user.email as string);
   return (
-    <section className="pt-4 flex flex-col gap-6">
+    <section className="pt-4 flex flex-col gap-6 lg:pb-0 pb-6">
       {users?.map((user, i) => (
         <UserCard key={i} {...user} />
       ))}

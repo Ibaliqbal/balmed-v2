@@ -5,6 +5,7 @@ import SearchPeopleView from "@/views/search/search-people-view";
 import SearchTopView from "@/views/search/search-top-view";
 import TabNavigation from "@/layouts/search/tab-search-navigation";
 import HeaderWithBack from "@/components/header/header-with-back";
+import Search from "@/components/form/form-search";
 
 const page = ({
   searchParams,
@@ -13,14 +14,11 @@ const page = ({
 }) => {
   const query = decodeURIComponent(searchParams.q as string);
   const filter = decodeURIComponent(searchParams?.f as string);
-
-  console.log(filter);
   return (
     <>
       <HeaderWithBack>
-        <div className="w-fit flex flex-col">
-          <h1 className="text-2xl font-semibold">Search</h1>
-          <p className="text-sm">query : {query}</p>
+        <div className="w-full">
+          <Search className="w-full" defaultValue={query} />
         </div>
       </HeaderWithBack>
       <TabNavigation query={query} filter={filter} />

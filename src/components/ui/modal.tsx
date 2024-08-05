@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { Fragment } from "react";
 
 const Modal = ({
   open,
@@ -12,7 +13,7 @@ const Modal = ({
   return (
     <AnimatePresence>
       {open && (
-        <div className="z-[60]">
+        <Fragment>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{
@@ -28,7 +29,7 @@ const Modal = ({
             onClick={() => setOpen(false)}
           />
           {children}
-        </div>
+        </Fragment>
       )}
     </AnimatePresence>
   );

@@ -8,57 +8,19 @@ import CustomImage from "../ui/image";
 import Input from "../ui/input";
 import { toast } from "react-hot-toast";
 import { MediaPreview } from "@/types/media";
-import { uploadFilePost } from "@/actions/post";
 import { FaCamera } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateProfile } from "@/actions/user";
-import { GetUser } from "@/types/user";
+import { updateProfile, uploadFileUser } from "@/actions/user";
+import { LuLoader2 } from "react-icons/lu";
 
 const ButtonEditProfile = () => {
   const [openModalEdit, setOpenModalEdit] = useState(false);
-  const queryClient = useQueryClient();
   const { user, isLoading } = useGetUserLogin();
   const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState<MediaPreview | undefined>(user?.photo);
   const [headerPhoto, setHeaderPhoto] = useState<MediaPreview | undefined>(
     user?.header_photo
   );
-  const { mutate, status } = useMutation({
-    mutationFn: updateProfile,
-    async onMutate(data: {
-      name: string;
-      bio: string;
-      location: string;
-      web: string;
-      avatar: MediaPreview;
-      header_photo: MediaPreview;
-      id: string;
-    }) {
-      await queryClient.cancelQueries({ queryKey: ["user-login"] });
-
-      // Snapshot the previous value
-      const previousData = queryClient.getQueryData<GetUser>(["user-login"]);
-
-      queryClient.setQueryData(["user-login"], (oldData: GetUser) => ({
-        ...oldData,
-        name: data.name,
-        bio: data.bio,
-        location: data.location,
-        web: data.web,
-        photo: data.avatar,
-        header_photo: data.header_photo,
-      }));
-
-      return { previousData };
-    },
-    onError(error, variables, context) {
-      queryClient.setQueryData(["user-login"], context?.previousData);
-    },
-    onSettled() {
-      queryClient.invalidateQueries({ queryKey: ["user-login"] });
-    },
-  });
 
   useEffect(() => {
     setAvatar(user?.photo);
@@ -73,8 +35,9 @@ const ButtonEditProfile = () => {
     const location = target.location.value;
     const web = target.web.value;
 
-    mutate(
-      {
+    try {
+      setLoading(true);
+      await updateProfile({
         avatar: avatar as MediaPreview,
         bio,
         header_photo: headerPhoto as MediaPreview,
@@ -82,17 +45,14 @@ const ButtonEditProfile = () => {
         name,
         web,
         id: user?.id as string,
-      },
-      {
-        onSuccess() {
-          toast.success("Update data profile successfully");
-          setOpenModalEdit(false);
-        },
-        onError() {
-          toast.error("Failed to update data profile");
-        },
-      }
-    );
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+      toast.success("Update data profile successfully");
+      window.location.reload();
+    }
   }
 
   const handleUpload = async (
@@ -113,11 +73,12 @@ const ButtonEditProfile = () => {
 
       try {
         setLoading(true);
-        const { status, data, message } = await uploadFilePost(formData);
+        const { status, data, message } = await uploadFileUser(formData);
         if (!status) return toast.error(message);
         if (isAvatar) {
           setAvatar({ url: data?.url as string, path: data?.path as string });
         } else {
+          console.log("here");
           setHeaderPhoto({
             url: data?.url as string,
             path: data?.path as string,
@@ -151,7 +112,7 @@ const ButtonEditProfile = () => {
           exit={{
             scale: 0,
           }}
-          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 gap-4 z-[9999] rounded-lg bg-red-400 modal-post custom-scroll-horizontal border-2 border-white"
+          className="fixed bg-primary md:max-w-[750px] mx-w-[450px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 gap-4 z-[9999] rounded-lg bg-red-400 modal-post custom-scroll-horizontal border-2 border-white"
         >
           {isLoading ? (
             <Loading className="h-[650px]" />
@@ -159,30 +120,36 @@ const ButtonEditProfile = () => {
             <>
               <div className="w-full aspect-[1/.5] relative rounded-t-lg">
                 <CustomImage
-                  src={"/example.jpg"}
+                  src={headerPhoto ? headerPhoto.url : "/example.jpg"}
                   alt={"bg"}
                   width={700}
                   height={700}
                   className="w-full object-cover object-center h-full absolute inset-0 rounded-t-xl"
                 />
                 <div className="w-full h-full absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center gap-10 text-xl">
-                  <div>
-                    <label
-                      htmlFor="upload_header"
-                      className="cursor-pointer rounded-full hover:bg-black hover:bg-opacity-65 transition-all duration-200 ease-linear p-3 flex items-center justify-center"
-                    >
-                      <FaCamera aria-label="input-file" />
-                    </label>
-                    <Input
-                      type="file"
-                      id="upload_header"
-                      className="peer-disabled:cursor-not-allowed hidden"
-                      onChange={(e) => handleUpload(e, false)}
-                    />
-                  </div>
-                  <button className="p-3 rounded-full hover:bg-black hover:bg-opacity-65 transition-all duration-200 ease-linear">
-                    <IoClose aria-label="delete-btn" />
-                  </button>
+                  {loading ? (
+                    <LuLoader2 aria-label="loader" className="animate-spin" />
+                  ) : (
+                    <>
+                      <div>
+                        <label
+                          htmlFor="upload_header"
+                          className="cursor-pointer rounded-full hover:bg-black hover:bg-opacity-65 transition-all duration-200 ease-linear p-3 flex items-center justify-center"
+                        >
+                          <FaCamera aria-label="input-file" />
+                        </label>
+                        <Input
+                          type="file"
+                          id="upload_header"
+                          className="peer-disabled:cursor-not-allowed hidden"
+                          onChange={(e) => handleUpload(e, false)}
+                        />
+                      </div>
+                      <button className="p-3 rounded-full hover:bg-black hover:bg-opacity-65 transition-all duration-200 ease-linear">
+                        <IoClose aria-label="delete-btn" />
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="px-5">
@@ -262,13 +229,22 @@ const ButtonEditProfile = () => {
                       defaultValue={user?.web}
                     />
                   </div>
-                  <button
-                    className="bg-blue-600 font-bold w-full py-4 rounded-full text-white self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
-                    type="submit"
-                    disabled={loading || status === "pending"}
-                  >
-                    {loading || status === "pending" ? "Process..." : "Edit"}
-                  </button>
+                  <div className="flex items-center gap-4">
+                    <button
+                      className="bg-red-600 font-bold md:hidden w-full py-4 rounded-full text-white self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
+                      type="button"
+                      onClick={() => setOpenModalEdit(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="bg-blue-600 font-bold w-full py-4 rounded-full text-white self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
+                      type="submit"
+                      disabled={loading}
+                    >
+                      {loading ? "Process..." : "Edit"}
+                    </button>
+                  </div>
                 </form>
               </div>
             </>

@@ -18,7 +18,7 @@ const UserLikePosts = ({ id }: { id: string | UUID }) => {
     enabled: !!id,
   });
   return (
-    <section className="pt-8">
+    <section className="pt-5">
       <div className="flex flex-col gap-5">
         {isLoading || userLoading ? (
           <Loading />

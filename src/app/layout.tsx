@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Platypi } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import Provider from "@/provider";
 import { Toaster } from "react-hot-toast";
 import TopLoader from "@/components/toploader";

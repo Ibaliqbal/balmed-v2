@@ -5,7 +5,7 @@ import { supabase } from "@/libs/supabase/init";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
-const RightBookmarks = async () => {
+const RightSearch = async () => {
   const session = await getServerSession();
   const { data: users } = await supabase
     .from("users")
@@ -18,12 +18,7 @@ const RightBookmarks = async () => {
   const { data: trends } = await supabase.from("hastags").select().limit(10);
   return (
     <section className="relative w-full lg:block">
-      <header className="w-full md:sticky md:top-0 z-10">
-        <div className="py-2 px-3">
-          <Search />
-        </div>
-      </header>
-      <main className="p-4 text-white mt-4">
+      <main className="p-4 text-white">
         <section className="w-full p-5 rounded-3xl border-2 border-slate-800 mt-4">
           <h1 className="text-2xl font-bold">Who to follow</h1>
           <div className="mt-4 w-full flex flex-col gap-6 mb-5">
@@ -61,4 +56,4 @@ const RightBookmarks = async () => {
   );
 };
 
-export default RightBookmarks;
+export default RightSearch;

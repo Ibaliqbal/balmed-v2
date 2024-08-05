@@ -1,4 +1,5 @@
 import HeaderWithBack from "@/components/header/header-with-back";
+import MainSection from "@/layouts/main-section";
 import RightSide from "@/layouts/right-side";
 import RightUserProfile from "@/layouts/user-profile/right-side-user-profile";
 import { supabase } from "@/libs/supabase/init";
@@ -17,7 +18,7 @@ const layout = async ({
     .single();
   return (
     <>
-      <main className="col-span-3">
+      <MainSection>
         <HeaderWithBack>
           <div className="w-fit flex flex-col">
             <h1 className="text-2xl font-semibold">{data?.username}</h1>
@@ -28,7 +29,7 @@ const layout = async ({
           </div>
         </HeaderWithBack>
         <section className="border-x-2 border-slate-700">{children}</section>
-      </main>
+      </MainSection>
       <RightSide>
         <RightUserProfile />
       </RightSide>

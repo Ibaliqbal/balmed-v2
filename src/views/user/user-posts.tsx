@@ -19,7 +19,7 @@ const UserPosts = ({ id }: { id: string | UUID }) => {
   });
 
   return (
-    <section className="pt-8">
+    <section className="pt-5">
       <div className="flex flex-col gap-5">
         {isLoading || userLoading ? (
           <Loading />

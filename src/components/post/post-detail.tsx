@@ -45,11 +45,11 @@ const PostDetail = ({
               alt={"Avatar"}
               width={70}
               height={70}
-              className="rounded-full w-[50px] h-[50px] object-cover object-center"
+              className="rounded-full md:w-[50px] md:h-[50px] object-cover object-center"
             />
           </Link>
         </UserTooltip>
-        <div className="flex items-center gap-2 text-md">
+        <div className="flex items-center gap-2 md:text-md text-sm md:flex-nowrap flex-wrap">
           <UserTooltip {...{ ...post.creator }}>
             <Link
               href={`/${encodeURIComponent(post.creator.username)}`}

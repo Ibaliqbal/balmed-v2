@@ -12,7 +12,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     <SessionProvider>
       <QueryClientProvider client={client}>
         <UserProvider>{children}</UserProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </SessionProvider>
   );
