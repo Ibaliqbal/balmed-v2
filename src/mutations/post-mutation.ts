@@ -1,6 +1,11 @@
 import { uploadComment, uploadPost } from "@/actions/post";
 import { GetPost } from "@/types/post";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+  QueryFilters,
+} from "@tanstack/react-query";
 
 export const useUploadPostMutation = (
   queryKey: string[],
@@ -19,15 +24,47 @@ export const useUploadPostMutation = (
           );
         },
       });
+      const queryFilter = {} satisfies QueryFilters;
 
-      const previousPosts = queryClient.getQueryData(queryKey);
+      const previousPosts =
+        queryClient.getQueryData<
+          InfiniteData<
+            { data: Array<GetPost>; max: number },
+            number | undefined
+          >
+        >(queryKey);
 
-      queryClient.setQueryData(queryKey, (oldData: Array<GetPost>) => {
-        return [...oldData, newPost];
+      queryClient.setQueryData<
+        InfiniteData<{ data: Array<GetPost>; max: number }, number | undefined>
+      >(queryKey, (oldData) => {
+        const firstPage = oldData?.pages[0];
+        if (firstPage) {
+          return {
+            pageParams: oldData.pageParams,
+            pages: [
+              {
+                data: [newPost, ...firstPage.data],
+                max: firstPage.max,
+              },
+              ...oldData.pages.slice(1),
+            ],
+          };
+        }
       });
       return { previousPosts };
     },
-    onError: (err, newTodo, context?: { previousPosts: Array<GetPost> }) => {
+    onError: (
+      err,
+      newTodo,
+      context?: {
+        previousPosts:
+          | InfiniteData<
+              { data: Array<GetPost>; max: number },
+              number | undefined
+            >
+          | undefined;
+      }
+    ) => {
       if (context) {
         queryClient.setQueryData(queryKey, context.previousPosts);
       }

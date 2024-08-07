@@ -6,6 +6,28 @@ import SearchTopView from "@/views/search/search-top-view";
 import TabNavigation from "@/layouts/search/tab-search-navigation";
 import HeaderWithBack from "@/components/header/header-with-back";
 import Search from "@/components/form/form-search";
+import type { Metadata } from "next";
+
+export const generateMetadata = ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}): Metadata => {
+  const title = `${decodeURIComponent(searchParams.q as string)} - Search / BM`;
+  const description = "Discover new trends and topics in the balmed community.";
+  const keywords = ["search", "community", "trends"];
+  const openGraph = {
+    title,
+    description,
+    keywords,
+  };
+
+  return {
+    title,
+    description,
+    openGraph,
+  };
+};
 
 const page = ({
   searchParams,

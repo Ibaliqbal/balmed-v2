@@ -1,19 +1,32 @@
+import { getRandomStartData } from "@/actions/util";
 import Search from "@/components/form/form-search";
+import TrendsCard from "@/components/trends/trends-card";
 import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
-import { dateFormat } from "@/utils/helpers";
+import { limitTrends, limitUser } from "@/utils/constant";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const RightUserProfile = async () => {
   const session = await getServerSession();
+
+  const startUser = await getRandomStartData(limitUser, "users");
+
+  const startTrends = await getRandomStartData(limitTrends, "hastags");
+
   const { data: users } = await supabase
     .from("users")
     .select(
       `name, username, photo, bio, id, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
     )
     .not("email", "eq", session?.user.email as string)
-    .limit(5);
+    .range(startUser, limitUser + startUser);
+
+  const { data: trends } = await supabase
+    .from("hastags")
+    .select()
+    .range(startTrends, limitTrends + startTrends);
+    
   return (
     <section className="w-full lg:block">
       <header className="w-full md:sticky md:top-0 z-10">
@@ -41,15 +54,9 @@ const RightUserProfile = async () => {
         >
           <h1 className="text-2xl font-bold">Trends for you</h1>
           <ul className="mt-4 w-full flex flex-col gap-3 mb-5">
-            {Array.from({ length: 5 }).map((_, i) => (
+            {trends?.map((trend, i) => (
               <li key={i}>
-                <Link className="flex flex-col gap-2 py-3" href={`/search`}>
-                  <h4 className="font-bold text-xl">Bola</h4>
-                  <p className=" font-semibold">10 Posts</p>
-                  <p className="font-semibold">
-                    Trend from {dateFormat("2024-07-19")}
-                  </p>
-                </Link>
+                <TrendsCard {...trend} />
               </li>
             ))}
           </ul>

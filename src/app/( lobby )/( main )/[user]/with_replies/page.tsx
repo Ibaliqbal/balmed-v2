@@ -1,14 +1,34 @@
 import ProfileCard from "@/components/user/user-profile-card";
 import TabNavigation from "@/layouts/user-profile/tab-navigation";
 import { supabase } from "@/libs/supabase/init";
-import UserReposts from "@/views/user/user-repost";
+import UserReplies from "@/views/user/user-replies";
 import { getServerSession } from "next-auth";
+
+import type { Metadata } from "next";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { user: string };
+}): Promise<Metadata> => {
+  const { data } = await supabase
+    .from("users")
+    .select("name, username")
+    .eq("username", decodeURIComponent(params.user))
+    .maybeSingle();
+
+  return {
+    title: `Replies post by ${data?.name} (@${data?.username}) / BM`,
+    description: `Explore replies by ${data?.name} (@${data?.username}) on their profile page. Visit /${params.user}/with_replies for more!`,
+    openGraph: {
+      title: `Replies post by ${data?.name} (@${data?.username}) / BM`,
+      description: `Explore replies by ${data?.name} (@${data?.username}) on their profile page. Visit /${params.user}/with_replies for more!`,
+    },
+  };
+};
 
 const page = async ({ params }: { params: { user: string } }) => {
   const session = await getServerSession();
-  const { data: reposts_user } = await supabase
-    .from("users")
-    .select("id, reposts:reposts (post_id, id)");
   const { data } = await supabase
     .from("users")
     .select(
@@ -21,7 +41,7 @@ const page = async ({ params }: { params: { user: string } }) => {
     <>
       <ProfileCard {...{ ...data, emailLogin: session?.user.email }} />
       <TabNavigation username={data.username} />
-      <UserReposts id={data.id} />
+      <UserReplies id={data.id} />
     </>
   );
 };

@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "SignIn / BM",
+  description: "Sign in page with authentication google provider",
+};
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession();

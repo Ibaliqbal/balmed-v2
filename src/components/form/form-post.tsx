@@ -8,6 +8,7 @@ import { useUploadPostMutation } from "@/mutations/post-mutation";
 import { IoClose } from "react-icons/io5";
 import EmojiSelect from "./emoji-selected";
 import CustomImage from "../ui/image";
+import { offensiveWords } from "@/utils/helpers";
 
 const FormPost = ({
   queryKey,
@@ -28,10 +29,17 @@ const FormPost = ({
   const handlePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
-    const content = target.content.value;
+    const content = target.content.value as string;
 
     if (!content || content.trim() === "") {
       toast.error("Content cannot be empty");
+      return;
+    }
+
+    if (
+      offensiveWords.some((word) => content.toLocaleLowerCase().includes(word))
+    ) {
+      toast.error("Your post contains offensive content");
       return;
     }
 

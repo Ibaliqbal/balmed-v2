@@ -1,11 +1,17 @@
+import { getRandomStartData } from "@/actions/util";
 import Search from "@/components/form/form-search";
 import TrendsCard from "@/components/trends/trends-card";
 import { supabase } from "@/libs/supabase/init";
-import { dateFormat } from "@/utils/helpers";
+import { limitTrends } from "@/utils/constant";
 import Link from "next/link";
 
 const RightPeople = async () => {
-  const { data: trends } = await supabase.from("hastags").select().limit(10);
+  const start = await getRandomStartData(limitTrends, "hastags")
+
+  const { data: trends } = await supabase
+    .from("hastags")
+    .select()
+    .range(start, limitTrends + start);
   return (
     <section className="w-full">
       <header className={`w-full md:sticky md:top-0 z-10`}>

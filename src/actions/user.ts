@@ -3,6 +3,8 @@
 import { deleteFile, getUrlFile, uploadFile } from "@/libs/supabase/function";
 import { supabase } from "@/libs/supabase/init";
 import { MediaPreview } from "@/types/media";
+import { limitPost } from "@/utils/constant";
+import { queryPosting } from "@/utils/helpers";
 import { getServerSession } from "next-auth";
 
 export async function getAllUser() {
@@ -109,4 +111,27 @@ export async function searchPeople(query: string) {
   if (error) return [];
 
   return users;
+}
+
+export async function getInfinitePostsBookmarks(pageparams: number) {
+  const session = await getServerSession();
+
+  if (!session) return { data: [], max: 0 };
+
+  const { data: likes } = await supabase
+    .from("users")
+    .select(`id, bookmarks:bookmarks (post_id)`)
+    .eq("email", session.user.email)
+    .single();
+
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .in("id", likes?.bookmarks.map((mark) => mark.post_id) as string[])
+    .order("upload_at", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) return { data: [], max: count };
+
+  return { data, max: count };
 }

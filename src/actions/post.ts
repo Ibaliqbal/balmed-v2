@@ -7,6 +7,8 @@ import {
 } from "@/libs/supabase/function";
 import { supabase } from "@/libs/supabase/init";
 import { MediaPreview } from "@/types/media";
+import { limitPost } from "@/utils/constant";
+import { queryPosting } from "@/utils/helpers";
 import { randomUUID, UUID } from "crypto";
 import { getServerSession } from "next-auth";
 
@@ -300,9 +302,7 @@ export async function unbookmarkPost(id: string | UUID) {
 export async function getTrendPostsByContent(posts: string[]) {
   const { data, error } = await supabase
     .from("postings")
-    .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-    )
+    .select(queryPosting)
     .in("id", posts)
     .limit(3);
 
@@ -384,9 +384,7 @@ export async function uploadComment(input: {
 export async function getPostsByHastag(postsId: string[]) {
   const { data, error } = await supabase
     .from("postings")
-    .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-    )
+    .select(queryPosting)
     .in("id", postsId)
     .order("upload_at", { ascending: false });
 
@@ -409,17 +407,12 @@ export async function getMediaPostsByHastag(postsId: string[]) {
 export async function getSearchTop(query: string) {
   const { data, error } = await supabase
     .from("postings")
-    .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-    )
+    .select(queryPosting)
     .or(`content.ilike.%${query}%`)
     .is("comment_id", null)
-    .then((data) => {
-      data.data?.sort((a, b) => b.like[0].count - a.like[0].count);
-      return data;
-    });
+    .order("likes_count", { ascending: false });
 
-  if (error) return [];
+  if (error) throw new Error("Internal  server error, please try again");
 
   return data;
 }
@@ -427,9 +420,7 @@ export async function getSearchTop(query: string) {
 export async function getSearchLatest(query: string) {
   const { data, error } = await supabase
     .from("postings")
-    .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-    )
+    .select(queryPosting)
     .or(`content.ilike.%${query}%`)
     .is("comment_id", null)
     .order("upload_at", { ascending: false });
@@ -449,4 +440,123 @@ export async function getSearchMedia(query: string) {
   if (error) return [];
 
   return data.flatMap((data) => data.media);
+}
+
+export async function getInfinitePostsForYou(pageparams: number) {
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .is("comment_id", null)
+    .order("upload_at", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) return { data: [], max: count };
+
+  return { data, max: count };
+}
+export async function getInfinitePostsByFollowings(pageparams: number) {
+  const session = await getServerSession();
+
+  if (!session) return { data: [], max: 0 };
+
+  const { data: user, error: user_error } = await supabase
+    .from("users")
+    .select(`id, followings:follow!follow_user_id_fkey(follow_to, id)`)
+    .eq("email", session.user.email)
+    .single();
+
+  if (user_error) return { data: [], max: 0 };
+
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .in(
+      "creator_id",
+      user.followings.map((follow) => follow.follow_to)
+    )
+    .is("comment_id", null)
+    .order("upload_at", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) return { data: [], max: count };
+
+  return { data, max: count };
+}
+export async function getInfiniteComments(pageparams: number, id: string) {
+
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .eq("comment_id", id)
+    .order("upload_at", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) return { data: [], max: count };
+
+  return { data, max: count };
+}
+
+export async function getInfiniteSearchTop(query: string, pageparams: number) {
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .or(`content.ilike.%${query}%`)
+    .is("comment_id", null)
+    .order("likes_count", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) throw new Error("Internal  server error, please try again");
+
+  return { data, max: count };
+}
+
+export async function getInfiniteSearchLatest(
+  query: string,
+  pageparams: number
+) {
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .or(`content.ilike.%${query}%`)
+    .is("comment_id", null)
+    .order("upload_at", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) throw new Error("Internal  server error, please try again");
+
+  return { data, max: count };
+}
+
+export async function getInfiniteTopPostByHastag(
+  postsId: string[],
+  pageparams: number
+) {
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .in("id", postsId)
+    .is("comment_id", null)
+    .order("likes_count", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) throw new Error("Internal  server error, please try again");
+
+  return { data, max: count };
+}
+
+export async function getInfiniteLatestPostByHastag(
+  postsId: string[],
+  pageparams: number
+) {
+  const { data, error, count } = await supabase
+    .from("postings")
+    .select(queryPosting, { count: "exact" })
+    .in("id", postsId)
+    .is("comment_id", null)
+    .order("upload_at", { ascending: false })
+    .range(pageparams, pageparams + limitPost);
+
+  if (error) throw new Error("Internal  server error, please try again");
+
+  return { data, max: count };
 }

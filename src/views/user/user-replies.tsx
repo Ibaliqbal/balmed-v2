@@ -1,16 +1,19 @@
 "use client";
-import { getInfiniteComments } from "@/actions/post";
 import Loading from "@/components/loading";
 import PostCard from "@/components/post/post-card";
 import EmptyPosts from "@/layouts/empty-posts";
 import InfiniteScrollLayout from "@/layouts/infinite-scroll-layout";
+import instance from "@/libs/axios/instance";
 import { useGetUserLogin } from "@/provider/user-provider";
 import { GetPost } from "@/types/post";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { UUID } from "crypto";
+import Link from "next/link";
 import { LuLoader2 } from "react-icons/lu";
 
-const ListPOstComment = ({ id }: { id: string }) => {
+const UserReplies = ({ id }: { id: string | UUID }) => {
   const { user, isLoading: userLoading } = useGetUserLogin();
+
   const {
     hasNextPage,
     fetchNextPage,
@@ -19,8 +22,9 @@ const ListPOstComment = ({ id }: { id: string }) => {
     status,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ["post", `${id}-comments`],
-    queryFn: async ({ pageParam }) => await getInfiniteComments(pageParam, id),
+    queryKey: ["post", `user-${id}`, "with-replies"],
+    queryFn: async ({ pageParam }) =>
+      (await instance.get(`/api/users/${id}/comments?page=${pageParam}`)).data,
     initialPageParam: 0,
     getNextPageParam: (lastPage, nextPage) => {
       return nextPage.length * 10 >= lastPage.max!
@@ -29,13 +33,12 @@ const ListPOstComment = ({ id }: { id: string }) => {
     },
     enabled: !!id,
   });
-
   const datas = posts?.pages.flatMap((datas) => datas.data);
 
   return (
     <InfiniteScrollLayout
-      className="pt-4 pb-12"
       callback={() => hasNextPage && !isFetching && fetchNextPage()}
+      className="pt-5 pb-12"
     >
       <div className="flex flex-col gap-5">
         {status === "pending" || userLoading ? (
@@ -47,7 +50,10 @@ const ListPOstComment = ({ id }: { id: string }) => {
         ) : (
           <EmptyPosts>
             <h1 className="text-xl text-center">
-              No comment on this post, create your comment now
+              This user has not posted anything yet,{" "}
+              <Link href={`/home`} className="text-blue-600">
+                Start creating your own post now
+              </Link>
             </h1>
           </EmptyPosts>
         )}
@@ -61,4 +67,4 @@ const ListPOstComment = ({ id }: { id: string }) => {
   );
 };
 
-export default ListPOstComment;
+export default UserReplies;

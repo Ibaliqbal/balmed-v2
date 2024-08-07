@@ -1,23 +1,25 @@
 import { supabase } from "@/libs/supabase/init";
+import { limitPost } from "@/utils/constant";
+import { queryPosting } from "@/utils/helpers";
 import { NextRequest } from "next/server";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const page = Number(req.nextUrl.searchParams.get("page")) || 0;
   const { data: likes } = await supabase
     .from("users")
     .select(`id, likes:likes (post_id)`)
     .eq("id", params.id)
     .single();
 
-  const { data, error } = await supabase
+  const { data, error, count } = await supabase
     .from("postings")
-    .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-    )
+    .select(queryPosting, { count: "exact" })
     .in("id", likes?.likes.map((like) => like.post_id) as string[])
-    .order("upload_at", { ascending: false });
+    .order("upload_at", { ascending: false })
+    .range(page, page + limitPost);
 
   if (error)
     return Response.json(
@@ -25,5 +27,5 @@ export async function GET(
       { status: 400, statusText: "Bad request" }
     );
 
-  return Response.json({ posts: data }, { status: 200, statusText: "OK" });
+  return Response.json({ data, max: count }, { status: 200, statusText: "OK" });
 }

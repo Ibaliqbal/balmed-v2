@@ -1,21 +1,31 @@
+import { getRandomStartData } from "@/actions/util";
 import Search from "@/components/form/form-search";
 import TrendsCard from "@/components/trends/trends-card";
 import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
+import { limitTrends, limitUser } from "@/utils/constant";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const RightBookmarks = async () => {
   const session = await getServerSession();
+
+  const startUser = await getRandomStartData(limitUser, "users");
+  const startTrends = await getRandomStartData(limitTrends, "hastags");
+
   const { data: users } = await supabase
     .from("users")
     .select(
       `name, username, photo, bio, id, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
     )
     .not("email", "eq", session?.user.email as string)
-    .limit(5);
+    .range(startUser, startUser + limitUser);
 
-  const { data: trends } = await supabase.from("hastags").select().limit(10);
+  const { data: trends } = await supabase
+    .from("hastags")
+    .select()
+    .range(startTrends, limitTrends + startTrends);
+    
   return (
     <section className="relative w-full lg:block">
       <header className="w-full md:sticky md:top-0 z-10">

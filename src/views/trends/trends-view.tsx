@@ -26,7 +26,6 @@ const TrendsView = ({ trends }: { trends: Trend[] | null }) => {
       <div className="mt-5 flex flex-col gap-6">
         {trends
           ?.sort((a, b) => (b.posts.length || 0) - (a.posts.length || 0))
-          .slice(0, 10)
           .map((trend, i) => (
             <div key={i}>
               <div className="flex items-center gap-3 pl-3">

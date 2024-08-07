@@ -15,7 +15,9 @@ const layout = async ({
     .from("users")
     .select(`username, posts:postings!id (count)`)
     .eq("username", decodeURIComponent(params.user))
+    .is("posts.comment_id", null)
     .single();
+  const totalPosts = data?.posts[0].count;
   return (
     <>
       <MainSection>
@@ -23,8 +25,7 @@ const layout = async ({
           <div className="w-fit flex flex-col">
             <h1 className="text-2xl font-semibold">{data?.username}</h1>
             <p className="text-sm">
-              {data?.posts[0].count}{" "}
-              {data?.posts[0].count > 1 ? "Posts" : "Post"}
+              {totalPosts} {totalPosts > 1 ? "Posts" : "Post"}
             </p>
           </div>
         </HeaderWithBack>

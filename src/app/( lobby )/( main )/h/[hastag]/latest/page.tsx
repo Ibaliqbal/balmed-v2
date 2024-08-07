@@ -1,5 +1,5 @@
 import { supabase } from "@/libs/supabase/init";
-import HastagMediaView from "@/views/hastag/hastag-media-view";
+import HastagLatestPostView from "@/views/hastag/hastag-latest-post-view";
 import type { Metadata } from "next";
 
 export const generateMetadata = ({
@@ -9,12 +9,13 @@ export const generateMetadata = ({
 }): Metadata => {
   const hastagContent = decodeURIComponent(params.hastag);
   return {
-    title: `${hastagContent} Media / BM`,
-    description: `Discover the latest media content related to ${hastagContent} on Balmed.`,
-    keywords: [hastagContent, "Balmed", "media", "trends"],
+    title: `${hastagContent} Latest Media / BM`,
+    description: `Explore the latest media content related to ${hastagContent} on Balmed.`,
+    keywords: [hastagContent, "Balmed", "latest media", "trends"],
     openGraph: {
-      title: `${hastagContent} Media / BM`,
-      description: `Discover the latest media content related to ${hastagContent} on Balmed.`,
+      title: `${hastagContent} Latest Media / BM`,
+      description: `Explore the latest media content related to ${hastagContent} on Balmed.`,
+      url: `/h/${hastagContent}/latest`,
     },
   };
 };
@@ -28,7 +29,11 @@ const page = async ({ params }: { params: { hastag: string } }) => {
     .eq("content", decoded)
     .maybeSingle();
   return (
-    <HastagMediaView id={data?.id} hastag={decoded} postsId={data?.posts} />
+    <HastagLatestPostView
+      id={data?.id}
+      hastag={decoded}
+      postsId={data?.posts}
+    />
   );
 };
 

@@ -8,9 +8,14 @@ const TabNavigation = ({ hastag }: { hastag: string }) => {
   // Add your tab navigation code here
   const navigate = [
     {
-      title: "Latest",
+      title: "Top",
       href: `/h/${encodeURIComponent(hastag)}`,
       active: pathname === `/h/${encodeURIComponent(hastag)}`,
+    },
+    {
+      title: "Latest",
+      href: `/h/${encodeURIComponent(hastag)}/latest`,
+      active: pathname === `/h/${encodeURIComponent(hastag)}/latest`,
     },
     {
       title: "Media",
@@ -22,7 +27,7 @@ const TabNavigation = ({ hastag }: { hastag: string }) => {
     <div
       className={`grid grid-cols-${
         navigate.length ? navigate.length : "1"
-      } border-b-2 border-x-2 border-slate-700 `}
+      } border-b-2 lg:border-x-2 border-slate-700 `}
     >
       {navigate.map((nav, i) => (
         <div

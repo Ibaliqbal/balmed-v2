@@ -4,10 +4,28 @@ import RightExplore from "@/layouts/explore/right-explore";
 import MainSection from "@/layouts/main-section";
 import RightSide from "@/layouts/right-side";
 import { supabase } from "@/libs/supabase/init";
+import { limitTrends } from "@/utils/constant";
 import ExploreView from "@/views/explore/explore-view";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Explore / BM",
+  description: "Discover and engage with the latest trends on Balmed.",
+  openGraph: {
+    title: "Explore / BM",
+    description: "Discover and engage with the latest trends on Balmed.",
+  }
+};
 
 const page = async () => {
-  const { data: trends } = await supabase.from("hastags").select()
+  const { count } = await supabase
+    .from("hastags")
+    .select("*", { count: "exact", head: true });
+  const start = ~~(Math.random() * (count! - limitTrends) + 1);
+  const { data: trends } = await supabase
+    .from("hastags")
+    .select()
+    .range(start, start + limitTrends);
   return (
     <>
       <MainSection>

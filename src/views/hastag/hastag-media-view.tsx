@@ -24,7 +24,7 @@ const HastagMediaView = ({
   return isLoading ? (
     <Loading />
   ) : data?.length ?? 0 > 0 ? (
-    <section className="pt-8 px-3 grid grid-cols-3 gap-2 pb-10">
+    <section className="pt-8 px-3 grid grid-cols-3 gap-2 pb-12">
       {data?.map((media: MediaPreview, i: number) =>
         media.url.includes("mp4") ? (
           <video

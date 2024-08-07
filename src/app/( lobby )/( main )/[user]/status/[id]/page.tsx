@@ -1,14 +1,36 @@
 import PostDetail from "@/components/post/post-detail";
 import DetailPostFormComment from "@/layouts/detail-post/detail-post-form-comment";
 import { supabase } from "@/libs/supabase/init";
+import { queryPosting } from "@/utils/helpers";
 import ListPOstComment from "@/views/detail-post/list-post-comment";
+import type { Metadata } from "next";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { user: string; id: string };
+}): Promise<Metadata> => {
+  const username = decodeURIComponent(params.user);
+  const { data } = await supabase
+    .from("postings")
+    .select("content, media")
+    .eq("id", params.id)
+    .single();
+  return {
+    title: `${username} on BM : "${data?.content}"`,
+    description: `Detail post by ${username} at /${username}/status/${params.id}. Explore the content and comments.`,
+    openGraph: {
+      title: `${username} on BM : "${data?.content}"`,
+      description: `Detail post by ${username} at /${username}/status/${params.id}. Explore the content and comments.`,
+      images: data?.media.length > 0 ? data?.media[0].url : "/demo.png",
+    },
+  };
+};
 
 const page = async ({ params }: { params: { user: string; id: string } }) => {
   const { data } = await supabase
     .from("postings")
-    .select(
-      `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-    )
+    .select(queryPosting)
     .eq("id", params.id)
     .single();
 

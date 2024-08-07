@@ -1,29 +1,59 @@
 "use client";
 import { useGetUserLogin } from "@/provider/user-provider";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
-import { getSearchTop } from "@/actions/post";
+import { getInfiniteSearchTop } from "@/actions/post";
 import Loading from "@/components/loading";
 import { GetPost } from "@/types/post";
 import PostCard from "@/components/post/post-card";
 import EmptyPosts from "@/layouts/empty-posts";
-import Link from "next/link";
+import InfiniteScrollLayout from "@/layouts/infinite-scroll-layout";
+import { LuLoader2 } from "react-icons/lu";
 
 const SearchTopView = ({ query }: { query: string }) => {
   const { user, isLoading: userLoading } = useGetUserLogin();
-  const { data, isLoading } = useQuery({
+
+  const {
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    data: posts,
+    status,
+    isFetching,
+    error,
+    isError,
+  } = useInfiniteQuery({
     queryKey: ["post", `search-${query}`, "top"],
-    queryFn: async () => await getSearchTop(query),
+    queryFn: async ({ pageParam }) =>
+      await getInfiniteSearchTop(query, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, nextPage) => {
+      return nextPage.length * 10 >= lastPage.max!
+        ? undefined
+        : nextPage.length * 10;
+    },
     enabled: !!query,
   });
 
+  if (isError)
+    return (
+      <section className="pt-4">
+        <h1 className="text-center">{error.message}</h1>
+      </section>
+    );
+
+  const datas = posts?.pages.flatMap((datas) => datas.data);
+
   return (
-    <section className="pt-4">
-      {isLoading || userLoading ? (
+    <InfiniteScrollLayout
+      callback={() => hasNextPage && !isFetching && fetchNextPage()}
+      className="pt-4 pb-12"
+    >
+      {status === "pending" || userLoading ? (
         <Loading />
-      ) : data?.length ?? 0 > 0 ? (
+      ) : datas?.length ?? 0 > 0 ? (
         <div className="flex flex-col gap-5">
-          {data?.map((post: GetPost, i: number) => (
+          {datas?.map((post: GetPost, i: number) => (
             <PostCard key={post.id} {...post} userLogin={user} />
           ))}
         </div>
@@ -40,7 +70,12 @@ const SearchTopView = ({ query }: { query: string }) => {
           </div>
         </EmptyPosts>
       )}
-    </section>
+      {isFetchingNextPage && (
+        <div className="w-full items-center justify-center flex mt-3">
+          <LuLoader2 className="text-white w-5 h-5 animate-spin " />
+        </div>
+      )}
+    </InfiniteScrollLayout>
   );
 };
 

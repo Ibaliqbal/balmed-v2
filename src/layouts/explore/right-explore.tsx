@@ -1,18 +1,21 @@
+import { getRandomStartData } from "@/actions/util";
 import Search from "@/components/form/form-search";
 import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
+import { limitUser } from "@/utils/constant";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const RightExplore = async () => {
   const session = await getServerSession();
+  const start = await getRandomStartData(limitUser, "users");
   const { data: users } = await supabase
     .from("users")
     .select(
       `name, username, photo, bio, id, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
     )
     .not("email", "eq", session?.user.email as string)
-    .limit(5);
+    .range(start, start + limitUser);
 
   return (
     <section className="w-full">
