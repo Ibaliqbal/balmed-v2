@@ -5,7 +5,14 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "SignIn / BM",
-  description: "Sign in page with authentication google provider",
+  description: "What happened recently regarding entertainment or whatever",
+  keywords: ["twitter clone", "balmed", "social media"],
+  openGraph: {
+    type: "website",
+    title: "SignIn / BM",
+    description: "What happened recently regarding entertainment or whatever",
+    images: "/demo.png",
+  },
 };
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
@@ -14,11 +21,11 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   if (session) return redirect("/home");
   return (
     <main className="container py-7 h-dvh">
-      <section className="max-w-7xl h-full grid grid-cols-2 rounded-xl bg-slate-800/55">
+      <section className="max-w-7xl h-full lg:grid lg:grid-cols-2 flex justify-center items-center rounded-xl bg-slate-800/55">
         <section className="w-full h-full flex justify-center items-center py-7 ">
           {children}
         </section>
-        <section className="w-full h-full relative rounded-xl">
+        <section className="w-full h-full relative rounded-xl lg:block hidden">
           <Image
             src={"/example.jpg"}
             alt={"bg"}
