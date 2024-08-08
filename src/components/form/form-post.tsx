@@ -9,6 +9,7 @@ import { IoClose } from "react-icons/io5";
 import EmojiSelect from "./emoji-selected";
 import CustomImage from "../ui/image";
 import { offensiveWords } from "@/utils/helpers";
+import { AnimatePresence, motion } from "framer-motion";
 
 const FormPost = ({
   queryKey,
@@ -21,6 +22,7 @@ const FormPost = ({
   id: string;
   username: string;
 }) => {
+
   const [medias, setMedias] = useState<MediaPreview[]>([]);
   const [val, setVal] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -151,42 +153,68 @@ const FormPost = ({
         </button>
       </div>
       <div className="w-full flex gap-2 items-center overflow-x-auto max-w-full custom-scroll-vertical pb-2 mt-3">
-        {medias.map((media, i) =>
-          media.url.includes("mp4") ? (
-            <div className="relative group cursor-pointer" key={i}>
-              <video
-                className={`w-[100px] h-[100px] object-contain rounded-lg object-center`}
-                controls
+        <AnimatePresence>
+          {medias.map((media, i) =>
+            media.url.includes("mp4") ? (
+              <motion.div
+                initial={{ scale: 0.3 }}
+                animate={{
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: "backInOut",
+                  type: "tween",
+                }}
+                className="relative group cursor-pointer"
+                key={i}
               >
-                <source src={media?.url} type="video/mp4" />
-              </video>
-              <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
-                <IoClose
-                  className="w-5 h-5 font-bold text-white"
-                  aria-label="remove media button"
-                  onClick={() => handleDeleteFile(media.path)}
+                <video
+                  className={`w-[100px] h-[100px] object-contain rounded-lg object-center`}
+                  controls
+                >
+                  <source src={media?.url} type="video/mp4" />
+                </video>
+                <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
+                  <IoClose
+                    className="w-5 h-5 font-bold text-white"
+                    aria-label="remove media button"
+                    onClick={() => handleDeleteFile(media.path)}
+                  />
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                className="relative group cursor-pointer"
+                key={i}
+                initial={{ scale: 0.3 }}
+                animate={{
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: "backInOut",
+                  type: "tween",
+                }}
+              >
+                <CustomImage
+                  src={media.url}
+                  alt={"bg"}
+                  width={100}
+                  height={100}
+                  className="w-[100px] h-[100px] object-cover object-center rounded-lg"
                 />
-              </div>
-            </div>
-          ) : (
-            <div className="relative group cursor-pointer" key={i}>
-              <CustomImage
-                src={media.url}
-                alt={"bg"}
-                width={100}
-                height={100}
-                className="w-[100px] h-[100px] object-cover object-center rounded-lg"
-              />
-              <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
-                <IoClose
-                  className="w-5 h-5 font-bold text-white"
-                  aria-label="remove media button"
-                  onClick={() => handleDeleteFile(media.path)}
-                />
-              </div>
-            </div>
-          )
-        )}
+                <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
+                  <IoClose
+                    className="w-5 h-5 font-bold text-white"
+                    aria-label="remove media button"
+                    onClick={() => handleDeleteFile(media.path)}
+                  />
+                </div>
+              </motion.div>
+            )
+          )}
+        </AnimatePresence>
       </div>
     </form>
   );

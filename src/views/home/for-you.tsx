@@ -8,6 +8,7 @@ import Loading from "@/components/loading";
 import { getInfinitePostsForYou } from "@/actions/post";
 import InfiniteScrollLayout from "@/layouts/infinite-scroll-layout";
 import { LuLoader2 } from "react-icons/lu";
+import { AnimatePresence } from "framer-motion";
 
 const ForYou = () => {
   const { user, isLoading: userLoading } = useGetUserLogin();
@@ -39,9 +40,11 @@ const ForYou = () => {
         {status === "pending" || userLoading ? (
           <Loading />
         ) : datas?.length ?? 0 > 0 ? (
-          datas?.map((post: GetPost, i: number) => (
-            <PostCard key={post.id} {...post} userLogin={user} />
-          ))
+          <AnimatePresence mode="popLayout">
+            {datas?.map((post: GetPost, i: number) => (
+              <PostCard key={post.id} {...post} userLogin={user} />
+            ))}
+          </AnimatePresence>
         ) : (
           <EmptyPosts>
             <h1 className="text-xl text-center">

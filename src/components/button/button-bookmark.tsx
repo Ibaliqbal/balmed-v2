@@ -20,9 +20,7 @@ const ButtonBookmark = ({ id, isBookmarked }: Props) => {
   );
   const { mutate } = useMutation({
     mutationFn: async () =>
-      !bookmarked
-        ? unbookmarkPost(id as string)
-        : bookmarkedPost(id as string),
+      !bookmarked ? unbookmarkPost(id as string) : bookmarkedPost(id as string),
     async onMutate() {
       await queryClient.cancelQueries({ queryKey: ["user-login"] });
 
@@ -43,7 +41,7 @@ const ButtonBookmark = ({ id, isBookmarked }: Props) => {
       if (isBookmarked) {
         queryClient.setQueryData(["user-login"], (oldData: GetUser) => ({
           ...oldData,
-          bookmarks: oldData.bookmarks.filter((b) => b.id !== isBookmarked.id),
+          bookmarks: oldData.bookmarks.filter((b) => b.id !== newData.data?.id),
         }));
       } else {
         queryClient.setQueryData(["user-login"], (oldData: GetUser) => ({
@@ -72,6 +70,7 @@ const ButtonBookmark = ({ id, isBookmarked }: Props) => {
     <button
       onClick={() => mutate()}
       className={`disabled:cursor-not-allowed hover:text-yellow-500 transition-colors duration-200 ease-out`}
+      aria-label="button bookmark post"
     >
       {bookmarked ? (
         <FaBookmark className="w-5 h-5 text-yellow-500" />

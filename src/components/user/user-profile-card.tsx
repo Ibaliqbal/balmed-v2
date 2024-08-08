@@ -7,6 +7,7 @@ import { IoIosLink, IoMdCalendar } from "react-icons/io";
 import { TbDotsCircleHorizontal } from "react-icons/tb";
 import ButtonEditProfile from "../button/button-edit-profile";
 import CustomImage from "../ui/image";
+import ButtonFollow from "../button/button-follow";
 
 interface Props extends User {
   followings: [Count];
@@ -27,6 +28,7 @@ const ProfileCard = ({
   bio,
   photo,
   header_photo,
+  id,
 }: Props) => {
   return (
     <>
@@ -55,9 +57,7 @@ const ProfileCard = ({
             ) : (
               <>
                 <TbDotsCircleHorizontal className="w-12 h-12 cursor-pointer" />
-                <button className="bg-slate-800 text-white self-start px-6 py-3 rounded-full font-bold">
-                  Follow
-                </button>
+                <ButtonFollow className="bg-slate-800 px-6 py-3" id={id} />
               </>
             )}
           </div>

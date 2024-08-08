@@ -7,6 +7,7 @@ import EmptyPosts from "@/layouts/empty-posts";
 import Link from "next/link";
 import CustomImage from "@/components/ui/image";
 import { MediaPreview } from "@/types/media";
+import { motion } from "framer-motion";
 
 const SearchMediaView = ({ query }: { query: string }) => {
   const { data, isLoading } = useQuery({
@@ -21,22 +22,48 @@ const SearchMediaView = ({ query }: { query: string }) => {
     <section className="pt-8 px-3 grid md:grid-cols-3 grid-cols-2 gap-2 pb-10">
       {data?.map((media: MediaPreview, i: number) =>
         media.url.includes("mp4") ? (
-          <video
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{
+              scale: 1,
+            }}
             key={i}
-            className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
-            controls
+            transition={{
+              duration: 0.6,
+              ease: "backInOut",
+              type: "tween",
+              delay: 0.2 * i,
+            }}
           >
-            <source src={media?.url} type="video/mp4" />
-          </video>
+            <video
+              className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
+              controls
+            >
+              <source src={media?.url} type="video/mp4" />
+            </video>
+          </motion.div>
         ) : (
-          <CustomImage
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{
+              scale: 1,
+            }}
             key={i}
-            src={media.url}
-            alt={"medias"}
-            width={700}
-            height={700}
-            className="w-full object-cover object-center rounded-lg aspect-[1/.9] cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out"
-          />
+            transition={{
+              duration: 0.6,
+              ease: "backInOut",
+              type: "tween",
+              delay: 0.2 * i,
+            }}
+          >
+            <CustomImage
+              src={media.url}
+              alt={"medias"}
+              width={700}
+              height={700}
+              className="w-full object-cover object-center rounded-lg aspect-[1/.9] cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out"
+            />
+          </motion.div>
         )
       )}
     </section>

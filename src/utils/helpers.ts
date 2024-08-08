@@ -1,6 +1,6 @@
 import { formatDistanceToNowStrict, format } from "date-fns";
 
-export const queryPosting = `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`;
+export const queryPosting = `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`;
 export function dateConverterNow(date: Date | string): string {
   return formatDistanceToNowStrict(new Date(date), {
     addSuffix: true,
@@ -126,4 +126,3 @@ export const offensiveWords: string[] = [
   "wally",
   "prat",
 ];
-

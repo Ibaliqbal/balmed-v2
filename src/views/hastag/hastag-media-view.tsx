@@ -6,6 +6,7 @@ import EmptyPosts from "@/layouts/empty-posts";
 import { MediaPreview } from "@/types/media";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const HastagMediaView = ({
   id,
@@ -27,22 +28,48 @@ const HastagMediaView = ({
     <section className="pt-8 px-3 grid grid-cols-3 gap-2 pb-12">
       {data?.map((media: MediaPreview, i: number) =>
         media.url.includes("mp4") ? (
-          <video
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{
+              scale: 1,
+            }}
             key={i}
-            className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
-            controls
+            transition={{
+              duration: 0.6,
+              ease: "backInOut",
+              type: "tween",
+              delay: 0.2 * i,
+            }}
           >
-            <source src={media?.url} type="video/mp4" />
-          </video>
+            <video
+              className={`w-full aspect-[1/.9] object-contain rounded-xl object-center`}
+              controls
+            >
+              <source src={media?.url} type="video/mp4" />
+            </video>
+          </motion.div>
         ) : (
-          <CustomImage
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.6,
+              ease: "backInOut",
+              type: "tween",
+              delay: 0.2 * i,
+            }}
             key={i}
-            src={media.url}
-            alt={"medias"}
-            width={700}
-            height={700}
-            className="w-full object-cover object-center rounded-lg aspect-[1/.9] cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out"
-          />
+          >
+            <CustomImage
+              src={media.url}
+              alt={"medias"}
+              width={700}
+              height={700}
+              className="w-full object-cover object-center rounded-lg aspect-[1/.9] cursor-pointer hover:scale-95 transition-transform duration-200 ease-in-out"
+            />
+          </motion.div>
         )
       )}
     </section>

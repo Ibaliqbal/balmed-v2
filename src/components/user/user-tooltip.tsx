@@ -35,7 +35,7 @@ const UserTooltip = ({
             height={70}
             className="rounded-full w-[60px] h-[60px] object-cover object-center"
           />
-          <ButtonFollow className="bg-blue-600 py-3 px-5" id={id} />
+          <ButtonFollow className="bg-blue-800 py-3 px-5" id={id} />
         </div>
         <div className="flex gap-1 flex-col">
           <div className="flex gap-2 items-center flex-wrap">

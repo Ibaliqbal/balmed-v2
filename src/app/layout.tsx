@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={`${platypi.className} custom-scroll-horizontal`}>
         <TopLoader />
         <Provider>{children}</Provider>
-        <Toaster position="bottom-center" reverseOrder />
+        <Toaster position="top-right" reverseOrder />
       </body>
     </html>
   );

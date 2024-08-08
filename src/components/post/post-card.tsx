@@ -28,12 +28,14 @@ const PostCard = ({
 }: Props) => {
   return (
     <motion.article
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0, scale: 0.5 }}
       animate={{
         opacity: 1,
+        scale: 1,
         transition: {
-          duration: 0.8,
-          ease: "linear",
+          duration: 1,
+          type: "spring",
+          ease: "circInOut",
         },
       }}
       className="w-full border-b-2 pb-3 border-slate-700 p-4"
@@ -50,7 +52,7 @@ const PostCard = ({
               alt={"Avatar"}
               width={70}
               height={70}
-              className="rounded-full md:w-[50px] md:h-[50px] object-cover object-center"
+              className="rounded-full w-[50px] h-[50px] object-cover object-center"
             />
           </Link>
         </UserTooltip>

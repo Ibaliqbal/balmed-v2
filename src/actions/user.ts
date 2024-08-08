@@ -5,6 +5,7 @@ import { supabase } from "@/libs/supabase/init";
 import { MediaPreview } from "@/types/media";
 import { limitPost } from "@/utils/constant";
 import { queryPosting } from "@/utils/helpers";
+import { UUID } from "crypto";
 import { getServerSession } from "next-auth";
 
 export async function getAllUser() {
@@ -34,8 +35,6 @@ export async function getIsFollowing(id: string) {
     ),
   };
 }
-
-export async function followingAction() {}
 
 export async function uploadFileUser(formData: FormData) {
   const session = await getServerSession();
@@ -134,4 +133,28 @@ export async function getInfinitePostsBookmarks(pageparams: number) {
   if (error) return { data: [], max: count };
 
   return { data, max: count };
+}
+
+export async function follow(follow_to: string | UUID, user_id: string | UUID) {
+  const { error, data } = await supabase
+    .from("follow")
+    .insert({ follow_to, user_id })
+    .select("follow_to, id")
+    .single();
+  if (error) throw new Error("Server internal error");
+
+  return { data };
+}
+
+export async function unfollow(id: string) {
+  const { error, data } = await supabase
+    .from("follow")
+    .delete()
+    .eq("id", id)
+    .select("follow_to, id")
+    .single();
+
+  if (error) throw new Error("Server internal error");
+
+  return { data };
 }
