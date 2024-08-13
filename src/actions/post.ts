@@ -27,10 +27,37 @@ export async function uploadPost(input: {
     .single();
 
   const id = randomUUID();
+  const mentionPeople = input.content
+    .split(" ")
+    .filter((str) => str.startsWith("@"))
+    .reduce((acc: string[], word: string) => {
+      if (acc.find((str) => word === str)) {
+        return acc;
+      }
+
+      return [...acc, word];
+    }, []);
 
   const filterHastags = input.content
     .split(" ")
     .filter((str) => str.startsWith("#"));
+
+  const insertNotifications = mentionPeople.map(async (people) => {
+    const { data } = await supabase
+      .from("users")
+      .select("id")
+      .eq("username", people.replaceAll("@", ""))
+      .single();
+
+    if (data) {
+      await supabase.from("notifications").insert({
+        owner_id: data.id,
+        type: "mention",
+        post_id: id,
+        guest_id: userId?.id,
+      });
+    }
+  });
 
   const insertHastags = filterHastags.map(async (hastag) => {
     const { data: existHastag } = await supabase
@@ -64,6 +91,7 @@ export async function uploadPost(input: {
       .select(
         `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
       ),
+    insertNotifications,
   ]);
   if (newPost.error) throw new Error("Failed to create new post");
 
@@ -175,10 +203,24 @@ export async function getRepostPost(id: string | UUID) {
 
 export async function likePost(id: string | UUID) {
   const session = await getServerSession();
+  const { data: getOwnerId } = await supabase
+    .from("postings")
+    .select("creator_id")
+    .eq("id", id)
+    .single();
 
   if (!session)
     return { message: "Please login first", status: false, data: null };
   const { data } = await getUserLogin(session?.user.email as string);
+
+  const notif = {
+    type: "like",
+    post_id: id,
+    guest_id: getOwnerId?.creator_id,
+    owner_id: data.id,
+  };
+  await supabase.from("notifications").insert(notif);
+
   const { error } = await supabase
     .from("likes")
     .insert({ post_id: id, user_id: data.id });
@@ -193,7 +235,15 @@ export async function likePost(id: string | UUID) {
 
 export async function unlikePost(id: string | UUID) {
   const session = await getServerSession();
+
   const { data } = await getUserLogin(session?.user.email as string);
+
+  await supabase
+    .from("notifications")
+    .delete()
+    .eq("type", "like")
+    .eq("post_id", id)
+    .eq("guest_id", data.id);
 
   const { error } = await supabase
     .from("likes")
@@ -330,6 +380,12 @@ export async function uploadComment(input: {
 
   if (!session) throw new Error("Unautorized");
 
+  const { data: owner_post } = await supabase
+    .from("postings")
+    .select("creator_id")
+    .eq("id", input.id)
+    .single();
+
   const { data: userId } = await supabase
     .from("users")
     .select("id")
@@ -375,6 +431,12 @@ export async function uploadComment(input: {
       .select(
         `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
       ),
+    supabase.from("notifications").insert({
+      post_id: input.id,
+      guest_id: userId?.id,
+      owner_id: owner_post?.creator_id,
+      type: "comment",
+    }),
   ]);
   if (newPost.error) throw new Error("Failed to create new post");
 
@@ -483,7 +545,6 @@ export async function getInfinitePostsByFollowings(pageparams: number) {
   return { data, max: count };
 }
 export async function getInfiniteComments(pageparams: number, id: string) {
-
   const { data, error, count } = await supabase
     .from("postings")
     .select(queryPosting, { count: "exact" })

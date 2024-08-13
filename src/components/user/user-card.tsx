@@ -32,9 +32,9 @@ const UserCard = ({
                 : `https://ui-avatars.com/api/?name=${username}&background=random&color=fff`
             }
             alt={"Avatar"}
-            width={50}
-            height={50}
-            className="rounded-full w-[50px] h-[50px] object-cover object-center"
+            width={48}
+            height={48}
+            className="rounded-full w-[48px] h-[48px] object-cover object-center"
           />
         </UserTooltip>
         <div className="flex flex-col text-sm flex-grow gap-2">

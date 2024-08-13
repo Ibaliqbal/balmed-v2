@@ -31,7 +31,7 @@ const ButtonPost = () => {
           exit={{
             scale: 0,
           }}
-          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 gap-4 z-[9999] rounded-lg bg-red-400 p-3 modal-post border-2 border-white"
+          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 gap-4 z-[70] rounded-lg bg-red-400 p-3 modal-post border-2 border-white"
         >
           <h1 className="text-2xl font-bold mb-5">
             Post something do you want

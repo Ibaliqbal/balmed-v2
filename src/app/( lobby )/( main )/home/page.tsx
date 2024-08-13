@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Home / BM",
     description: "This is the home page of the application.",
-    images: "/demo.png",
   },
 };
 

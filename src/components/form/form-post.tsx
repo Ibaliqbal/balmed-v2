@@ -22,7 +22,6 @@ const FormPost = ({
   id: string;
   username: string;
 }) => {
-
   const [medias, setMedias] = useState<MediaPreview[]>([]);
   const [val, setVal] = useState("");
   const [isLoading, setIsLoading] = useState(false);

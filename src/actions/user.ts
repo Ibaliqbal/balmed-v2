@@ -141,6 +141,11 @@ export async function follow(follow_to: string | UUID, user_id: string | UUID) {
     .insert({ follow_to, user_id })
     .select("follow_to, id")
     .single();
+
+  await supabase
+    .from("notifications")
+    .insert({ type: "follow", owner_id: follow_to, guest_id: user_id });
+
   if (error) throw new Error("Server internal error");
 
   return { data };
@@ -151,8 +156,17 @@ export async function unfollow(id: string) {
     .from("follow")
     .delete()
     .eq("id", id)
-    .select("follow_to, id")
+    .select("follow_to, id, user_id")
     .single();
+
+  const { error: errorNotif } = await supabase
+    .from("notifications")
+    .delete()
+    .eq("type", "follow")
+    .eq("owner_id", data?.follow_to)
+    .eq("guest_id", data?.user_id);
+
+  console.log(errorNotif);
 
   if (error) throw new Error("Server internal error");
 

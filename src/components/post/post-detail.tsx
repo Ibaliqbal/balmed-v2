@@ -13,10 +13,8 @@ import CustomImage from "../ui/image";
 
 const PostDetail = ({
   post,
-  time_upload,
 }: {
   post: GetPost;
-  time_upload: string;
 }) => {
   const { user } = useGetUserLogin();
   const [formattedDate, setFormattedDate] = useState("");

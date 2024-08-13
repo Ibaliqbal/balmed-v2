@@ -34,14 +34,10 @@ const page = async ({ params }: { params: { user: string; id: string } }) => {
     .eq("id", params.id)
     .single();
 
-  const timeUpload = new Date(data.upload_at).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "numeric",
-    formatMatcher: "basic",
-  });
+  
   return (
     <div>
-      <PostDetail post={data} time_upload={timeUpload} />
+      <PostDetail post={data} />
       <DetailPostFormComment id={params.id} username={params.user} />
       <ListPOstComment id={params.id} />
     </div>

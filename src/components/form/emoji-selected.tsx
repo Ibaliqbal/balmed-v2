@@ -19,11 +19,23 @@ const EmojiSelect = ({ onEmojiSelect }: { onEmojiSelect: Function }) => {
         aria-label="button-emoji"
         onClick={() => setOpenModal((prev) => !prev)}
       />
-      {openModal && ( // Render EmojiPicker only if mounted
-        <div className="absolute z-50 ">
-          <EmojiPicker onEmojiClick={(obj) => onEmojiSelect(obj.emoji)} />
-        </div>
-      )}
+      <AnimatePresence>
+        {openModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+              type: "tween",
+            }}
+            className="absolute z-50 left-1/2 md:-translate-x-1/4 -translate-x-1/2"
+          >
+            <EmojiPicker onEmojiClick={(obj) => onEmojiSelect(obj.emoji)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -50,9 +50,9 @@ const PostCard = ({
                   : `https://ui-avatars.com/api/?name=${creator.username}&background=random&color=fff`
               }
               alt={"Avatar"}
-              width={70}
-              height={70}
-              className="rounded-full w-[50px] h-[50px] object-cover object-center"
+              width={48}
+              height={48}
+              className="rounded-full aspect-square object-cover object-center"
             />
           </Link>
         </UserTooltip>

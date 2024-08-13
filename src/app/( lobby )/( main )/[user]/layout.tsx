@@ -23,13 +23,21 @@ const layout = async ({
       <MainSection>
         <HeaderWithBack>
           <div className="w-fit flex flex-col">
-            <h1 className="text-2xl font-semibold">{data?.username}</h1>
+            <h1 className="text-2xl font-semibold">
+              {data ? data?.username : "User Not found"}
+            </h1>
             <p className="text-sm">
               {totalPosts} {totalPosts > 1 ? "Posts" : "Post"}
             </p>
           </div>
         </HeaderWithBack>
-        <section className="lg:border-x-2 border-slate-700">{children}</section>
+        <section className="lg:border-x-2 border-slate-700">
+          {data ? (
+            children
+          ) : (
+            <h1 className="text-center text-xl mt-5">User Not found</h1>
+          )}
+        </section>
       </MainSection>
       <RightSide>
         <RightUserProfile />

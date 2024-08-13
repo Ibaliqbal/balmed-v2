@@ -24,7 +24,6 @@ export const useUploadPostMutation = (
           );
         },
       });
-      const queryFilter = {} satisfies QueryFilters;
 
       const previousPosts =
         queryClient.getQueryData<

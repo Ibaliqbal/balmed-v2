@@ -9,7 +9,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="lg:grid lg:grid-cols-9 container lg:px-[1.25rem] max-w-7xl lg:gap-4">
       <LeftSide />
-      <section className="lg:col-span-7 lg:grid lg:grid-cols-5 lg:gap-4">
+      <section className="lg:col-span-7 lg:grid lg:grid-cols-7 lg:gap-4">
         {children}
       </section>
     </main>

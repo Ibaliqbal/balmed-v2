@@ -10,7 +10,7 @@ const MainSection = ({
   children: React.ReactNode;
 }) => {
   return (
-    <main className={`lg:col-span-3 ${className}`} {...rest}>
+    <main className={`lg:col-span-4 ${className}`} {...rest}>
       <NavbarProfile />
       {children}
       <NavbarBottom />
