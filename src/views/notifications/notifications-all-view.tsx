@@ -7,7 +7,7 @@ import React from "react";
 
 const AllNotificationsView = async () => {
   const user = await getServerUser();
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("notifications")
     .select(
       `*, post:postings!post_id(id, content, creator: users (username)), visitor:users!guest_id (name, username, photo)`,
@@ -26,7 +26,7 @@ const AllNotificationsView = async () => {
             idNotif={notif.id}
             idPost=""
             type={notif.type}
-            username=""
+            username={notif.visitor.username}
             isRead={notif.isAlreadyRead}
             key={notif.id}
           >
