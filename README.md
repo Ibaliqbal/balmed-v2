@@ -10,13 +10,30 @@
 
 ## Features
 
-- **Authentication:** Secure login and registration using NextAuth.
-- **Post Interactions:** Users can like, create, mark, and repost posts.
-- **Search Functionality:** Search for posts using keywords or phrases.
-- **User Interactions:** Follow and unfollow other users (Feature in development).
-- **Media Upload:** Upload images and videos, stored securely in Supabase storage.
-- **Trending Posts:** View trending posts based on hashtags.
-- **Optimistic Updates:** Real-time feedback for likes, reposts, marks, and post creation.
+- **Authentication:**
+  - Secure and efficient user authentication powered by NextAuth, including registration and login.
+
+- **Post Interactions:**
+  - Engage with content by liking, creating, bookmarking, and reposting posts.
+
+- **Search Functionality:**
+  - Discover posts easily with advanced keyword and phrase search capabilities.
+
+- **User Interactions:**
+  - Follow and unfollow users effortlessly, enhancing your social network.
+
+- **Media Upload:**
+  - Upload and securely store images and videos using Supabase's robust storage solutions.
+
+- **Trending Posts:**
+  - Stay updated with trending posts driven by popular hashtags.
+
+- **Optimistic Updates:**
+  - Experience real-time, responsive feedback for actions such as likes, reposts, bookmarks, and post creation.
+
+- **Notifications:**
+  - Receive timely notifications for follows, mentions, and comments to stay engaged with your community.
+
 
 ## Tech Stack
 
