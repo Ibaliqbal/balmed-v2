@@ -102,15 +102,19 @@ const ButtonEditProfile = () => {
       </button>
       <Modal open={openModalEdit} setOpen={setOpenModalEdit}>
         <motion.div
-          initial={{ scale: 0 }}
+          initial={{ opacity: 0, translateY: 200 }}
           animate={{
-            scale: 1,
-            transition: {
-              duration: 0.3,
-            },
+            opacity: 1,
+            translateY: 0,
           }}
           exit={{
-            scale: 0,
+            opacity: 0,
+            translateY: -200,
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut",
+            type: "tween",
           }}
           className="fixed bg-primary md:max-w-[750px] mx-w-[450px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 gap-4 z-[9999] rounded-lg bg-red-400 modal-post custom-scroll-horizontal border-2 border-white"
         >

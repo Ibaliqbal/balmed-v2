@@ -27,6 +27,10 @@ export async function uploadPost(input: {
     .single();
 
   const id = randomUUID();
+  const filterHastags = input.content
+    .split(" ")
+    .filter((str) => str.startsWith("#"));
+
   const mentionPeople = input.content
     .split(" ")
     .filter((str) => str.startsWith("@"))
@@ -37,10 +41,6 @@ export async function uploadPost(input: {
 
       return [...acc, word];
     }, []);
-
-  const filterHastags = input.content
-    .split(" ")
-    .filter((str) => str.startsWith("#"));
 
   const insertNotifications = mentionPeople.map(async (people) => {
     const { data } = await supabase
@@ -417,6 +417,34 @@ export async function uploadComment(input: {
     return;
   });
 
+  const mentionPeople = input.content
+    .split(" ")
+    .filter((str) => str.startsWith("@"))
+    .reduce((acc: string[], word: string) => {
+      if (acc.find((str) => word === str)) {
+        return acc;
+      }
+
+      return [...acc, word];
+    }, []);
+
+  const insertNotifications = mentionPeople.map(async (people) => {
+    const { data } = await supabase
+      .from("users")
+      .select("id")
+      .eq("username", people.replaceAll("@", ""))
+      .single();
+
+    if (data) {
+      await supabase.from("notifications").insert({
+        owner_id: data.id,
+        type: "mention",
+        post_id: id,
+        guest_id: userId?.id,
+      });
+    }
+  });
+
   const [_, newPost] = await Promise.all([
     insertHastags,
     supabase
@@ -437,6 +465,7 @@ export async function uploadComment(input: {
       owner_id: owner_post?.creator_id,
       type: "comment",
     }),
+    insertNotifications,
   ]);
   if (newPost.error) throw new Error("Failed to create new post");
 

@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 0;
+
 const page = () => {
   return <MentionsNotificationsView />;
 };

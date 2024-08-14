@@ -21,15 +21,19 @@ const ButtonPost = () => {
       </button>
       <Modal open={open} setOpen={setOpen}>
         <motion.div
-          initial={{ scale: 0 }}
+          initial={{ opacity: 0, translateY: 200 }}
           animate={{
-            scale: 1,
-            transition: {
-              duration: 0.3,
-            },
+            opacity: 1,
+            translateY: 0,
           }}
           exit={{
-            scale: 0,
+            opacity: 0,
+            translateY: -200,
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut",
+            type: "tween",
           }}
           className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 gap-4 z-[70] rounded-lg bg-red-400 p-3 modal-post border-2 border-white"
         >

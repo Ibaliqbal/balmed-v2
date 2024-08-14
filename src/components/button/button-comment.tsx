@@ -38,17 +38,21 @@ const ButtonComment = ({ id, total, username_creator, isDetail }: Props) => {
       </button>
       <Modal open={open} setOpen={setOpen}>
         <motion.div
-          initial={{ scale: 0 }}
+          initial={{ opacity: 0, translateY: 200 }}
           animate={{
-            scale: 1,
-            transition: {
-              duration: 0.3,
-            },
+            opacity: 1,
+            translateY: 0,
           }}
           exit={{
-            scale: 0,
+            opacity: 0,
+            translateY: -200,
           }}
-          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 z-[9999] rounded-lg bg-red-400 p-3 modal-post border-2 border-white"
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut",
+            type: "tween",
+          }}
+          className="fixed bg-primary md:max-w-[750px] mx-w-[650px] pb-8 overflow-auto max-h-[700px] h-fit m-auto inset-0 z-[9999] rounded-lg p-3 modal-post border-2 border-white"
         >
           <div>
             <h1 className="text-2xl font-bold mb-5">

@@ -48,7 +48,7 @@ const AllNotificationsView = async () => {
                 type: notif.type,
                 owner_id: notif.owner_id,
               }}
-              idNotif={notif.id}
+              usernameLogin={user.username}
             />
           </NotificationWrapper>
         )

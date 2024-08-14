@@ -8,17 +8,16 @@ type Props = Pick<Post, "content" | "id"> &
   Pick<User, "username" | "name" | "photo"> & {
     type: string;
     owner_id: string;
-    idNotif: string;
+    usernameLogin: string;
   };
 
 const NotificationPostCard = ({
   username,
   photo,
   name,
-  id,
   type,
   content,
-  idNotif,
+  usernameLogin,
 }: Props) => {
   const msgComment = "meninggalkan komentar di postingan anda";
   const msgMention = "menyebut anda di sebuah post";
@@ -56,7 +55,7 @@ const NotificationPostCard = ({
             <div className="w-full p-2 bg-slate-700 bg-opacity-40 rounded-md">
               <p>
                 {content.split(" ").map((str, i) =>
-                  str.startsWith("@") ? (
+                  str.startsWith("@") && str === `@${usernameLogin}` ? (
                     <span className="bg-sky-500/40" key={i}>
                       {str}{" "}
                     </span>

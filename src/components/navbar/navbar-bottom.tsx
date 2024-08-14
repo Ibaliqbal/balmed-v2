@@ -2,20 +2,23 @@
 import { useMotionValueEvent, useScroll, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IoHome,
   IoHomeOutline,
   IoNotifications,
+  IoNotificationsOutline,
   IoSearchOutline,
   IoMail,
 } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { getCountNotifications } from "@/actions/notification";
 
 const NavbarBottom = () => {
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState<boolean>(false);
+  const [countNotif, setCountNotif] = useState(0);
 
   useMotionValueEvent(scrollY, "change", (latest: number) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -25,6 +28,15 @@ const NavbarBottom = () => {
       setHidden(false);
     }
   });
+
+  useEffect(() => {
+    async function getNotif() {
+      const res = await getCountNotifications();
+      setCountNotif(res ?? 0);
+    }
+
+    getNotif();
+  }, []);
 
   return (
     <motion.nav
@@ -47,9 +59,21 @@ const NavbarBottom = () => {
         </Link>
       </div>
       <div className="w-full flex items-center justify-center font-semibold cursor-pointer">
-        <p className={`h-full py-7 text-2xl`}>
-          <IoNotifications />
-        </p>
+        <Link
+          href={"/notification"}
+          className={`h-full py-7 text-2xl relative`}
+        >
+          {pathname === "/notification" ? (
+            <IoNotifications />
+          ) : (
+            <IoNotificationsOutline />
+          )}
+          {!!countNotif ? (
+            <div className="w-5 h-5 text-center text-xs bg-red-600 rounded-full absolute top-5 -left-1">
+              {countNotif}
+            </div>
+          ) : null}
+        </Link>
       </div>
       <div className="w-full flex items-center justify-center font-semibold cursor-pointer">
         <p className={`h-full py-7 text-2xl`}>
