@@ -72,7 +72,7 @@ const ModalMedia = ({
             className="w-12 h-12 flex justify-center items-center bg-gray-700"
             onClick={handlePrev}
           >
-            <GoArrowLeft className="cursor-pointer text-xl text-white" />
+            <GoArrowLeft className="cursor-pointer text-xl" />
           </div>
           <AnimatePresence mode="wait">
             <motion.div
@@ -126,7 +126,7 @@ const ModalMedia = ({
             className="flex w-12 h-12 justify-center items-center bg-gray-700"
             onClick={handleNext}
           >
-            <GoArrowRight className="cursor-pointer text-xl text-white" />
+            <GoArrowRight className="cursor-pointer text-xl" />
           </div>
         </section>
       </motion.div>

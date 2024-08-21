@@ -9,7 +9,7 @@ const Loading = ({ className, ...rest }: Props) => {
       className={`w-full items-center justify-center flex pt-4 ${className}`}
       {...rest}
     >
-      <LuLoader2 className="text-white w-5 h-5 animate-spin " />
+      <LuLoader2 className="w-5 h-5 animate-spin " />
     </div>
   );
 };

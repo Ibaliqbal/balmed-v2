@@ -49,7 +49,7 @@ const PostMedia = ({ media }: { media: MediaPreview[] }) => {
                         handleOpenModal(m?.url);
                       }}
                     ></video>
-                    <div className="w-full h-full font-semibold text-lg inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60 text-white grid place-items-center">
+                    <div className="w-full h-full font-semibold text-lg inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60 grid place-items-center">
                       +{media.length - 4}
                     </div>
                   </motion.div>
@@ -76,7 +76,7 @@ const PostMedia = ({ media }: { media: MediaPreview[] }) => {
                       height={700}
                       className="w-full object-cover object-center rounded-lg aspect-[1/.9]"
                     />
-                    <div className="w-full h-full font-semibold text-xl inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60 text-white grid place-items-center">
+                    <div className="w-full h-full font-semibold text-xl inset-0 absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in bg-black bg-opacity-60  grid place-items-center">
                       +{media.length - 4}
                     </div>
                   </motion.div>

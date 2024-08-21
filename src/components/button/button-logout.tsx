@@ -7,14 +7,14 @@ const ButtonLogout = ({ isAuth }: { isAuth: Session | null }) => {
     <div className="w-full">
       {isAuth ? (
         <button
-          className="text-white bg-red-600 font-bold py-4 w-full rounded-md"
+          className="bg-red-600 font-bold py-4 w-full rounded-md"
           onClick={() => signOut()}
         >
           Logout
         </button>
       ) : (
         <button
-          className="text-white bg-blue-600 font-bold py-4 px-4 w-full rounded-md"
+          className="bg-blue-600 font-bold py-4 px-4 w-full rounded-md"
           onClick={() => signIn()}
         >
           Login

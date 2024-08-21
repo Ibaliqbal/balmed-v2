@@ -74,7 +74,7 @@ const ButtonFollow = ({
 
   return id !== user?.id ? (
     <button
-      className={`${className} self-start rounded-full font-bold disabled:cursor-not-allowed text-white`}
+      className={`${className} self-start rounded-full font-bold disabled:cursor-not-allowed`}
       onClick={() => mutate()}
       disabled={isLoading}
     >

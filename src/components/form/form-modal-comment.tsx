@@ -135,7 +135,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
 
         <button
           disabled={isLoading || status === "pending"}
-          className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg disabled:bg-opacity-65 disabled:cursor-not-allowed"
+          className="bg-blue-600 px-6 py-3 rounded-full text-lg disabled:bg-opacity-65 disabled:cursor-not-allowed"
         >
           {isLoading || status === "pending" ? "Process..." : "Post"}
         </button>
@@ -152,7 +152,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
               </video>
               <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
                 <IoClose
-                  className="w-5 h-5 font-bold text-white"
+                  className="w-5 h-5 font-bold"
                   aria-label="remove media button"
                   onClick={() => handleDeleteFile(media.path)}
                 />
@@ -169,7 +169,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
               />
               <div className="w-full h-full inset-0 absolute bg-black bg-opacity-60 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-200 ease-out">
                 <IoClose
-                  className="w-5 h-5 font-bold text-white"
+                  className="w-5 h-5 font-bold"
                   aria-label="remove media button"
                   onClick={() => handleDeleteFile(media.path)}
                 />

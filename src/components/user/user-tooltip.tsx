@@ -26,7 +26,7 @@ const UserTooltip = ({
   return (
     <div className="relative cursor-pointer group w-fit">
       {children}
-      <div className="w-[300px] h-fit z-[62] rounded-2xl scale-0 invisible opacity-0 transition-all duration-[600ms] ease-in-out group-hover:visible group-hover:opacity-100 bg-slate-900 bg-opacity-70 text-white absolute left-[50%] -translate-x-[50%] group-hover:scale-100 origin-top flex flex-col">
+      <div className="w-[300px] h-fit z-[62] rounded-2xl scale-0 invisible opacity-0 transition-all duration-[600ms] ease-in-out group-hover:visible group-hover:opacity-100 bg-slate-900 bg-opacity-70 absolute left-[50%] -translate-x-[50%] group-hover:scale-100 origin-top flex flex-col">
         <CustomImage
           src={header_photo ? header_photo.url : "/example.jpg"}
           alt="Header photo"

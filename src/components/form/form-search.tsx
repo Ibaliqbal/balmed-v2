@@ -25,7 +25,7 @@ const Search = ({
   }
   return (
     <form
-      className={`${className} flex items-center gap-4 text-white bg-slate-700 rounded-full pl-5`}
+      className={`${className} flex items-center gap-4 bg-slate-700 rounded-full pl-5`}
       onSubmit={handleSearch}
       {...rest}
     >

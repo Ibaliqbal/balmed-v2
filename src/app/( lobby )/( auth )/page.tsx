@@ -8,7 +8,7 @@ const page = ({
 }) => {
   const callbackUrl = (searchParams.callbackUrl as string) || "/";
   return (
-    <div className="text-white w-4/5 h-full flex items-center justify-center flex-col">
+    <div className="w-4/5 h-full flex items-center justify-center flex-col">
       <div className="w-full">
         <h1 className="text-center font-bold text-3xl pt-6">Login to BM</h1>
         <div className="w-full mt-6 my-auto">

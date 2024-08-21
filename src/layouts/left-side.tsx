@@ -27,7 +27,7 @@ const LeftSide = async () => {
 
   return (
     <aside className="w-full p-4 lg:flex hidden flex-col items-start gap-8 h-dvh col-span-2 sticky top-0 z-[61]">
-      <nav className="flex-col grow h-full w-full items-start flex gap-10 text-white">
+      <nav className="flex-col grow h-full w-full items-start flex gap-10">
         <h1 className="text-xl font-bold">BM</h1>
         <Icon
           href="/home"

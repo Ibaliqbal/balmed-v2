@@ -33,7 +33,7 @@ const RightHome = async () => {
           <Search />
         </div>
       </header>
-      <main className="p-4 text-white mt-4">
+      <main className="p-4 mt-4">
         <div className="w-full py-5 pl-5 pr-10 rounded-3xl border-2 border-slate-800">
           <section className="flex flex-col gap-3">
             <h1 className="font-bold text-2xl">Subscribe to premium</h1>
@@ -41,7 +41,7 @@ const RightHome = async () => {
               Subscribe to unlock new features and if eligible, receive a share
               of ads revenue.
             </p>
-            <button className="bg-blue-600 px-4 py-3 rounded-full self-start text-white font-semibold">
+            <button className="bg-blue-600 px-4 py-3 rounded-full self-start font-semibold">
               Subscribe
             </button>
           </section>

@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${platypi.className} custom-scroll-horizontal`}>
+      <body
+        className={`${platypi.className} custom-scroll-horizontal text-white`}
+      >
         <TopLoader />
         <Provider>{children}</Provider>
         <Toaster position="top-right" reverseOrder />

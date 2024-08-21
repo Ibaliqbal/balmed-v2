@@ -19,7 +19,7 @@ const RightPeople = async () => {
           <Search />
         </div>
       </header>
-      <main className="pt-4 mt-4 text-white">
+      <main className="pt-4 mt-4">
         <section
           className={`w-full p-5 border-2 border-slate-800 rounded-3xl mt-4`}
         >

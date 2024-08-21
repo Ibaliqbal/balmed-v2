@@ -71,7 +71,7 @@ const SearchTopView = ({ query }: { query: string }) => {
       )}
       {isFetchingNextPage && (
         <div className="w-full items-center justify-center flex mt-3">
-          <LuLoader2 className="text-white w-5 h-5 animate-spin " />
+          <LuLoader2 className="w-5 h-5 animate-spin " />
         </div>
       )}
     </InfiniteScrollLayout>

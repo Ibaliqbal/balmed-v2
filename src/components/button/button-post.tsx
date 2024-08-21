@@ -14,7 +14,7 @@ const ButtonPost = () => {
   return (
     <>
       <button
-        className="bg-blue-600 font-bold w-full py-4 rounded-full text-white"
+        className="bg-blue-600 font-bold w-full py-4 rounded-full"
         onClick={() => setOpen(true)}
       >
         Post

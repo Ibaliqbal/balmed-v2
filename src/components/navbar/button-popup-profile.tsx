@@ -162,7 +162,7 @@ const ButtonPopupProfile = ({
               animate="enter"
               exit="closed"
               custom={6}
-              className="text-white bg-red-600 font-bold py-4 w-full rounded-md justify-self-end"
+              className="bg-red-600 font-bold py-4 w-full rounded-md justify-self-end"
               onClick={() => signOut()}
             >
               Logout

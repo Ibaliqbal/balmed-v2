@@ -24,7 +24,7 @@ const RightExplore = async () => {
           <Search />
         </div>
       </header>
-      <main className="pt-4 mt-4 text-white">
+      <main className="pt-4 mt-4">
         <section className="w-full p-5 rounded-3xl border-2 border-slate-800 mt-4">
           <h1 className="text-2xl font-bold">Who to follow</h1>
           <div className="mt-4 w-full flex flex-col gap-6 mb-5">

@@ -94,7 +94,7 @@ const ButtonEditProfile = () => {
   return (
     <div className="">
       <button
-        className="bg-slate-800 text-white self-start px-6 py-3 rounded-full font-bold"
+        className="bg-slate-800 self-start px-6 py-3 rounded-full font-bold"
         onClick={() => setOpenModalEdit(true)}
       >
         Edit profile
@@ -238,14 +238,14 @@ const ButtonEditProfile = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <button
-                      className="bg-red-600 font-bold md:hidden w-full py-4 rounded-full text-white self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
+                      className="bg-red-600 font-bold md:hidden w-full py-4 rounded-full self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
                       type="button"
                       onClick={() => setOpenModalEdit(false)}
                     >
                       Cancel
                     </button>
                     <button
-                      className="bg-blue-600 font-bold w-full py-4 rounded-full text-white self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
+                      className="bg-blue-600 font-bold w-full py-4 rounded-full self-end disabled:bg-opacity-65 disabled:cursor-not-allowed"
                       type="submit"
                       disabled={loading}
                     >
