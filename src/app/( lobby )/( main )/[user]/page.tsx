@@ -4,6 +4,7 @@ import { supabase } from "@/libs/supabase/init";
 import UserPosts from "@/views/user/user-posts";
 import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
+import { seo } from "@/utils/helpers";
 
 export const generateMetadata = async ({
   params,
@@ -16,14 +17,11 @@ export const generateMetadata = async ({
     .eq("username", decodeURIComponent(params.user))
     .maybeSingle();
 
-  return {
-    title: `${data?.name} (@${data?.username}) / BM`,
-    description: `Discover the profile of ${data?.name} (@${data?.username}). Visit /${data?.username} for more information and updates.`,
-    openGraph: {
-      title: `${data?.name} (@${data?.username}) / BM`,
-      description: `Discover the profile of ${data?.name} (@${data?.username}). Visit /${data?.username} for more information and updates.`,
-    },
-  };
+  return seo(
+    `${data?.name} (@${data?.username}) / BM`,
+    `Discover the profile of ${data?.name} (@${data?.username}). Visit /${data?.username} for more information and updates.`,
+    `${params.user}`
+  );
 };
 
 const page = async ({ params }: { params: { user: string } }) => {

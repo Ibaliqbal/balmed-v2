@@ -115,7 +115,7 @@ const PostCard = ({
         }}
       />
       {who_likes.length > 0 ? (
-        <p className="mt-4">
+        <p className="mt-4 md:text-sm text-xs">
           Liked by{" "}
           <Link
             href={`/${encodeURIComponent(who_likes[0].user.username)}`}

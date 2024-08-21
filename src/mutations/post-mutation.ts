@@ -4,7 +4,6 @@ import {
   InfiniteData,
   useMutation,
   useQueryClient,
-  QueryFilters,
 } from "@tanstack/react-query";
 
 export const useUploadPostMutation = (
@@ -37,6 +36,7 @@ export const useUploadPostMutation = (
         InfiniteData<{ data: Array<GetPost>; max: number }, number | undefined>
       >(queryKey, (oldData) => {
         const firstPage = oldData?.pages[0];
+        console.log(oldData);
         if (firstPage) {
           return {
             pageParams: oldData.pageParams,
@@ -64,6 +64,7 @@ export const useUploadPostMutation = (
           | undefined;
       }
     ) => {
+      console.log(err);
       if (context) {
         queryClient.setQueryData(queryKey, context.previousPosts);
       }

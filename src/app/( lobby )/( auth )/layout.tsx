@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: "SignIn / BM",
     description: "What happened recently regarding entertainment or whatever",
     images: "/demo.png",
+    siteName: `${process.env.NEXT_PUBLIC_APP_URL}`,
   },
 };
 

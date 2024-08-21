@@ -5,6 +5,7 @@ import UserReplies from "@/views/user/user-replies";
 import { getServerSession } from "next-auth";
 
 import type { Metadata } from "next";
+import { seo } from "@/utils/helpers";
 
 export const generateMetadata = async ({
   params,
@@ -17,14 +18,11 @@ export const generateMetadata = async ({
     .eq("username", decodeURIComponent(params.user))
     .maybeSingle();
 
-  return {
-    title: `Replies post by ${data?.name} (@${data?.username}) / BM`,
-    description: `Explore replies by ${data?.name} (@${data?.username}) on their profile page. Visit /${params.user}/with_replies for more!`,
-    openGraph: {
-      title: `Replies post by ${data?.name} (@${data?.username}) / BM`,
-      description: `Explore replies by ${data?.name} (@${data?.username}) on their profile page. Visit /${params.user}/with_replies for more!`,
-    },
-  };
+  return seo(
+    `Replies post by ${data?.name} (@${data?.username}) / BM`,
+    `Explore replies by ${data?.name} (@${data?.username}) on their profile page. Visit /${params.user}/with_replies for more!`,
+    `${params.user}/with_replies`
+  );
 };
 
 const page = async ({ params }: { params: { user: string } }) => {

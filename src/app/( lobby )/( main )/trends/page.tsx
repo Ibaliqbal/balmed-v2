@@ -4,18 +4,16 @@ import RightSide from "@/layouts/right-side";
 import RightTrends from "@/layouts/trends/right-trends";
 import { supabase } from "@/libs/supabase/init";
 import { limitTrends } from "@/utils/constant";
+import { seo } from "@/utils/helpers";
 import TrendsView from "@/views/trends/trends-view";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Trends / BM",
-  description: "Discover and share trends in the Balmed community.",
-  keywords: ["balmed", "trends", "community"],
-  openGraph: {
-    title: "Trends / BM",
-    description: "Discover and share trends in the Balmed community.",
-  }
-};
+export const metadata: Metadata = seo(
+  "Trends / BM",
+  "Discover and share trends in the Balmed community.",
+  "trends",
+  ["balmed", "trends", "community"]
+);
 
 const page = async () => {
   const { count } = await supabase

@@ -3,8 +3,8 @@ import TabNavigation from "@/layouts/user-profile/tab-navigation";
 import { supabase } from "@/libs/supabase/init";
 import UserMedias from "@/views/user/user-medias";
 import { getServerSession } from "next-auth";
-
 import type { Metadata } from "next";
+import { seo } from "@/utils/helpers";
 
 export const generateMetadata = async ({
   params,
@@ -17,14 +17,11 @@ export const generateMetadata = async ({
     .eq("username", decodeURIComponent(params.user))
     .maybeSingle();
 
-  return {
-    title: `Media posts by ${data?.name} (@${data?.username}) / BM`,
-    description: `Explore media posts by ${data?.name} (@${data?.username}) on their profile. Discover photos, videos, and more!`,
-    openGraph: {
-      title: `Media posts by ${data?.name} (@${data?.username}) / BM`,
-      description: `Explore media posts by ${data?.name} (@${data?.username}) on their profile. Discover photos, videos, and more!`,
-    },
-  };
+  return seo(
+    `Media posts by ${data?.name} (@${data?.username}) / BM`,
+    `Explore media posts by ${data?.name} (@${data?.username}) on their profile. Discover photos, videos, and more!`,
+    `${params.user}/medias`
+  );
 };
 
 const page = async ({ params }: { params: { user: string } }) => {

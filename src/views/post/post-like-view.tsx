@@ -1,6 +1,5 @@
 import UserCard from "@/components/user/user-card";
 import { supabase } from "@/libs/supabase/init";
-import React from "react";
 
 const PostLikeView = async ({ id }: { id: string }) => {
   const { data: totalUserId } = await supabase

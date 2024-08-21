@@ -1,7 +1,7 @@
 import PostDetail from "@/components/post/post-detail";
 import DetailPostFormComment from "@/layouts/detail-post/detail-post-form-comment";
 import { supabase } from "@/libs/supabase/init";
-import { queryPosting } from "@/utils/helpers";
+import { queryPosting, seo } from "@/utils/helpers";
 import ListPOstComment from "@/views/detail-post/list-post-comment";
 import type { Metadata } from "next";
 
@@ -16,15 +16,11 @@ export const generateMetadata = async ({
     .select("content, media")
     .eq("id", params.id)
     .single();
-  return {
-    title: `${username} on BM : "${data?.content}"`,
-    description: `Detail post by ${username} at /${username}/status/${params.id}. Explore the content and comments.`,
-    openGraph: {
-      title: `${username} on BM : "${data?.content}"`,
-      description: `Detail post by ${username} at /${username}/status/${params.id}. Explore the content and comments.`,
-      images: data?.media.length > 0 ? data?.media[0].url : "/demo.png",
-    },
-  };
+  return seo(
+    `${username} on BM : "${data?.content}"`,
+    `Detail post by ${username} at /${username}/status/${params.id}. Explore the content and comments.`,
+    `${params.user}/status/${params.id}`
+  );
 };
 
 const page = async ({ params }: { params: { user: string; id: string } }) => {
@@ -34,7 +30,6 @@ const page = async ({ params }: { params: { user: string; id: string } }) => {
     .eq("id", params.id)
     .single();
 
-  
   return (
     <div>
       <PostDetail post={data} />

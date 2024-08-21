@@ -1,4 +1,3 @@
-import React from "react";
 import SearchLatestView from "@/views/search/search-latest-view";
 import SearchMediaView from "@/views/search/search-media-view";
 import SearchPeopleView from "@/views/search/search-people-view";
@@ -7,26 +6,25 @@ import TabNavigation from "@/layouts/search/tab-search-navigation";
 import HeaderWithBack from "@/components/header/header-with-back";
 import Search from "@/components/form/form-search";
 import type { Metadata } from "next";
+import { seo } from "@/utils/helpers";
 
 export const generateMetadata = ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }): Metadata => {
+  const query = decodeURIComponent(searchParams.q as string);
+  const filter = decodeURIComponent(searchParams?.f as string);
   const title = `${decodeURIComponent(searchParams.q as string)} - Search / BM`;
   const description = "Discover new trends and topics in the balmed community.";
   const keywords = ["search", "community", "trends"];
-  const openGraph = {
-    title,
-    description,
-    keywords,
-  };
 
-  return {
+  return seo(
     title,
     description,
-    openGraph,
-  };
+    `search?q=${query}${filter !== "undefined" ? `&f=${filter}` : ""}`,
+    keywords
+  );
 };
 
 const page = ({

@@ -3,8 +3,8 @@ import TabNavigation from "@/layouts/user-profile/tab-navigation";
 import { supabase } from "@/libs/supabase/init";
 import UserLikePosts from "@/views/user/user-like-posts";
 import { getServerSession } from "next-auth";
-
 import type { Metadata } from "next";
+import { seo } from "@/utils/helpers";
 
 export const generateMetadata = async ({
   params,
@@ -17,14 +17,11 @@ export const generateMetadata = async ({
     .eq("username", decodeURIComponent(params.user))
     .maybeSingle();
 
-  return {
-    title: `Posts like by ${data?.name} (@${data?.username}) / BM`,
-    description: `Explore the posts liked by ${data?.name} (@${data?.username}) on their profile. Visit /${data?.username}/likes for more insights.`,
-    openGraph: {
-      title: `Posts like by ${data?.name} (@${data?.username}) / BM`,
-      description: `Explore the posts liked by ${data?.name} (@${data?.username}) on their profile. Visit /${data?.username}/likes for more insights.`,
-    },
-  };
+  return seo(
+    `Posts like by ${data?.name} (@${data?.username}) / BM`,
+    `Explore the posts liked by ${data?.name} (@${data?.username}) on their profile. Visit /${data?.username}/likes for more insights.`,
+    `${params.user}/likes`
+  );
 };
 
 const page = async ({ params }: { params: { user: string } }) => {

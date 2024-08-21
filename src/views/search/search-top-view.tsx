@@ -1,7 +1,6 @@
 "use client";
 import { useGetUserLogin } from "@/provider/user-provider";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
 import { getInfiniteSearchTop } from "@/actions/post";
 import Loading from "@/components/loading";
 import { GetPost } from "@/types/post";

@@ -1,4 +1,3 @@
-import React from "react";
 import CustomImage from "../ui/image";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { User } from "@/types/user";

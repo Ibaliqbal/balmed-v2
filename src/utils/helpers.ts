@@ -1,6 +1,28 @@
 import { formatDistanceToNowStrict, format } from "date-fns";
+import type { Metadata } from "next";
 
 export const queryPosting = `*, comment:postings (count), like:likes!id(count), who_likes:likes!id(user:users!user_id (username)), repost:reposts!id(count), creator:users (name, username, photo, bio, header_photo, id, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`;
+
+export const seo = (
+  title: string,
+  description: string,
+  site: string,
+  keywords?: string[]
+): Metadata => {
+  return {
+    title,
+    description,
+    keywords,
+    openGraph: {
+      type: "website",
+      title,
+      description,
+      siteName: `${process.env.NEXT_PUBLIC_APP_URL}/${site}`,
+      url: `${process.env.NEXT_PUBLIC_APP_URL}/${site}`,
+    },
+  };
+};
+
 export function dateConverterNow(date: Date | string): string {
   return formatDistanceToNowStrict(new Date(date), {
     addSuffix: true,

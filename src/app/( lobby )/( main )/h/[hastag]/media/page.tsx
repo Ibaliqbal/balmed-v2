@@ -1,4 +1,5 @@
 import { supabase } from "@/libs/supabase/init";
+import { seo } from "@/utils/helpers";
 import HastagMediaView from "@/views/hastag/hastag-media-view";
 import type { Metadata } from "next";
 
@@ -8,15 +9,12 @@ export const generateMetadata = ({
   params: { hastag: string };
 }): Metadata => {
   const hastagContent = decodeURIComponent(params.hastag);
-  return {
-    title: `${hastagContent} Media / BM`,
-    description: `Discover the latest media content related to ${hastagContent} on Balmed.`,
-    keywords: [hastagContent, "Balmed", "media", "trends"],
-    openGraph: {
-      title: `${hastagContent} Media / BM`,
-      description: `Discover the latest media content related to ${hastagContent} on Balmed.`,
-    },
-  };
+  return seo(
+    `${hastagContent} / BM`,
+    `Discover the latest media content related to ${hastagContent} on Balmed.`,
+    `h/${params.hastag}/media`,
+    [hastagContent, "Balmed", "trends"]
+  );
 };
 
 const page = async ({ params }: { params: { hastag: string } }) => {

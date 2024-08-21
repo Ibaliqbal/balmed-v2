@@ -88,9 +88,7 @@ export async function uploadPost(input: {
         media: input.medias,
         creator_id: userId?.id,
       })
-      .select(
-        `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-      ),
+      .select(queryPosting),
     insertNotifications,
   ]);
   if (newPost.error) throw new Error("Failed to create new post");
@@ -456,9 +454,7 @@ export async function uploadComment(input: {
         creator_id: userId?.id,
         comment_id: input.id,
       })
-      .select(
-        `*, comment:postings (count), like:likes!id(count), repost:reposts!id(count), creator:users (name, username, photo, bio, followers:follow_follow_to_fkey (count), followings:follow_user_id_fkey (count))`
-      ),
+      .select(queryPosting),
     supabase.from("notifications").insert({
       post_id: input.id,
       guest_id: userId?.id,

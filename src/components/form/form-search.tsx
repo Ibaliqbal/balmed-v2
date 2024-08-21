@@ -33,7 +33,7 @@ const Search = ({
       <Input
         type="search"
         className="w-full py-5 rounded-e-full px-4 bg-slate-700 outline-none"
-        placeholder="Search"
+        placeholder="Search something..."
         name="search"
         defaultValue={defaultValue}
       />

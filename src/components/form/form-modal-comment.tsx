@@ -99,7 +99,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
   return (
     <form className="grow flex flex-col gap-3" onSubmit={handlePost}>
       <textarea
-        placeholder="Text something"
+        placeholder="What happened today !!!"
         name="content"
         id=""
         value={value}

@@ -159,7 +159,7 @@ export async function unfollow(id: string) {
     .select("follow_to, id, user_id")
     .single();
 
-  const { error: errorNotif } = await supabase
+  await supabase
     .from("notifications")
     .delete()
     .eq("type", "follow")

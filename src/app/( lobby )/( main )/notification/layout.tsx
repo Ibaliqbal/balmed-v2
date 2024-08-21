@@ -4,7 +4,6 @@ import RightBookmarks from "@/layouts/bookmarks/right-bookmarks";
 import MainSection from "@/layouts/main-section";
 import TabNavigation from "@/layouts/notifications/tab-navigation";
 import RightSide from "@/layouts/right-side";
-import React from "react";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   const countNotif = await getCountNotifications();

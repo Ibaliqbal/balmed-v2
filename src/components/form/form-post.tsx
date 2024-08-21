@@ -86,7 +86,7 @@ const FormPost = ({
           { url: data?.url as string, path: data?.path as string },
         ]);
       } catch (error) {
-        toast.error("Something went wrong in the server")
+        toast.error("Something went wrong in the server");
       } finally {
         setIsLoading(false);
       }
@@ -114,7 +114,7 @@ const FormPost = ({
   return (
     <form className="grow flex flex-col gap-3" onSubmit={handlePost}>
       <textarea
-        placeholder="Text something"
+        placeholder="What happened today !!!"
         name="content"
         value={val}
         onChange={(e) => setVal(e.target.value)}

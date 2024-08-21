@@ -1,5 +1,4 @@
 import PostLikeView from "@/views/post/post-like-view";
-import React from "react";
 
 type Props = {
   params: { id: string };

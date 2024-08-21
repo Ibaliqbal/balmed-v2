@@ -2,17 +2,16 @@ import HeaderWithBack from "@/components/header/header-with-back";
 import RightBookmarks from "@/layouts/bookmarks/right-bookmarks";
 import MainSection from "@/layouts/main-section";
 import RightSide from "@/layouts/right-side";
+import { seo } from "@/utils/helpers";
 import BookmarksView from "@/views/bookmarks/bookmarks-view";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Bookmarks / BM",
-  description: "Discover new trends and topics in the balmed community.",
-  openGraph: {
-    title: "Balmed",
-    description: "Discover new trends and topics in the balmed community.",
-  },
-};
+export const metadata: Metadata = seo(
+  "Bookmarks / BM",
+  "Discover new trends and topics in the balmed community.",
+  "bookmarks"
+);
+
 const page = () => {
   return (
     <>

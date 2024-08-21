@@ -2,6 +2,7 @@ import UserCard from "@/components/user/user-card";
 import EmptyPosts from "@/layouts/empty-posts";
 import { supabase } from "@/libs/supabase/init";
 import { GetFollow } from "@/types/follow";
+import { seo } from "@/utils/helpers";
 import { UUID } from "crypto";
 
 import type { Metadata } from "next";
@@ -17,14 +18,11 @@ export const generateMetadata = async ({
     .eq("username", decodeURIComponent(params.user))
     .maybeSingle();
 
-  return {
-    title: `People followed by ${data?.name} (@${data?.username}) / BM`,
-    description: "This is the user profile page of the application.",
-    openGraph: {
-      title: `People followed by ${data?.name} (@${data?.username}) / BM`,
-      description: "This is the user profile page of the application.",
-    },
-  };
+  return seo(
+    `People followed by ${data?.name} (@${data?.username}) / BM`,
+    "This is the user profile page of the application.",
+    `${params.user}/followings`
+  );
 };
 
 const page = async ({ params }: { params: { user: string } }) => {

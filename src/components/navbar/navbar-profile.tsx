@@ -1,5 +1,4 @@
 import { getServerUser } from "@/libs/supabase/function";
-import React from "react";
 import ButtonPopupProfile from "./button-popup-profile";
 
 const NavbarProfile = async () => {

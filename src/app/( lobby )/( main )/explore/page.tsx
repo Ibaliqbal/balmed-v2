@@ -5,17 +5,15 @@ import MainSection from "@/layouts/main-section";
 import RightSide from "@/layouts/right-side";
 import { supabase } from "@/libs/supabase/init";
 import { limitTrends } from "@/utils/constant";
+import { seo } from "@/utils/helpers";
 import ExploreView from "@/views/explore/explore-view";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Explore / BM",
-  description: "Discover and engage with the latest trends on Balmed.",
-  openGraph: {
-    title: "Explore / BM",
-    description: "Discover and engage with the latest trends on Balmed.",
-  }
-};
+export const metadata: Metadata = seo(
+  "Explore / BM",
+  "Discover and engage with the latest trends on Balmed.",
+  "explore"
+);
 
 const page = async () => {
   const { count } = await supabase

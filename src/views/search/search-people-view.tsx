@@ -1,7 +1,6 @@
 import { getAllUser, searchPeople } from "@/actions/user";
 import UserCard from "@/components/user/user-card";
 import EmptyPosts from "@/layouts/empty-posts";
-import React from "react";
 
 const SearchPeopleView = async ({ query }: { query: string }) => {
   const people = await searchPeople(query);

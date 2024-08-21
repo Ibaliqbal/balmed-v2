@@ -2,7 +2,6 @@ import NotificationPostCard from "@/components/notification/notification-post-ca
 import NotificationWrapper from "@/components/notification/notification-wrapper";
 import { getServerUser } from "@/libs/supabase/function";
 import { supabase } from "@/libs/supabase/init";
-import React from "react";
 
 const MentionsNotificationsView = async () => {
   const user = await getServerUser();
