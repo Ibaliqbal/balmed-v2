@@ -47,8 +47,8 @@ const ButtonRepost = ({ id, isReposted, total }: Props) => {
     <button
       onClick={() => mutate()}
       className={`${
-        data.isReposted && "text-sky-500"
-      } flex items-center gap-2 repost disabled:cursor-not-allowed hover:text-sky-500 transition-colors duration-200 ease-out`}
+        data.isReposted && "text-[#00BA7C]"
+      } flex items-center gap-2 repost disabled:cursor-not-allowed hover:text-[#00BA7C] transition-colors duration-200 ease-out`}
     >
       <BiRepost className={`w-7 h-7`} /> {data.total}
     </button>

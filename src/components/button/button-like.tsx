@@ -46,8 +46,8 @@ const Like = ({ isLiked, total, id }: Props) => {
   return (
     <button
       className={`flex items-center gap-2 disabled:cursor-not-allowed like ${
-        data.isLiked && "text-red-600"
-      } hover:text-red-600 transition-colors duration-200 ease-out`}
+        data.isLiked && "text-[#F91880]"
+      } hover:text-[#F91880] transition-colors duration-200 ease-out`}
       onClick={() => mutate()} // Pass necessary arguments
     >
       {data.isLiked ? (

@@ -68,11 +68,11 @@ const ButtonBookmark = ({ id, isBookmarked }: Props) => {
   return (
     <button
       onClick={() => mutate()}
-      className={`disabled:cursor-not-allowed hover:text-yellow-500 transition-colors duration-200 ease-out`}
+      className={`disabled:cursor-not-allowed hover:text-[#1D9BF0] transition-colors duration-200 ease-out`}
       aria-label="button bookmark post"
     >
       {bookmarked ? (
-        <FaBookmark className="w-5 h-5 text-yellow-500" />
+        <FaBookmark className="w-5 h-5 text-[#1D9BF0]" />
       ) : (
         <FaRegBookmark className="w-5 h-5" />
       )}
