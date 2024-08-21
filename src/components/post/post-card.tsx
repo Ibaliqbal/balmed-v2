@@ -26,6 +26,7 @@ const PostCard = ({
   id,
   creator_id,
   who_likes,
+  comment_id,
 }: Props) => {
   return (
     <motion.article
@@ -90,6 +91,17 @@ const PostCard = ({
         <PostMoreAction />
       </section>
       <section className="w-full pt-5 flex flex-col gap-3">
+        {comment_id ? (
+          <p>
+            Reply to{" "}
+            <Link
+              href={`/${encodeURIComponent(creator.username)}`}
+              className="text-blue-600"
+            >
+              {creator.username}
+            </Link>
+          </p>
+        ) : null}
         <Content
           content={content ? content : "Holaaa"}
           username={creator.username}

@@ -34,7 +34,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
     }
 
     mutate(
-      { content: `${content} @${username}`, medias: mediasComment, id },
+      { content: `${content}`, medias: mediasComment, id },
       {
         onSuccess: () => {
           toast.success("Post uploaded successfully");
