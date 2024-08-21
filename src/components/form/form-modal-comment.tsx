@@ -71,7 +71,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
           { url: data?.url as string, path: data?.path as string },
         ]);
       } catch (error) {
-        console.log(error);
+        toast.error("Something went wrong in the server");
       } finally {
         setIsLoading(false);
       }
@@ -122,6 +122,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
               className="hidden peer"
               id="upload_image_comment"
               onChange={handleUpload}
+              disabled={isLoading || status === "pending"}
             />
           </div>
           <EmojiSelect

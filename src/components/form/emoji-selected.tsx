@@ -30,7 +30,7 @@ const EmojiSelect = ({ onEmojiSelect }: { onEmojiSelect: Function }) => {
               ease: "easeInOut",
               type: "tween",
             }}
-            className="absolute z-50 left-1/2 md:-translate-x-1/4 -translate-x-1/2"
+            className="absolute z-50 left-1/2 -translate-x-1/4 lg:-translate-x-1/2"
           >
             <EmojiPicker onEmojiClick={(obj) => onEmojiSelect(obj.emoji)} />
           </motion.div>

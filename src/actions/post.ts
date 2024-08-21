@@ -216,8 +216,8 @@ export async function likePost(id: string | UUID) {
   const notif = {
     type: "like",
     post_id: id,
-    guest_id: getOwnerId?.creator_id,
-    owner_id: data.id,
+    guest_id: data.id,
+    owner_id: getOwnerId?.creator_id,
   };
   await supabase.from("notifications").insert(notif);
 
@@ -540,7 +540,6 @@ export async function getInfinitePostsForYou(pageparams: number) {
     .is("comment_id", null)
     .order("upload_at", { ascending: false })
     .range(pageparams, pageparams + limitPost);
-
   if (error) return { data: [], max: count };
 
   return { data, max: count };

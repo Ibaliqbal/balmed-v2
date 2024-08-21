@@ -5,7 +5,10 @@ import { Count } from "@/types/post";
 import Link from "next/link";
 import CustomImage from "../ui/image";
 
-type Props = Pick<User, "username" | "bio" | "photo" | "name" | "id"> & {
+type Props = Pick<
+  User,
+  "username" | "bio" | "photo" | "name" | "id" | "header_photo"
+> & {
   followings: Count[];
   followers: Count[];
 };
@@ -18,12 +21,22 @@ const UserCard = ({
   photo,
   username,
   id,
+  header_photo,
 }: Props) => {
   return (
     <div className="w-full flex items-center justify-between">
       <div className="flex itmes-center gap-4">
         <UserTooltip
-          {...{ bio, username, name, photo, followers, followings, id }}
+          {...{
+            bio,
+            username,
+            name,
+            photo,
+            followers,
+            followings,
+            id,
+            header_photo,
+          }}
         >
           <CustomImage
             src={
@@ -39,7 +52,16 @@ const UserCard = ({
         </UserTooltip>
         <div className="flex flex-col text-sm flex-grow gap-2">
           <UserTooltip
-            {...{ bio, username, name, photo, followers, followings, id }}
+            {...{
+              bio,
+              username,
+              name,
+              photo,
+              followers,
+              followings,
+              id,
+              header_photo,
+            }}
           >
             <Link
               href={`/${encodeURIComponent(username)}`}
@@ -49,7 +71,16 @@ const UserCard = ({
             </Link>
           </UserTooltip>
           <UserTooltip
-            {...{ bio, username, name, photo, followers, followings, id }}
+            {...{
+              bio,
+              username,
+              name,
+              photo,
+              followers,
+              followings,
+              id,
+              header_photo,
+            }}
           >
             <Link
               href={`/${encodeURIComponent(username)}`}

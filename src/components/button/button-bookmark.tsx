@@ -52,7 +52,6 @@ const ButtonBookmark = ({ id, isBookmarked }: Props) => {
     },
     onError: (err, newData, context) => {
       toast.error("Something went wrong in the server");
-      console.log(err);
       queryClient.setQueryData(["user-login"], context?.previousData);
       if (bookmarked) {
         bookmarkedOptimistic(true);

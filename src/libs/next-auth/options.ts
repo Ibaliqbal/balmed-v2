@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
           }
         }
       } catch (e) {
-        console.log(e);
+        throw new Error("Something went wrong in the authentication");
       }
 
       return token;

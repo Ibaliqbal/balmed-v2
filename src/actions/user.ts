@@ -13,7 +13,7 @@ export async function getAllUser() {
   const { data: users, error } = await supabase
     .from("users")
     .select(
-      `name, username, photo, bio, id, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
+      `name, username, photo, bio, id, header_photo, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
     )
     .neq("email", session?.user.email);
 
@@ -103,7 +103,7 @@ export async function searchPeople(query: string) {
   const { data: users, error } = await supabase
     .from("users")
     .select(
-      `name, username, photo, bio, id, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
+      `name, username, photo, bio, id, header_photo, followings:follow_user_id_fkey(count), followers:follow_follow_to_fkey (count)`
     )
     .or(`name.ilike.%${query}%, username.ilike.%${query}%`);
 
@@ -165,8 +165,6 @@ export async function unfollow(id: string) {
     .eq("type", "follow")
     .eq("owner_id", data?.follow_to)
     .eq("guest_id", data?.user_id);
-
-  console.log(errorNotif);
 
   if (error) throw new Error("Server internal error");
 

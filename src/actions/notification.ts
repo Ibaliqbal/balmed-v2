@@ -24,7 +24,6 @@ export async function addNotification() {
     type: "mention",
     isAlreadyRead: false,
   });
-  console.log(error);
   if (error) {
     return false;
   } else {
@@ -38,7 +37,6 @@ export async function updateRead(id: string) {
     .update({ isAlreadyRead: true })
     .eq("id", id);
 
-  console.log(error);
 
   if (error) return false;
 

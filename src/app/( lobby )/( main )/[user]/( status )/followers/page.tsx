@@ -34,7 +34,7 @@ const page = async ({ params }: { params: { user: string } }) => {
     await supabase
       .from("users")
       .select(
-        `id, followers:follow!follow_follow_to_fkey( user:follow_user_id_fkey (name, username, bio, photo, id, followers: follow_follow_to_fkey (count), followings: follow_user_id_fkey (count)))`
+        `id, followers:follow!follow_follow_to_fkey( user:follow_user_id_fkey (name, username, bio, photo, id, header_photo, followers: follow_follow_to_fkey (count), followings: follow_user_id_fkey (count)))`
       )
       .eq("username", decodeURIComponent(params.user))
       .single();

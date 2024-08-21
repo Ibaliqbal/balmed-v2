@@ -31,10 +31,6 @@ export async function GET(req: NextRequest) {
     .is("comment_id", null)
     .order("upload_at", { ascending: false });
 
-  console.log(data);
-
-  console.log(error);
-
   if (error)
     return Response.json(
       { message: "Internal server error please try again", data: [] },

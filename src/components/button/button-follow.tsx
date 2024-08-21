@@ -59,8 +59,7 @@ const ButtonFollow = ({
       }
     },
     onError: (err, newData, ctx) => {
-      toast.error("Something went wrong in the server");
-      console.log(err);
+      toast.error("Something went wrong in the server")
       queryClient.setQueryData(["user-login"], ctx?.previousData);
       if (isFollowing) {
         followingOptimistic(true);

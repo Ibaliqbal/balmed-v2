@@ -11,7 +11,7 @@ export type Follow = {
 };
 
 export type GetFollow = {
-  user: Pick<User, "username" | "bio" | "photo" | "name" | "id"> & {
+  user: Pick<User, "username" | "bio" | "photo" | "name" | "id" | "header_photo"> & {
     followings: Count[];
     followers: Count[];
   };

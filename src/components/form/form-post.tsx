@@ -86,7 +86,7 @@ const FormPost = ({
           { url: data?.url as string, path: data?.path as string },
         ]);
       } catch (error) {
-        console.log(error);
+        toast.error("Something went wrong in the server")
       } finally {
         setIsLoading(false);
       }
@@ -136,6 +136,7 @@ const FormPost = ({
               className="hidden peer"
               id="upload_image"
               onChange={handleUpload}
+              disabled={isLoading || status === "pending"}
             />
           </div>
           <EmojiSelect
@@ -146,7 +147,7 @@ const FormPost = ({
         </div>
         <button
           disabled={isLoading || status === "pending"}
-          className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg disabled:bg-opacity-65 disabled:cursor-not-allowed"
+          className="bg-blue-600 text-white md:px-6 md:py-3 py-1 px-3 rounded-full md:text-lg text-sm disabled:bg-opacity-65 disabled:cursor-not-allowed"
         >
           {isLoading || status === "pending" ? "Process..." : "Post"}
         </button>

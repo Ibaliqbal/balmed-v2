@@ -16,7 +16,7 @@ const RightBookmarks = async () => {
   const { data: users } = await supabase
     .from("users")
     .select(
-      `name, username, photo, bio, id, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
+      `name, username, photo, bio, id, header_photo, followings:follow!follow_user_id_fkey(count), followers:follow!follow_follow_to_fkey (count)`
     )
     .not("email", "eq", session?.user.email as string)
     .range(startUser, startUser + limitUser);
@@ -25,7 +25,7 @@ const RightBookmarks = async () => {
     .from("hastags")
     .select()
     .range(startTrends, limitTrends + startTrends);
-    
+
   return (
     <section className="relative w-full lg:block">
       <header className="w-full md:sticky md:top-0 z-10">

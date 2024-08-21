@@ -47,7 +47,7 @@ const ButtonEditProfile = () => {
         id: user?.id as string,
       });
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong in the server");
     } finally {
       setLoading(false);
       toast.success("Update data profile successfully");
@@ -78,14 +78,13 @@ const ButtonEditProfile = () => {
         if (isAvatar) {
           setAvatar({ url: data?.url as string, path: data?.path as string });
         } else {
-          console.log("here");
           setHeaderPhoto({
             url: data?.url as string,
             path: data?.path as string,
           });
         }
       } catch (error) {
-        console.log(error);
+        toast.error("Something went wrong in the server");
       } finally {
         setLoading(false);
       }
@@ -159,7 +158,11 @@ const ButtonEditProfile = () => {
               <div className="px-5">
                 <figure className="md:w-[200px] w-[150px] h-[150px] md:h-[200px] md:-mt-32 -mt-20 bg-primary rounded-full p-2 flex items-center justify-center relative cover-photo">
                   <CustomImage
-                    src={avatar ? avatar.url : "/avatar.jpg"}
+                    src={
+                      avatar
+                        ? avatar.url
+                        : `https://ui-avatars.com/api/?name=${user?.username}&background=random&color=fff`
+                    }
                     alt={"Avatar"}
                     fill
                     className="rounded-full object-cover object-center absolute inset-0 w-full h-full"

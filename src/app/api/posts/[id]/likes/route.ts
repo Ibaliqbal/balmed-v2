@@ -8,7 +8,6 @@ export async function GET(
 ) {
   const id = params.id;
   const session = await getServerSession();
-  console.log(session);
 
   const { data: likes } = await supabase
     .from("postings")

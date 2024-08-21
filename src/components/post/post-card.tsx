@@ -25,6 +25,7 @@ const PostCard = ({
   userLogin,
   id,
   creator_id,
+  who_likes,
 }: Props) => {
   return (
     <motion.article
@@ -113,6 +114,25 @@ const PostCard = ({
           isReposted: userLogin?.reposts?.some((data) => data.post_id === id),
         }}
       />
+      {who_likes.length > 0 ? (
+        <p className="mt-4">
+          Liked by{" "}
+          <Link
+            href={`/${encodeURIComponent(who_likes[0].user.username)}`}
+            className="text-blue-600"
+          >
+            {who_likes[0].user.username}
+          </Link>{" "}
+          {who_likes.length > 1 && (
+            <>
+              and{" "}
+              <Link href={`/post/${id}/likes`} className="text-blue-600">
+                others
+              </Link>
+            </>
+          )}
+        </p>
+      ) : null}
     </motion.article>
   );
 };
