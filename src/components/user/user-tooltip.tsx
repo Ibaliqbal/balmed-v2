@@ -31,7 +31,7 @@ const UserTooltip = ({
           src={header_photo ? header_photo.url : "/example.jpg"}
           alt="Header photo"
           width={300}
-          height={10}
+          height={20}
           className="rounded-t-2xl w-full aspect-[1/.4] object-cover object-center"
         />
         <div className="p-5 flex flex-col gap-3 h-full">

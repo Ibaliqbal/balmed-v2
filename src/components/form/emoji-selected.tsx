@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 
-const EmojiSelect = ({ onEmojiSelect }: { onEmojiSelect: Function }) => {
+const EmojiSelect = ({
+  onEmojiSelect,
+  isModal,
+}: {
+  onEmojiSelect: Function;
+  isModal: boolean;
+}) => {
   const [openModal, setOpenModal] = useState(false);
-  const [isMounted, setIsMounted] = useState(false); // Added state to check if component is mounted
-
-  useEffect(() => {
-    setIsMounted(true); // Set to true after component is mounted
-  }, []);
 
   return (
     <div className="relative">
@@ -30,7 +31,9 @@ const EmojiSelect = ({ onEmojiSelect }: { onEmojiSelect: Function }) => {
               ease: "easeInOut",
               type: "tween",
             }}
-            className="absolute z-50 left-1/2 -translate-x-1/4 lg:-translate-x-1/2"
+            className={`absolute z-50 ${
+              isModal ? "-left-9" : "lg:left-1/2 -left-9 lg:-translate-x-1/2"
+            }`}
           >
             <EmojiPicker onEmojiClick={(obj) => onEmojiSelect(obj.emoji)} />
           </motion.div>

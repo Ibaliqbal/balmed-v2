@@ -26,13 +26,10 @@ const NotificationFollowCard = ({ name, photo, username, id }: Props) => {
             <h2 className="line-clamp-1 break-all">{name}</h2>
             <h2 className="line-clamp-1 break-all">@{username}</h2>
           </div>
-          <p>{username} mulai mengikuti anda, lihat informasi selengkapnya</p>
+          <p>{username} start following you, see more information</p>
         </div>
       </div>
-      <button
-        aria-label="More information"
-        className="text-2xl"
-      >
+      <button aria-label="More information" className="text-2xl">
         <MdKeyboardArrowRight />
       </button>
     </article>

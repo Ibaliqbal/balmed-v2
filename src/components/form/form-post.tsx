@@ -16,11 +16,13 @@ const FormPost = ({
   isComment,
   id,
   username,
+  isModal = false,
 }: {
   queryKey: string[];
   isComment: boolean;
   id: string;
   username: string;
+  isModal?: boolean;
 }) => {
   const [medias, setMedias] = useState<MediaPreview[]>([]);
   const [val, setVal] = useState("");
@@ -140,6 +142,7 @@ const FormPost = ({
             />
           </div>
           <EmojiSelect
+            isModal={isModal}
             onEmojiSelect={(emoji: string) =>
               setVal((prev) => `${prev} ${emoji}`)
             }

@@ -8,17 +8,20 @@ import { TbDotsCircleHorizontal } from "react-icons/tb";
 import ButtonEditProfile from "../button/button-edit-profile";
 import CustomImage from "../ui/image";
 import ButtonFollow from "../button/button-follow";
+import { supabase } from "@/libs/supabase/init";
+import ButtonShareUserProfile from "../button/button-share-user-profile";
 
 interface Props extends User {
   followings: [Count];
-  followers: [Count];
-  emailLogin: string;
+  followers: { user_id: string }[];
+  userLogin: User & {
+    followings: [Count];
+    followers: [Count];
+  };
 }
 
-const ProfileCard = ({
+const ProfileCard = async ({
   username,
-  email,
-  emailLogin,
   name,
   followers,
   followings,
@@ -29,17 +32,43 @@ const ProfileCard = ({
   photo,
   header_photo,
   id,
+  userLogin,
 }: Props) => {
+  const { data } = await supabase
+    .from("follow")
+    .select("follow_to")
+    .eq("user_id", userLogin?.id)
+    .then((all) => ({ ...all, data: all.data?.map((user) => user.follow_to) }));
+
+  const peopleFollowersThisUser = new Set(
+    followers.map((user) => user.user_id)
+  );
+
+  const filterPeopleFollower = data?.filter((user) =>
+    peopleFollowersThisUser.has(user)
+  );
+
+  const { data: users } = await supabase
+    .from("users")
+    .select("username")
+    .in("id", filterPeopleFollower as string[]);
+
   return (
     <>
-      <div className="w-full aspect-[1/.5] relative">
-        <CustomImage
-          src={header_photo ? header_photo.url : "/example.jpg"}
-          alt={"bg"}
-          width={700}
-          height={700}
-          className="w-full object-cover object-center h-full absolute inset-0"
-        />
+      <div
+        className={`w-full aspect-[1/.5] relative ${
+          header_photo ? "" : "bg-[#333639]"
+        }`}
+      >
+        {header_photo ? (
+          <CustomImage
+            src={header_photo.url}
+            alt={"bg"}
+            width={700}
+            height={700}
+            className="w-full object-cover object-center h-full absolute inset-0"
+          />
+        ) : null}
       </div>
       <div className="px-2 pt-4">
         <div className="flex justify-between px-2">
@@ -52,11 +81,11 @@ const ProfileCard = ({
             />
           </div>
           <div className="flex gap-4">
-            {email === emailLogin ? (
+            {id === userLogin?.id ? (
               <ButtonEditProfile />
             ) : (
               <>
-                <TbDotsCircleHorizontal className="w-12 h-12 cursor-pointer" />
+                <ButtonShareUserProfile username={username} />
                 <ButtonFollow className="bg-slate-800 px-6 py-3" id={id} />
               </>
             )}
@@ -104,13 +133,36 @@ const ProfileCard = ({
               href={`/${encodeURIComponent(username)}/followers`}
               className="hover:underline-offset-2 hover:underline"
             >
-              {followers[0].count}{" "}
+              {followers.length}{" "}
               <span className="text-gray-500">Followers</span>
             </Link>
           </div>
-          <p className="text-md text-gray-500">
-            Not followed by anyone you{"`"}re following
-          </p>
+          {users?.length ? (
+            <p>
+              Followed by{" "}
+              <Link
+                href={`/${encodeURIComponent(users![0].username)}`}
+                className="text-blue-600"
+              >
+                {users![0].username}
+              </Link>{" "}
+              {users?.length > 1 ? (
+                <>
+                  and{" "}
+                  <Link
+                    href={`/${encodeURIComponent(username)}/followers`}
+                    className="text-blue-600"
+                  >
+                    others
+                  </Link>
+                </>
+              ) : null}
+            </p>
+          ) : (
+            <p className="text-md text-gray-500">
+              Not followed by anyone you{"`"}re following
+            </p>
+          )}
         </article>
       </div>
     </>

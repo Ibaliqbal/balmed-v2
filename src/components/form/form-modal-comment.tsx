@@ -126,6 +126,7 @@ const FormComment = ({ id, username }: { id: string; username: string }) => {
             />
           </div>
           <EmojiSelect
+            isModal
             onEmojiSelect={(emoji: string) =>
               setValue((prev) => `${prev} ${emoji}`)
             }

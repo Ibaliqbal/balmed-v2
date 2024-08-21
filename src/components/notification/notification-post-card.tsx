@@ -18,9 +18,9 @@ const NotificationPostCard = ({
   content,
   usernameLogin,
 }: Props) => {
-  const msgComment = "meninggalkan komentar di postingan anda";
-  const msgMention = "menyebut anda di sebuah post";
-  const msgLike = "menyukai postingan anda";
+  const msgComment = "leave a comment on your post";
+  const msgMention = "mention you in a post";
+  const msgLike = "liked your post";
 
   return (
     <article className="w-full flex items-center justify-between p-2">
@@ -48,7 +48,7 @@ const NotificationPostCard = ({
               : type === "like"
               ? msgLike
               : msgComment}
-            , lihat informasi selengkapnya
+            , see more information
           </p>
           {type === "mention" ? (
             <div className="w-full p-2 bg-slate-700 bg-opacity-40 rounded-md">

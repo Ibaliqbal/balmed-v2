@@ -44,6 +44,7 @@ const ButtonPost = () => {
             id=""
             isComment={false}
             username=""
+            isModal={true}
             queryKey={
               pathname === `/${user?.username}`
                 ? ["post", `user-${user?.id}`]

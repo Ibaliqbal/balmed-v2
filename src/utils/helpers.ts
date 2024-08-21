@@ -20,6 +20,8 @@ export const seo = (
       siteName: `${process.env.NEXT_PUBLIC_APP_URL}/${site}`,
       url: `${process.env.NEXT_PUBLIC_APP_URL}/${site}`,
     },
+    applicationName: "BALMED",
+    robots: {}
   };
 };
 
