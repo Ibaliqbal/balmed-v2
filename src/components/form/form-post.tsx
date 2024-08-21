@@ -150,7 +150,7 @@ const FormPost = ({
         </div>
         <button
           disabled={isLoading || status === "pending"}
-          className="bg-blue-600 md:px-6 md:py-3 py-1 px-3 rounded-full md:text-lg text-sm disabled:bg-opacity-65 disabled:cursor-not-allowed"
+          className="bg-blue-600 md:px-6 md:py-3 py-3 px-4 rounded-full md:text-lg text-sm disabled:bg-opacity-65 disabled:cursor-not-allowed"
         >
           {isLoading || status === "pending" ? "Process..." : "Post"}
         </button>
