@@ -8,6 +8,10 @@
 
 **BALMED** is a cutting-edge social media application developed using Next.js 14, with React Query for efficient data fetching and Supabase as the database. This app is designed to provide users with an intuitive and responsive experience on the social media platform.
 
+## Demo
+
+https://github-production-user-asset-6210df.s3.amazonaws.com/128505015/359827604-a065e404-1952-43b8-ba73-3a4f79814979.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240821%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240821T090105Z&X-Amz-Expires=300&X-Amz-Signature=cc3be30acbd77aafdea5822b21570bfbda74aa07f3b0553809a63829f605b53d&X-Amz-SignedHeaders=host&actor_id=128505015&key_id=0&repo_id=831816547
+
 ## Features
 
 - **Authentication:**
