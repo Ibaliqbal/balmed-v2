@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import CustomImage from "../ui/image";
 import { MediaPreview } from "@/types/media";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoDownloadOutline } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 type Props = {
   media: MediaPreview[];
@@ -43,6 +44,33 @@ const ModalMedia = ({
       setInitialMedia(media[findIndex - 1].url);
     }
   };
+
+  const handleDownload = async (path: string, urlMedia: string) => {
+    try {
+      const res = await fetch(urlMedia);
+
+      if (!res.ok) throw new Error("Could not download this file");
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = path.split("/").pop() || "download"; // Nama file untuk diunduh
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "An unexpected error occurred";
+
+      toast.error(errorMessage);
+    } finally {
+      toast.success("Download complete");
+    }
+  };
+
   return (
     <Modal open={openModal} setOpen={setOpenModal}>
       <motion.div
@@ -61,7 +89,16 @@ const ModalMedia = ({
         }}
         className="fixed bg-primary lg:w-[85%] md:w-[95%] w-[95%] pb-8 h-fit m-auto inset-0 z-[9999] rounded-lg bg-black bg-opacity-50 flex flex-col gap-4"
       >
-        <div className="self-end mr-5">
+        <div className="self-end mr-5 flex items-center gap-4">
+          <IoDownloadOutline
+            className="text-2xl cursor-pointer"
+            onClick={() =>
+              handleDownload(
+                media.find((data) => data.url === initialMedia)?.path ?? "",
+                initialMedia
+              )
+            }
+          />
           <IoClose
             className="text-3xl cursor-pointer"
             onClick={() => setOpenModal(false)}
