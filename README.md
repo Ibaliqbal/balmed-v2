@@ -78,3 +78,9 @@ To run this project locally, follow these steps:
 ```bash
    npm run dev
 ```
+
+<div align="center">
+
+Don't forget to gift ⭐ for this repo. Thank you all 😃
+
+</div>
