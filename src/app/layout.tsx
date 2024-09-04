@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Platypi } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "@/styles/globals.css";
 import Provider from "@/provider";
 import { Toaster } from "react-hot-toast";
 import TopLoader from "@/components/toploader";
 
-const platypi = Platypi({ weight: "600", subsets: ["latin"] });
+const poppins = Poppins({ weight: "600", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${platypi.className} custom-scroll-horizontal text-white`}
+        className={`${poppins.className} custom-scroll-horizontal text-white`}
       >
         <TopLoader />
         <Provider>{children}</Provider>
