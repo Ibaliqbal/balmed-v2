@@ -36,28 +36,6 @@ const Content = ({
           >
             {str}{" "}
           </Link>
-        ) : str.startsWith("https") || str.startsWith("http") ? (
-          <a
-            href={str}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 z-50"
-            key={i}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {str}{" "}
-          </a>
-        ) : str.includes(".") ? (
-          <a
-            href={`https://${str}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 z-50"
-            key={i}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {str}{" "}
-          </a>
         ) : (
           `${str} `
         )
